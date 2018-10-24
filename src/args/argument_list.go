@@ -24,7 +24,7 @@ type ArgumentList struct {
 // Validate validates Consul arguments
 func (al ArgumentList) Validate() error {
 	if al.EnableSSL {
-		if !al.TrustServerCertificate && (al.CABundleDir == "" || al.CABundleFile == "") {
+		if !al.TrustServerCertificate && al.CABundleDir == "" && al.CABundleFile == "" {
 			return errors.New("invalid configuration: must specify a certificate file or bundle when using SSL and not trusting server certificate")
 		}
 	}
