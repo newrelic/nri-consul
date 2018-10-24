@@ -1,0 +1,26 @@
+name: com.newrelic.consul
+description: Reports status and metrics for HashiCorp Consul service
+protocol_version: 1
+os: linux
+
+commands:
+  all_data:
+    command:
+      - ./bin/nr-consul
+    interval: 15
+  metrics:
+    command:
+      - ./bin/nr-consul
+      - --metrics
+    interval: 15
+  inventory:
+    command:
+      - ./bin/nr-consul
+      - --inventory
+    prefix: config/nr-consul
+    interval: 15
+  events:
+    command:
+    - ./bin/nr-consul
+    - --events
+    interval: 15
