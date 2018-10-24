@@ -27,10 +27,20 @@ func main() {
 	log.SetupLogging(args.Verbose)
 
 	// create client
-	_, err = api.NewClient(args.CreateAPIConfig())
+	client, err := api.NewClient(args.CreateAPIConfig())
 	if err != nil {
 		log.Error("Error creating API client, please check configuration: %s", err.Error())
 		os.Exit(1)
+	}
+
+	members, err := client.Agent().Members(false)
+	if err != nil {
+		log.Error("Error getting members: %s", err.Error())
+		os.Exit(1)
+	}
+
+	for _, member := range members {
+		log.Info(member.Name)
 	}
 
 	if err = i.Publish(); err != nil {
