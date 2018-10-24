@@ -3,7 +3,9 @@ package args
 
 import (
 	"errors"
+	"fmt"
 
+	"github.com/hashicorp/consul/api"
 	sdkArgs "github.com/newrelic/infra-integrations-sdk/args"
 )
 
@@ -28,4 +30,25 @@ func (al ArgumentList) Validate() error {
 	}
 
 	return nil
+}
+
+// CreateAPIConfig creates an API config from the argument list
+func (al ArgumentList) CreateAPIConfig() *api.Config {
+	config := &api.Config{
+		Address: fmt.Sprintf("%s:%s", al.Hostname, al.Port),
+		Token:   al.Token,
+		Scheme:  "http",
+	}
+
+	// setup SSL if enabled
+	if al.EnableSSL {
+		config.TLSConfig = api.TLSConfig{
+			CAFile:             al.CABundleFile,
+			CAPath:             al.CABundleDir,
+			InsecureSkipVerify: al.TrustServerCertificate,
+		}
+		config.Scheme = "https"
+	}
+
+	return config
 }
