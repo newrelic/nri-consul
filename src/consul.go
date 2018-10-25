@@ -46,6 +46,10 @@ func main() {
 		agent.CollectInventory(agents)
 	}
 
+	if args.HasMetrics() {
+		agent.CollectMetrics(agents)
+	}
+
 	if err = i.Publish(); err != nil {
 		log.Error(err.Error())
 	}

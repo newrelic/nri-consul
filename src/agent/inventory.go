@@ -6,8 +6,6 @@ import (
 	"github.com/newrelic/infra-integrations-sdk/log"
 )
 
-const inventoryWorkers = 5
-
 // CollectInventory collects inventory data for each Agent entity
 func CollectInventory(agents []*Agent) {
 	var wg sync.WaitGroup
@@ -24,8 +22,8 @@ func CollectInventory(agents []*Agent) {
 
 func createInventoryPool(wg *sync.WaitGroup) chan *Agent {
 	agentChan := make(chan *Agent)
-	wg.Add(inventoryWorkers)
-	for i := 0; i < inventoryWorkers; i++ {
+	wg.Add(workerCount)
+	for i := 0; i < workerCount; i++ {
 		go inventoryWorker(agentChan, wg)
 	}
 
@@ -56,30 +54,5 @@ func inventoryWorker(agentChan <-chan *Agent, wg *sync.WaitGroup) {
 		if debugConfig, ok := selfData["DebugConfig"]; ok {
 			agent.processConfig(debugConfig, "DebugConfig")
 		}
-	}
-}
-
-func (a *Agent) processConfig(config map[string]interface{}, configPrefix string) {
-	for key, value := range config {
-		switch v := value.(type) {
-		case map[string]interface{}:
-			log.Debug("Not processing config param '%s' nested object", key)
-		case string:
-			if v != "" {
-				a.setInventoryItem(configPrefix+"/"+key, "value", v)
-			}
-		case []interface{}:
-			if len(v) > 0 {
-				a.setInventoryItem(configPrefix+"/"+key, "value", v)
-			}
-		default:
-			a.setInventoryItem(configPrefix+"/"+key, "value", v)
-		}
-	}
-}
-
-func (a *Agent) setInventoryItem(key, field string, value interface{}) {
-	if err := a.entity.SetInventoryItem(key, field, value); err != nil {
-		log.Debug("Error setting Inventory item '%s' on Agent '%s': %s", key, a.entity.Metadata.Name)
 	}
 }
