@@ -12,8 +12,8 @@ import (
 )
 
 func TestCreateAgents(t *testing.T) {
-	mux, hostname, port, close := testutils.SetupServer()
-	defer close()
+	mux, hostname, port, serverClose := testutils.SetupServer()
+	defer serverClose()
 
 	arg := args.ArgumentList{
 		Hostname:  hostname,
