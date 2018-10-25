@@ -34,10 +34,16 @@ func main() {
 		os.Exit(1)
 	}
 
-	_, err = agent.CreateAgents(client, i, &args)
+	// Create the list of agents in LAN pool
+	agents, err := agent.CreateAgents(client, i, &args)
 	if err != nil {
 		log.Error("Error creating Agent entities: %s", err.Error())
 		os.Exit(1)
+	}
+
+	// Collect inventory for agents
+	if args.HasInventory() {
+		agent.CollectInventory(agents)
 	}
 
 	if err = i.Publish(); err != nil {

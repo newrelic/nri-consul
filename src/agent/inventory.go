@@ -1,17 +1,35 @@
 package agent
 
 import (
-	"errors"
-	"strings"
 	"sync"
 
-	"github.com/newrelic/infra-integrations-sdk/integration"
 	"github.com/newrelic/infra-integrations-sdk/log"
 )
 
-// CollectInventory collects inventory data for each Agent entity
-func CollectInventory(agentEntities *[]integration.Entity) {
+const inventoryWorkers = 5
 
+// CollectInventory collects inventory data for each Agent entity
+func CollectInventory(agents []*Agent) {
+	var wg sync.WaitGroup
+	agentChan := createInventoryPool(&wg)
+
+	for _, agent := range agents {
+		agentChan <- agent
+	}
+
+	close(agentChan)
+
+	wg.Wait()
+}
+
+func createInventoryPool(wg *sync.WaitGroup) chan *Agent {
+	agentChan := make(chan *Agent)
+	wg.Add(inventoryWorkers)
+	for i := 0; i < inventoryWorkers; i++ {
+		go inventoryWorker(agentChan, wg)
+	}
+
+	return agentChan
 }
 
 func inventoryWorker(agentChan <-chan *Agent, wg *sync.WaitGroup) {
@@ -38,32 +56,7 @@ func inventoryWorker(agentChan <-chan *Agent, wg *sync.WaitGroup) {
 		if debugConfig, ok := selfData["DebugConfig"]; ok {
 			agent.processConfig(debugConfig, "DebugConfig")
 		}
-
-		// Special case to get Agents role
-		if memberConfig, ok := selfData["Member"]; ok {
-			role, err := getRole(memberConfig)
-			if err != nil {
-				log.Warn("Error finding role attribute for Agent '%s': %s", agent.entity.Metadata.Name, err)
-			} else {
-				agent.setInventoryItem("Member/Tags/role", "value", role)
-			}
-		}
 	}
-}
-
-func getRole(memberConfig map[string]interface{}) (interface{}, error) {
-	tagsRaw, ok := memberConfig["Tags"]
-	if !ok {
-		return nil, errors.New("could not find Tags structure in Member")
-	}
-
-	tagsData := tagsRaw.(map[string]interface{})
-	role, ok := tagsData["role"]
-	if !ok {
-		return nil, errors.New("could not find role attribute in Tags")
-	}
-
-	return role, nil
 }
 
 func (a *Agent) processConfig(config map[string]interface{}, configPrefix string) {
@@ -71,8 +64,14 @@ func (a *Agent) processConfig(config map[string]interface{}, configPrefix string
 		switch v := value.(type) {
 		case map[string]interface{}:
 			log.Debug("Not processing config param '%s' nested object", key)
-		case []string:
-			a.setInventoryItem(configPrefix+"/"+key, "value", strings.Join(v, ","))
+		case string:
+			if v != "" {
+				a.setInventoryItem(configPrefix+"/"+key, "value", v)
+			}
+		case []interface{}:
+			if len(v) > 0 {
+				a.setInventoryItem(configPrefix+"/"+key, "value", v)
+			}
 		default:
 			a.setInventoryItem(configPrefix+"/"+key, "value", v)
 		}
