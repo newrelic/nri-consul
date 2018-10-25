@@ -2,17 +2,10 @@ package agent
 
 import (
 	"github.com/newrelic/infra-integrations-sdk/data/metric"
+	"github.com/newrelic/nri-consul/src/metrics"
 )
 
-// MetricDefinition represents a all the definition to collect
-// a metric from the API and send to Infrastructure
-type MetricDefinition struct {
-	APIKey     string
-	MetricName string
-	SourceType metric.SourceType
-}
-
-var gaugeMetrics = []*MetricDefinition{
+var gaugeMetrics = []*metrics.MetricDefinition{
 	{
 		APIKey:     "consul.runtime.num_goroutines",
 		MetricName: "runtime.goroutines",
@@ -55,7 +48,7 @@ var gaugeMetrics = []*MetricDefinition{
 	},
 }
 
-var counterMetrics = []*MetricDefinition{
+var counterMetrics = []*metrics.MetricDefinition{
 	{
 		APIKey:     "consul.client.rpc",
 		MetricName: "client.rpcLoad",
@@ -88,4 +81,69 @@ var counterMetrics = []*MetricDefinition{
 	},
 }
 
-// TODO timer metrics
+var timerMetrics = []*metrics.TimerDefinition{
+	{
+		MetricDefinition: metrics.MetricDefinition{
+			APIKey:     "consul.txn.apply",
+			MetricName: "agent.txnAvgInMilliseconds",
+			SourceType: metric.GAUGE,
+		},
+		Operation: metrics.Average,
+	},
+	{
+		MetricDefinition: metrics.MetricDefinition{
+			APIKey:     "consul.txn.apply",
+			MetricName: "agent.txns",
+			SourceType: metric.RATE,
+		},
+		Operation: metrics.Count,
+	},
+	{
+		MetricDefinition: metrics.MetricDefinition{
+			APIKey:     "consul.txn.apply",
+			MetricName: "agent.txnMedianInMilliseconds",
+			SourceType: metric.GAUGE,
+		},
+		Operation: metrics.Median,
+	},
+	{
+		MetricDefinition: metrics.MetricDefinition{
+			APIKey:     "consul.txn.apply",
+			MetricName: "agent.txnMaxInMilliseconds",
+			SourceType: metric.GAUGE,
+		},
+		Operation: metrics.Max,
+	},
+	{
+		MetricDefinition: metrics.MetricDefinition{
+			APIKey:     "consul.kvs.apply",
+			MetricName: "agent.kvStoresAvgInMilliseconds",
+			SourceType: metric.GAUGE,
+		},
+		Operation: metrics.Average,
+	},
+	{
+		MetricDefinition: metrics.MetricDefinition{
+			APIKey:     "consul.kvs.apply",
+			MetricName: "agent.kvStoress",
+			SourceType: metric.RATE,
+		},
+		Operation: metrics.Count,
+	},
+	{
+		MetricDefinition: metrics.MetricDefinition{
+			APIKey:     "consul.kvs.apply",
+			MetricName: "agent.kvStoresMedianInMilliseconds",
+			SourceType: metric.GAUGE,
+		},
+		Operation: metrics.Median,
+	},
+	{
+		MetricDefinition: metrics.MetricDefinition{
+			APIKey:     "consul.kvs.apply",
+			MetricName: "agent.kvStoresMaxInMilliseconds",
+			SourceType: metric.GAUGE,
+		},
+		Operation: metrics.Max,
+	},
+}
