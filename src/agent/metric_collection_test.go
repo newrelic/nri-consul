@@ -194,3 +194,118 @@ func TestCollectMetrics_PeerMetrics(t *testing.T) {
 		t.Errorf("Expected %+v got %+v", expected, result)
 	}
 }
+
+func TestCollectMetrics_LatencyMetrics(t *testing.T) {
+	mux, hostname, port, serverClose := testutils.SetupServer()
+	defer serverClose()
+
+	arg := args.ArgumentList{
+		Hostname:  hostname,
+		Port:      port,
+		EnableSSL: false,
+	}
+
+	client, err := api.NewClient(arg.CreateAPIConfig(arg.Hostname))
+	if err != nil {
+		t.Fatalf("Unexpected error: %s", err.Error())
+	}
+
+	i, err := integration.New("test", "1.0.0")
+	if err != nil {
+		t.Fatalf("Unexpected error %s", err.Error())
+	}
+
+	entity, err := i.Entity("consul-0", "agent")
+	if err != nil {
+		t.Fatalf("Unexpected error %s", err.Error())
+	}
+
+	agent := &Agent{
+		client: client,
+		entity: entity,
+	}
+
+	agents := []*Agent{agent}
+
+	mux.HandleFunc("/v1/coordinate/nodes", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, `[
+			{
+				"Node": "consul-0",
+				"Segment": "",
+				"Coord": {
+					"Vec": [
+						1,
+						2,
+						3
+					],
+					"Error": 0.08253992124813844,
+					"Adjustment": -0.00003836604013478102,
+					"Height": 0.0003466944852283233
+				}
+			},
+			{
+				"Node": "consul-1",
+				"Segment": "",
+				"Coord": {
+					"Vec": [
+						1,
+						2,
+						3
+					],
+					"Error": 0.06923646098980592,
+					"Adjustment": -0.00002374826302067419,
+					"Height": 0.00004579452297003133
+				}
+			},
+			{
+				"Node": "consul-2",
+				"Segment": "",
+				"Coord": {
+					"Vec": [
+						1,
+						2,
+						3
+					],
+					"Error": 0.08419609268393471,
+					"Adjustment": -0.0000457158939839238,
+					"Height": 0.00019087018135238138
+				}
+			},
+			{
+				"Node": "vault-0",
+				"Segment": "",
+				"Coord": {
+					"Vec": [
+						1,
+						2,
+						3
+					],
+					"Error": 0.08989722523185267,
+					"Adjustment": -0.00002838544900300396,
+					"Height": 0.00001
+				}
+			}
+		]`)
+	})
+
+	expected := map[string]interface{}{
+		"event_type":                           "ConsulAgentSample",
+		"displayName":                          "consul-0",
+		"entityName":                           "agent:consul-0",
+		"net.agentP95LatencyInMilliseconds":    0.28994299609053836,
+		"net.agentMedianLatencyInMilliseconds": 0.3919287187524497,
+		"net.agentMinLatencyInMilliseconds":    0.3303747050428994,
+		"net.agentMaxLatencyInMilliseconds":    0.28994299609053836,
+		"net.agentP25LatencyInMilliseconds":    0.3303747050428994,
+		"net.agentP75LatencyInMilliseconds":    0.28994299609053836,
+		"net.agentP90LatencyInMilliseconds":    0.28994299609053836,
+		"net.agentP99LatencyInMilliseconds":    0.28994299609053836,
+	}
+
+	CollectMetrics(agents)
+
+	result := agent.entity.Metrics[0].Metrics
+	if !reflect.DeepEqual(result, expected) {
+		t.Errorf("Expected %+v got %+v", expected, result)
+	}
+}
