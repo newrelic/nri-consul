@@ -110,8 +110,15 @@ func collectGaugeMetrics(metricSet *metric.Set, gauges []api.GaugeValue, defs []
 		for _, gauge := range gauges {
 			// If found, record and break
 			if def.APIKey == gauge.Name {
+				value := gauge.Value
+
+				// special case where we need to convert nanoseconds to milliseconds
+				if def.APIKey == "consul.runtime.total_gc_pause_ns" {
+					value /= 1000000
+				}
+
 				found = true
-				if err := metricSet.SetMetric(def.MetricName, gauge.Value, def.SourceType); err != nil {
+				if err := metricSet.SetMetric(def.MetricName, value, def.SourceType); err != nil {
 					log.Error("Error setting metric %s: %s", def.MetricName, err.Error())
 				}
 
