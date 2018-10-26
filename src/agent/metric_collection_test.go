@@ -139,3 +139,58 @@ func TestCollectMetrics_CoreMetrics(t *testing.T) {
 		t.Errorf("Expected %+v got %+v", expected, result)
 	}
 }
+
+func TestCollectMetrics_PeerMetrics(t *testing.T) {
+	mux, hostname, port, serverClose := testutils.SetupServer()
+	defer serverClose()
+
+	arg := args.ArgumentList{
+		Hostname:  hostname,
+		Port:      port,
+		EnableSSL: false,
+	}
+
+	client, err := api.NewClient(arg.CreateAPIConfig(arg.Hostname))
+	if err != nil {
+		t.Fatalf("Unexpected error: %s", err.Error())
+	}
+
+	i, err := integration.New("test", "1.0.0")
+	if err != nil {
+		t.Fatalf("Unexpected error %s", err.Error())
+	}
+
+	entity, err := i.Entity("test", "agent")
+	if err != nil {
+		t.Fatalf("Unexpected error %s", err.Error())
+	}
+
+	agent := &Agent{
+		client: client,
+		entity: entity,
+	}
+
+	agents := []*Agent{agent}
+
+	mux.HandleFunc("/v1/status/peers", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, `[
+			"10.0.0.0:8300",
+			"10.0.0.2:8300",
+			"10.0.0.3:8300"
+		]`)
+	})
+
+	expected := map[string]interface{}{
+		"event_type":   "ConsulAgentSample",
+		"displayName":  agent.entity.Metadata.Name,
+		"entityName":   agent.entity.Metadata.Namespace + ":" + agent.entity.Metadata.Name,
+		"consul.peers": float64(3),
+	}
+
+	CollectMetrics(agents)
+
+	result := agent.entity.Metrics[0].Metrics
+	if !reflect.DeepEqual(result, expected) {
+		t.Errorf("Expected %+v got %+v", expected, result)
+	}
+}
