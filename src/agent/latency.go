@@ -27,15 +27,17 @@ func calculateLatencyMetrics(metricSet *metric.Set, node *api.CoordinateEntry, n
 		}
 
 		latencies = append(latencies, calcLatencyDist(node.Coord, other.Coord))
-		metrics.SetMetric(metricSet, "net.agentMedianLatencyInMilliseconds", calcLatencyMedian(latencies), metric.GAUGE)
-		metrics.SetMetric(metricSet, "net.agentMinLatencyInMilliseconds", latencies[0], metric.GAUGE)
-		metrics.SetMetric(metricSet, "net.agentMaxLatencyInMilliseconds", latencies[len(latencies)-1], metric.GAUGE)
-		metrics.SetMetric(metricSet, "net.agentP25LatencyInMilliseconds", calcLatencyPercentile(latencies, 0.25), metric.GAUGE)
-		metrics.SetMetric(metricSet, "net.agentP75LatencyInMilliseconds", calcLatencyPercentile(latencies, 0.75), metric.GAUGE)
-		metrics.SetMetric(metricSet, "net.agentP90LatencyInMilliseconds", calcLatencyPercentile(latencies, 0.90), metric.GAUGE)
-		metrics.SetMetric(metricSet, "net.agentP95LatencyInMilliseconds", calcLatencyPercentile(latencies, 0.95), metric.GAUGE)
-		metrics.SetMetric(metricSet, "net.agentP99LatencyInMilliseconds", calcLatencyPercentile(latencies, 0.99), metric.GAUGE)
 	}
+
+	// Set metrics
+	metrics.SetMetric(metricSet, "net.agentMedianLatencyInMilliseconds", calcLatencyMedian(latencies), metric.GAUGE)
+	metrics.SetMetric(metricSet, "net.agentMinLatencyInMilliseconds", latencies[0], metric.GAUGE)
+	metrics.SetMetric(metricSet, "net.agentMaxLatencyInMilliseconds", latencies[len(latencies)-1], metric.GAUGE)
+	metrics.SetMetric(metricSet, "net.agentP25LatencyInMilliseconds", calcLatencyPercentile(latencies, 0.25), metric.GAUGE)
+	metrics.SetMetric(metricSet, "net.agentP75LatencyInMilliseconds", calcLatencyPercentile(latencies, 0.75), metric.GAUGE)
+	metrics.SetMetric(metricSet, "net.agentP90LatencyInMilliseconds", calcLatencyPercentile(latencies, 0.90), metric.GAUGE)
+	metrics.SetMetric(metricSet, "net.agentP95LatencyInMilliseconds", calcLatencyPercentile(latencies, 0.95), metric.GAUGE)
+	metrics.SetMetric(metricSet, "net.agentP99LatencyInMilliseconds", calcLatencyPercentile(latencies, 0.99), metric.GAUGE)
 }
 
 // calcLatencyDist calculates distance between two coordinates.
@@ -55,7 +57,7 @@ func calcLatencyDist(a, b *coordinate.Coordinate) float64 {
 		rtt = adjusted
 	}
 
-	return rtt
+	return rtt * 1000.0
 }
 
 // calcLatencyMedian is the median of a data set of latencies
@@ -73,5 +75,5 @@ func calcLatencyMedian(latencies []float64) float64 {
 func calcLatencyPercentile(latencies []float64, percent float64) float64 {
 	numLatencies := float64(len(latencies))
 	index := int(math.Ceil(numLatencies * percent))
-	return latencies[index - -1]
+	return latencies[index-1]
 }
