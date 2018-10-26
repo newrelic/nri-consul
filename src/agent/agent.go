@@ -70,24 +70,37 @@ func (a *Agent) processConfig(config map[string]interface{}, configPrefix string
 	}
 }
 
+// setInventoryItem adds a wrapper around setting an inventory item
 func (a *Agent) setInventoryItem(key, field string, value interface{}) {
 	if err := a.entity.SetInventoryItem(key, field, value); err != nil {
 		log.Debug("Error setting Inventory item '%s' on Agent '%s': %s", key, a.entity.Metadata.Name)
 	}
 }
 
-// CollectMetrics collects metrics for an Agent
-func (a *Agent) CollectMetrics(gaugeDefs, counterDefs []*metrics.MetricDefinition, timerDefs []*metrics.TimerDefinition) error {
+// addPeerCount counts the number of peers for an agent.
+func (a *Agent) addPeerCount(metricSet *metric.Set) error {
+	log.Debug("Starting peer count collection for Agent %s", a.entity.Metadata.Name)
+
+	peers, err := a.client.Status().Peers()
+	if err != nil {
+		return err
+	}
+
+	if err := metricSet.SetMetric("consul.peers", len(peers), metric.GAUGE); err != nil {
+		return err
+	}
+
+	log.Debug("Finished peer count collection for Agent %s", a.entity.Metadata.Name)
+	return nil
+}
+
+// CollectCoreMetrics collects metrics for an Agent
+func (a *Agent) CollectCoreMetrics(metricSet *metric.Set, gaugeDefs, counterDefs []*metrics.MetricDefinition, timerDefs []*metrics.TimerDefinition) error {
 	log.Debug("Starting core metric collection for Agent %s", a.entity.Metadata.Name)
 	metricInfo, err := a.client.Agent().Metrics()
 	if err != nil {
 		return err
 	}
-
-	metricSet := a.entity.NewMetricSet("ConsulAgentSample",
-		metric.Attribute{Key: "displayName", Value: a.entity.Metadata.Name},
-		metric.Attribute{Key: "entityName", Value: a.entity.Metadata.Namespace + ":" + a.entity.Metadata.Name},
-	)
 
 	// collect gauges
 	collectGaugeMetrics(metricSet, metricInfo.Gauges, gaugeDefs)

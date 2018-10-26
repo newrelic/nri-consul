@@ -3,6 +3,7 @@ package agent
 import (
 	"sync"
 
+	"github.com/newrelic/infra-integrations-sdk/data/metric"
 	"github.com/newrelic/infra-integrations-sdk/log"
 )
 
@@ -39,8 +40,19 @@ func metricWorker(agentChan <-chan *Agent, wg *sync.WaitGroup) {
 			return
 		}
 
-		if err := agent.CollectMetrics(gaugeMetrics, counterMetrics, timerMetrics); err != nil {
+		metricSet := agent.entity.NewMetricSet("ConsulAgentSample",
+			metric.Attribute{Key: "displayName", Value: agent.entity.Metadata.Name},
+			metric.Attribute{Key: "entityName", Value: agent.entity.Metadata.Namespace + ":" + agent.entity.Metadata.Name},
+		)
+
+		// Collect core metrics
+		if err := agent.CollectCoreMetrics(metricSet, gaugeMetrics, counterMetrics, timerMetrics); err != nil {
 			log.Error("Error collecting core metrics for Agent '%s': %s", agent.entity.Metadata.Name, err.Error())
+		}
+
+		// Peer Count
+		if err := agent.addPeerCount(metricSet); err != nil {
+			log.Error("Error collecting peer count for Agent '%s': %s", agent.entity.Metadata.Name, err.Error())
 		}
 	}
 }
