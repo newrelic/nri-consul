@@ -2,6 +2,8 @@
 package agent
 
 import (
+	"errors"
+
 	"github.com/hashicorp/consul/api"
 	"github.com/newrelic/infra-integrations-sdk/data/metric"
 	"github.com/newrelic/infra-integrations-sdk/integration"
@@ -77,8 +79,8 @@ func (a *Agent) setInventoryItem(key, field string, value interface{}) {
 	}
 }
 
-// addPeerCount counts the number of peers for an agent.
-func (a *Agent) addPeerCount(metricSet *metric.Set) error {
+// collectPeerCount counts the number of peers for an agent.
+func (a *Agent) collectPeerCount(metricSet *metric.Set) error {
 	log.Debug("Starting peer count collection for Agent %s", a.entity.Metadata.Name)
 
 	peers, err := a.client.Status().Peers()
@@ -86,11 +88,33 @@ func (a *Agent) addPeerCount(metricSet *metric.Set) error {
 		return err
 	}
 
-	if err := metricSet.SetMetric("consul.peers", len(peers), metric.GAUGE); err != nil {
+	metrics.SetMetric(metricSet, "consul.peers", len(peers), metric.GAUGE)
+
+	log.Debug("Finished peer count collection for Agent %s", a.entity.Metadata.Name)
+	return nil
+}
+
+func (a *Agent) collectLatencyMetrics(metricSet *metric.Set) error {
+	log.Debug("Starting latency metric collection for Agent %s", a.entity.Metadata.Name)
+
+	nodes, _, err := a.client.Coordinate().Nodes(nil)
+	if err != nil {
 		return err
 	}
 
-	log.Debug("Finished peer count collection for Agent %s", a.entity.Metadata.Name)
+	if len(nodes) == 1 {
+		return errors.New("cluster only contains 1 node")
+	}
+
+	agentNode := findNode(a.entity.Metadata.Name, nodes)
+	if agentNode == nil {
+		return errors.New("could not find node for agent")
+	}
+
+	// calculate and popluate metrics
+	calculateLatencyMetrics(metricSet, agentNode, nodes)
+
+	log.Debug("Finished latency metric collection for Agent %s", a.entity.Metadata.Name)
 	return nil
 }
 
@@ -131,10 +155,7 @@ func collectGaugeMetrics(metricSet *metric.Set, gauges []api.GaugeValue, defs []
 				}
 
 				found = true
-				if err := metricSet.SetMetric(def.MetricName, value, def.SourceType); err != nil {
-					log.Error("Error setting metric %s: %s", def.MetricName, err.Error())
-				}
-
+				metrics.SetMetric(metricSet, def.MetricName, value, def.SourceType)
 				break
 			}
 		}
@@ -154,10 +175,7 @@ func collectCounterMetrics(metricSet *metric.Set, counters []api.SampledValue, d
 			// If found, record and break
 			if def.APIKey == counter.Name {
 				found = true
-				if err := metricSet.SetMetric(def.MetricName, counter.Count, def.SourceType); err != nil {
-					log.Error("Error setting metric %s: %s", def.MetricName, err.Error())
-				}
-
+				metrics.SetMetric(metricSet, def.MetricName, counter.Count, def.SourceType)
 				break
 			}
 		}
@@ -192,9 +210,7 @@ func collectTimerMetrics(metricSet *metric.Set, timers []api.SampledValue, defs 
 
 		// Calculate/collect statistical sample
 		value := calculateStatValue(def.Operation, sample)
-		if err := metricSet.SetMetric(def.MetricName, value, def.SourceType); err != nil {
-			log.Error("Error setting metric %s: %s", def.MetricName, err.Error())
-		}
+		metrics.SetMetric(metricSet, def.MetricName, value, def.SourceType)
 	}
 }
 

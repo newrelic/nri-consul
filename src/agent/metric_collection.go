@@ -51,8 +51,13 @@ func metricWorker(agentChan <-chan *Agent, wg *sync.WaitGroup) {
 		}
 
 		// Peer Count
-		if err := agent.addPeerCount(metricSet); err != nil {
+		if err := agent.collectPeerCount(metricSet); err != nil {
 			log.Error("Error collecting peer count for Agent '%s': %s", agent.entity.Metadata.Name, err.Error())
+		}
+
+		// Latency metrics
+		if err := agent.collectLatencyMetrics(metricSet); err != nil {
+			log.Error("Error collecting latency metrics for Agent '%s': %s", agent.entity.Metadata.Name, err.Error())
 		}
 	}
 }
