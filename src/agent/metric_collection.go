@@ -24,7 +24,7 @@ func createMetricPool(wg *sync.WaitGroup) chan *Agent {
 	agentChan := make(chan *Agent)
 	wg.Add(workerCount)
 	for i := 0; i < workerCount; i++ {
-		go inventoryWorker(agentChan, wg)
+		go metricWorker(agentChan, wg)
 	}
 
 	return agentChan
