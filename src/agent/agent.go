@@ -26,14 +26,20 @@ type Agent struct {
 }
 
 // CreateAgents creates an Agent structure for every Agent member of the LAN cluster
-func CreateAgents(client *api.Client, i *integration.Integration, args *args.ArgumentList) ([]*Agent, error) {
+func CreateAgents(client *api.Client, i *integration.Integration, args *args.ArgumentList) (agents []*Agent, leader *Agent, err error) {
 	members, err := client.Agent().Members(false)
 	if err != nil {
 		log.Error("Error getting members: %s", err.Error())
-		return nil, err
+		return
 	}
 
-	agents := make([]*Agent, 0, len(members))
+	leaderAddr, err := client.Status().Leader()
+	if err != nil {
+		log.Error("Error getting leader address: %s", err.Error())
+		return
+	}
+
+	agents = make([]*Agent, 0, len(members))
 	for _, member := range members {
 		var agent Agent
 
@@ -50,9 +56,16 @@ func CreateAgents(client *api.Client, i *integration.Integration, args *args.Arg
 		}
 
 		agents = append(agents, &agent)
+
+		// we need to identify the leader to collect catalog
+		if member.Addr == leaderAddr {
+			leader = &agent
+		}
 	}
 
-	return agents, nil
+	err = nil
+
+	return
 }
 
 func (a *Agent) processConfig(config map[string]interface{}, configPrefix string) {

@@ -35,7 +35,7 @@ func main() {
 	}
 
 	// Create the list of agents in LAN pool
-	agents, err := agent.CreateAgents(client, i, &args)
+	agents, _, err := agent.CreateAgents(client, i, &args)
 	if err != nil {
 		log.Error("Error creating Agent entities: %s", err.Error())
 		os.Exit(1)
