@@ -289,17 +289,17 @@ func TestCollectMetrics_LatencyMetrics(t *testing.T) {
 	})
 
 	expected := map[string]interface{}{
-		"event_type":                           "ConsulAgentSample",
 		"displayName":                          "consul-0",
 		"entityName":                           "agent:consul-0",
-		"net.agentP95LatencyInMilliseconds":    0.28994299609053836,
-		"net.agentMedianLatencyInMilliseconds": 0.3919287187524497,
-		"net.agentMinLatencyInMilliseconds":    0.3303747050428994,
-		"net.agentMaxLatencyInMilliseconds":    0.28994299609053836,
-		"net.agentP25LatencyInMilliseconds":    0.3303747050428994,
-		"net.agentP75LatencyInMilliseconds":    0.28994299609053836,
-		"net.agentP90LatencyInMilliseconds":    0.28994299609053836,
-		"net.agentP99LatencyInMilliseconds":    0.28994299609053836,
+		"event_type":                           "ConsulAgentSample",
+		"net.agentMedianLatencyInMilliseconds": 0.3303747050428994,
+		"net.agentMinLatencyInMilliseconds":    0.28994299609053836,
+		"net.agentMaxLatencyInMilliseconds":    0.453482732462,
+		"net.agentP75LatencyInMilliseconds":    0.453482732462,
+		"net.agentP95LatencyInMilliseconds":    0.453482732462,
+		"net.agentP25LatencyInMilliseconds":    0.28994299609053836,
+		"net.agentP90LatencyInMilliseconds":    0.453482732462,
+		"net.agentP99LatencyInMilliseconds":    0.453482732462,
 	}
 
 	CollectMetrics(agents)

@@ -63,6 +63,7 @@ func (a *Agent) processConfig(config map[string]interface{}, configPrefix string
 				a.setInventoryItem(configPrefix+"/"+key, "value", v)
 			}
 		case []interface{}:
+			// TODO verify what this looks like in Infrastructure
 			if len(v) > 0 {
 				a.setInventoryItem(configPrefix+"/"+key, "value", v)
 			}

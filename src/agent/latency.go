@@ -2,6 +2,7 @@ package agent
 
 import (
 	"math"
+	"sort"
 
 	"github.com/hashicorp/consul/api"
 	"github.com/hashicorp/serf/coordinate"
@@ -29,6 +30,9 @@ func calculateLatencyMetrics(metricSet *metric.Set, node *api.CoordinateEntry, n
 		latencies = append(latencies, calcLatencyDist(node.Coord, other.Coord))
 	}
 
+	// Sort latencies
+	sort.Float64s(latencies)
+
 	// Set metrics
 	metrics.SetMetric(metricSet, "net.agentMedianLatencyInMilliseconds", calcLatencyMedian(latencies), metric.GAUGE)
 	metrics.SetMetric(metricSet, "net.agentMinLatencyInMilliseconds", latencies[0], metric.GAUGE)
@@ -42,6 +46,8 @@ func calculateLatencyMetrics(metricSet *metric.Set, node *api.CoordinateEntry, n
 
 // calcLatencyDist calculates distance between two coordinates.
 // Taken from Consul docs https://www.consul.io/docs/internals/coordinates.html
+// In order to compute the latency between two nodes you must calculate
+// the distance based on their coordinates.
 func calcLatencyDist(a, b *coordinate.Coordinate) float64 {
 	// Calculate the Euclidean distance plus the heights.
 	sumsq := 0.0
@@ -66,10 +72,10 @@ func calcLatencyMedian(latencies []float64) float64 {
 	halfIndex := numLatencies / 2
 
 	if numLatencies%2 == 0 {
-		return latencies[halfIndex]
+		return (latencies[halfIndex-1] + latencies[halfIndex]) / 2
 	}
 
-	return (latencies[halfIndex-1] + latencies[halfIndex]) / 2
+	return latencies[halfIndex]
 }
 
 func calcLatencyPercentile(latencies []float64, percent float64) float64 {
