@@ -8,6 +8,7 @@ import (
 	"github.com/newrelic/infra-integrations-sdk/log"
 	"github.com/newrelic/nri-consul/src/agent"
 	"github.com/newrelic/nri-consul/src/args"
+	"github.com/newrelic/nri-consul/src/cluster"
 )
 
 const (
@@ -35,9 +36,15 @@ func main() {
 	}
 
 	// Create the list of agents in LAN pool
-	agents, _, err := agent.CreateAgents(client, i, &args)
+	agents, leader, err := agent.CreateAgents(client, i, &args)
 	if err != nil {
 		log.Error("Error creating Agent entities: %s", err.Error())
+		os.Exit(1)
+	}
+
+	cluster, err := cluster.NewCluster(leader, i)
+	if err != nil {
+		log.Error("Error creating Cluster entity: %s", err.Error())
 		os.Exit(1)
 	}
 
@@ -48,6 +55,7 @@ func main() {
 
 	if args.HasMetrics() {
 		agent.CollectMetrics(agents)
+		cluster.CollectMetrics()
 	}
 
 	if err = i.Publish(); err != nil {

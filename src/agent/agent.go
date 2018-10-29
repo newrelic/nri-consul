@@ -146,13 +146,19 @@ func (a *Agent) CollectCoreMetrics(metricSet *metric.Set, gaugeDefs, counterDefs
 	}
 
 	// collect gauges
-	collectGaugeMetrics(metricSet, metricInfo.Gauges, gaugeDefs)
+	if gaugeDefs != nil {
+		collectGaugeMetrics(metricSet, metricInfo.Gauges, gaugeDefs)
+	}
 
 	// collect counters
-	collectCounterMetrics(metricSet, metricInfo.Counters, counterDefs)
+	if counterDefs != nil {
+		collectCounterMetrics(metricSet, metricInfo.Counters, counterDefs)
+	}
 
 	// collect timers
-	collectTimerMetrics(metricSet, metricInfo.Samples, timerDefs)
+	if timerDefs != nil {
+		collectTimerMetrics(metricSet, metricInfo.Samples, timerDefs)
+	}
 
 	log.Debug("Finished core metric collection for Agent %s", a.entity.Metadata.Name)
 	return nil
