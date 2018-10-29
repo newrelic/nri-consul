@@ -6,6 +6,7 @@ import (
 	"github.com/hashicorp/consul/api"
 	"github.com/newrelic/infra-integrations-sdk/integration"
 	"github.com/newrelic/infra-integrations-sdk/log"
+	"github.com/newrelic/nri-consul/src/agent"
 	"github.com/newrelic/nri-consul/src/args"
 )
 
@@ -27,20 +28,26 @@ func main() {
 	log.SetupLogging(args.Verbose)
 
 	// create client
-	client, err := api.NewClient(args.CreateAPIConfig())
+	client, err := api.NewClient(args.CreateAPIConfig(args.Hostname))
 	if err != nil {
 		log.Error("Error creating API client, please check configuration: %s", err.Error())
 		os.Exit(1)
 	}
 
-	members, err := client.Agent().Members(false)
+	// Create the list of agents in LAN pool
+	agents, err := agent.CreateAgents(client, i, &args)
 	if err != nil {
-		log.Error("Error getting members: %s", err.Error())
+		log.Error("Error creating Agent entities: %s", err.Error())
 		os.Exit(1)
 	}
 
-	for _, member := range members {
-		log.Info(member.Name)
+	// Collect inventory for agents
+	if args.HasInventory() {
+		agent.CollectInventory(agents)
+	}
+
+	if args.HasMetrics() {
+		agent.CollectMetrics(agents)
 	}
 
 	if err = i.Publish(); err != nil {

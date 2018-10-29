@@ -33,9 +33,9 @@ func (al ArgumentList) Validate() error {
 }
 
 // CreateAPIConfig creates an API config from the argument list
-func (al ArgumentList) CreateAPIConfig() *api.Config {
+func (al ArgumentList) CreateAPIConfig(hostname string) *api.Config {
 	config := &api.Config{
-		Address: fmt.Sprintf("%s:%s", al.Hostname, al.Port),
+		Address: fmt.Sprintf("%s:%s", hostname, al.Port),
 		Token:   al.Token,
 		Scheme:  "http",
 	}

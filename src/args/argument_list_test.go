@@ -99,7 +99,7 @@ func Test_ArgumentList_CreateAPIConfig(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		out := tc.args.CreateAPIConfig()
+		out := tc.args.CreateAPIConfig(tc.args.Hostname)
 		if !reflect.DeepEqual(out, tc.want) {
 			t.Errorf("Test Case %s Failed: Expected %v got %v", tc.name, tc.want, out)
 		}
