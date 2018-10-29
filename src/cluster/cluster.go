@@ -2,6 +2,8 @@
 package cluster
 
 import (
+	"errors"
+
 	"github.com/newrelic/infra-integrations-sdk/data/metric"
 	"github.com/newrelic/infra-integrations-sdk/integration"
 	"github.com/newrelic/infra-integrations-sdk/log"
@@ -17,6 +19,10 @@ type Cluster struct {
 
 // NewCluster creates a new cluster wrapped around the leader Agent
 func NewCluster(leader *agent.Agent, i *integration.Integration) (*Cluster, error) {
+	if leader == nil {
+		return nil, errors.New("leader must not be nil")
+	}
+
 	clusterEntity, err := i.Entity("Cluster", "cluster")
 	if err != nil {
 		return nil, err
@@ -33,6 +39,7 @@ func (c *Cluster) CollectMetrics() {
 	metricSet := c.entity.NewMetricSet("ConsulClusterSample",
 		metric.Attribute{Key: "displayName", Value: c.entity.Metadata.Name},
 		metric.Attribute{Key: "entityName", Value: c.entity.Metadata.Namespace + ":" + c.entity.Metadata.Name},
+		metric.Attribute{Key: "leaderNode", Value: c.leader.Name()},
 	)
 
 	// collect leader agent metrics

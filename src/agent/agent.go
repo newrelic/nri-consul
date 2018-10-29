@@ -33,7 +33,7 @@ func CreateAgents(client *api.Client, i *integration.Integration, args *args.Arg
 		return
 	}
 
-	leaderAddr, err := client.Status().Leader()
+	leaderAddr, err := getLeaderAddr(client)
 	if err != nil {
 		log.Error("Error getting leader address: %s", err.Error())
 		return
@@ -135,6 +135,11 @@ func (a *Agent) collectLatencyMetrics(metricSet *metric.Set) error {
 
 	log.Debug("Finished latency metric collection for Agent %s", a.entity.Metadata.Name)
 	return nil
+}
+
+// Name returns the entity name of the agent
+func (a *Agent) Name() string {
+	return a.entity.Metadata.Name
 }
 
 // CollectCoreMetrics collects metrics for an Agent
@@ -271,4 +276,14 @@ func arrayToString(input []interface{}) (*string, error) {
 	outString := strings.Join(stringElements, ",")
 
 	return &outString, nil
+}
+
+func getLeaderAddr(client *api.Client) (string, error) {
+	leaderAddr, err := client.Status().Leader()
+	if err != nil {
+		return "", err
+	}
+
+	// Addr comes in the form IP:Port splitting and only returning IP
+	return strings.Split(leaderAddr, ":")[0], nil
 }

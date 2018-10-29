@@ -62,7 +62,7 @@ func TestCreateAgents(t *testing.T) {
 	})
 
 	mux.HandleFunc("/v1/status/leader", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprint(w, `"10.0.0.1"`)
+		fmt.Fprint(w, `"10.0.0.1:8300"`)
 	})
 
 	agents, leader, err := CreateAgents(client, i, &arg)
@@ -107,7 +107,7 @@ func TestCreateAgents_BadMemberCall(t *testing.T) {
 	})
 
 	mux.HandleFunc("/v1/status/leader", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprint(w, `"10.0.0.1"`)
+		fmt.Fprint(w, `"10.0.0.1:8300"`)
 	})
 
 	agents, leader, err := CreateAgents(client, i, &arg)
@@ -179,5 +179,25 @@ func TestCreateAgents_BadLeaderCall(t *testing.T) {
 	}
 	if agents != nil && leader != nil {
 		t.Errorf("Agent and Leader should be nil got %+v and %+v respectively", agents, leader)
+	}
+}
+
+func Test_Agent_Name(t *testing.T) {
+	i, err := integration.New("test", "1.0.0")
+	if err != nil {
+		t.Fatalf("Unexpected error %s", err.Error())
+	}
+
+	entity, err := i.Entity("test", "agent")
+	if err != nil {
+		t.Fatalf("Unexpected error %s", err.Error())
+	}
+
+	agent := &Agent{
+		entity: entity,
+	}
+
+	if agent.Name() != entity.Metadata.Name {
+		t.Errorf("Expected %s got %s", entity.Metadata.Name, agent.Name())
 	}
 }
