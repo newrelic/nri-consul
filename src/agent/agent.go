@@ -3,6 +3,8 @@ package agent
 
 import (
 	"errors"
+	"fmt"
+	"strings"
 
 	"github.com/hashicorp/consul/api"
 	"github.com/newrelic/infra-integrations-sdk/data/metric"
@@ -63,9 +65,12 @@ func (a *Agent) processConfig(config map[string]interface{}, configPrefix string
 				a.setInventoryItem(configPrefix+"/"+key, "value", v)
 			}
 		case []interface{}:
-			// TODO verify what this looks like in Infrastructure
 			if len(v) > 0 {
-				a.setInventoryItem(configPrefix+"/"+key, "value", v)
+				if stringVal, err := arrayToString(v); err != nil {
+					log.Debug("Unable to store config param '%s': %s", key, err.Error())
+				} else {
+					a.setInventoryItem(configPrefix+"/"+key, "value", *stringVal)
+				}
 			}
 		default:
 			a.setInventoryItem(configPrefix+"/"+key, "value", v)
@@ -229,4 +234,22 @@ func calculateStatValue(operation metrics.StatOperation, sample *api.SampledValu
 	}
 
 	return value
+}
+
+// arrayToString converts an interface array to a comma delimited string if possible
+func arrayToString(input []interface{}) (*string, error) {
+	stringElements := make([]string, len(input))
+
+	for i, elem := range input {
+		elemString, ok := elem.(string)
+		if !ok {
+			return nil, fmt.Errorf("could not convert %v of type %T to string", elem, elem)
+		}
+
+		stringElements[i] = elemString
+	}
+
+	outString := strings.Join(stringElements, ",")
+
+	return &outString, nil
 }
