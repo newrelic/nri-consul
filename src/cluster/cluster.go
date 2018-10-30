@@ -39,7 +39,7 @@ func (c *Cluster) CollectMetrics() {
 	metricSet := c.entity.NewMetricSet("ConsulClusterSample",
 		metric.Attribute{Key: "displayName", Value: c.entity.Metadata.Name},
 		metric.Attribute{Key: "entityName", Value: c.entity.Metadata.Namespace + ":" + c.entity.Metadata.Name},
-		metric.Attribute{Key: "leaderNode", Value: c.leader.Name()},
+		metric.Attribute{Key: "leader", Value: c.leader.Name()},
 	)
 
 	// collect leader agent metrics
@@ -47,3 +47,8 @@ func (c *Cluster) CollectMetrics() {
 		log.Error("Error collecting leader metrics for Cluster: %s", err.Error())
 	}
 }
+
+// func (c *Cluster) collectStatusCounts() error {
+// 	// catalog.registeredNodes count of /catalog/nodes
+
+// }
