@@ -41,31 +41,39 @@ func CreateAgents(client *api.Client, i *integration.Integration, args *args.Arg
 
 	agents = make([]*Agent, 0, len(members))
 	for _, member := range members {
-		var agent Agent
 
-		agent.entity, err = i.Entity(member.Name, "agent")
+		entity, err := i.Entity(member.Name, "agent")
 		if err != nil {
 			log.Error("Error creating entity for Agent '%s': %s", member.Name, err.Error())
 			continue
 		}
 
-		agent.Client, err = api.NewClient(args.CreateAPIConfig(member.Name))
+		client, err = api.NewClient(args.CreateAPIConfig(member.Name))
 		if err != nil {
 			log.Error("Error creating client for Agent '%s': %s", member.Name, err.Error())
 			continue
 		}
 
-		agents = append(agents, &agent)
+		agent := NewAgent(client, entity)
+		agents = append(agents, agent)
 
 		// we need to identify the leader to collect catalog
 		if member.Addr == leaderAddr {
-			leader = &agent
+			leader = agent
 		}
 	}
 
 	err = nil
 
 	return
+}
+
+// NewAgent creates a new agent from the given client and Entity
+func NewAgent(client *api.Client, entity *integration.Entity) *Agent {
+	return &Agent{
+		Client: client,
+		entity: entity,
+	}
 }
 
 func (a *Agent) processConfig(config map[string]interface{}, configPrefix string) {
