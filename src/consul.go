@@ -53,6 +53,7 @@ func main() {
 		agent.CollectInventory(agents)
 	}
 
+	// Collect metrics for Agents and cluster
 	if args.HasMetrics() {
 		agent.CollectMetrics(agents)
 		cluster.CollectMetrics()

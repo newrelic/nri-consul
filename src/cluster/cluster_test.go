@@ -49,7 +49,7 @@ func TestNewCluster_Normal(t *testing.T) {
 
 }
 
-func Test_Cluster_CollectMetrics_Normal(t *testing.T) {
+func Test_Cluster_CollectMetrics_Full(t *testing.T) {
 	mux, hostname, port, serverClose := testutils.SetupServer()
 	defer serverClose()
 
@@ -101,6 +101,56 @@ func Test_Cluster_CollectMetrics_Normal(t *testing.T) {
 		"catalog.upNodes":                     float64(1),
 		"catalog.warningNodes":                float64(1),
 		"catalog.passingNodes":                float64(1),
+	}
+
+	c.CollectMetrics()
+
+	result := c.entity.Metrics[0].Metrics
+	if !reflect.DeepEqual(result, expected) {
+		t.Errorf("Expected %+v got %+v", expected, result)
+	}
+}
+
+func Test_Cluster_CollectMetrics_All_Endpoint_Fails(t *testing.T) {
+	_, hostname, port, serverClose := testutils.SetupServer()
+	defer serverClose()
+
+	arg := args.ArgumentList{
+		Hostname:  hostname,
+		Port:      port,
+		EnableSSL: false,
+	}
+
+	client, err := api.NewClient(arg.CreateAPIConfig(arg.Hostname))
+	if err != nil {
+		t.Fatalf("Unexpected error: %s", err.Error())
+	}
+
+	i, err := integration.New("test", "1.0.0")
+	if err != nil {
+		t.Fatalf("Unexpected error %s", err.Error())
+	}
+
+	clusterEntity, err := i.Entity("test", "cluster")
+	if err != nil {
+		t.Fatalf("Unexpected error %s", err.Error())
+	}
+
+	agentEntity, err := i.Entity("leader", "agent")
+	if err != nil {
+		t.Fatalf("Unexpected error %s", err.Error())
+	}
+
+	c := &Cluster{
+		entity: clusterEntity,
+		leader: agent.NewAgent(client, agentEntity),
+	}
+
+	expected := map[string]interface{}{
+		"event_type":  "ConsulClusterSample",
+		"displayName": c.entity.Metadata.Name,
+		"entityName":  c.entity.Metadata.Namespace + ":" + c.entity.Metadata.Name,
+		"leader":      "leader",
 	}
 
 	c.CollectMetrics()
