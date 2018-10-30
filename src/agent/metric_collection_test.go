@@ -38,7 +38,7 @@ func TestCollectMetrics_CoreMetrics(t *testing.T) {
 	}
 
 	agent := &Agent{
-		client: client,
+		Client: client,
 		entity: entity,
 	}
 
@@ -166,7 +166,7 @@ func TestCollectMetrics_PeerMetrics(t *testing.T) {
 	}
 
 	agent := &Agent{
-		client: client,
+		Client: client,
 		entity: entity,
 	}
 
@@ -221,7 +221,7 @@ func TestCollectMetrics_LatencyMetrics(t *testing.T) {
 	}
 
 	agent := &Agent{
-		client: client,
+		Client: client,
 		entity: entity,
 	}
 
@@ -289,17 +289,17 @@ func TestCollectMetrics_LatencyMetrics(t *testing.T) {
 	})
 
 	expected := map[string]interface{}{
-		"displayName":                          "consul-0",
-		"entityName":                           "agent:consul-0",
-		"event_type":                           "ConsulAgentSample",
-		"net.agentMedianLatencyInMilliseconds": 0.3303747050428994,
-		"net.agentMinLatencyInMilliseconds":    0.28994299609053836,
-		"net.agentMaxLatencyInMilliseconds":    0.453482732462,
-		"net.agentP75LatencyInMilliseconds":    0.453482732462,
-		"net.agentP95LatencyInMilliseconds":    0.453482732462,
-		"net.agentP25LatencyInMilliseconds":    0.28994299609053836,
-		"net.agentP90LatencyInMilliseconds":    0.453482732462,
-		"net.agentP99LatencyInMilliseconds":    0.453482732462,
+		"displayName":                           "consul-0",
+		"entityName":                            "agent:consul-0",
+		"event_type":                            "ConsulAgentSample",
+		"net.agent.medianLatencyInMilliseconds": 0.3303747050428994,
+		"net.agent.minLatencyInMilliseconds":    0.28994299609053836,
+		"net.agent.maxLatencyInMilliseconds":    0.453482732462,
+		"net.agent.p75LatencyInMilliseconds":    0.453482732462,
+		"net.agent.p95LatencyInMilliseconds":    0.453482732462,
+		"net.agent.p25LatencyInMilliseconds":    0.28994299609053836,
+		"net.agent.p90LatencyInMilliseconds":    0.453482732462,
+		"net.agent.p99LatencyInMilliseconds":    0.453482732462,
 	}
 
 	CollectMetrics(agents)

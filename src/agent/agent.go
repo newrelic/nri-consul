@@ -22,37 +22,58 @@ const workerCount = 5
 // and the Entity representing it.
 type Agent struct {
 	entity *integration.Entity
-	client *api.Client
+	Client *api.Client
 }
 
 // CreateAgents creates an Agent structure for every Agent member of the LAN cluster
-func CreateAgents(client *api.Client, i *integration.Integration, args *args.ArgumentList) ([]*Agent, error) {
+func CreateAgents(client *api.Client, i *integration.Integration, args *args.ArgumentList) (agents []*Agent, leader *Agent, err error) {
 	members, err := client.Agent().Members(false)
 	if err != nil {
 		log.Error("Error getting members: %s", err.Error())
-		return nil, err
+		return
 	}
 
-	agents := make([]*Agent, 0, len(members))
-	for _, member := range members {
-		var agent Agent
+	leaderAddr, err := getLeaderAddr(client)
+	if err != nil {
+		log.Error("Error getting leader address: %s", err.Error())
+		return
+	}
 
-		agent.entity, err = i.Entity(member.Name, "agent")
+	agents = make([]*Agent, 0, len(members))
+	for _, member := range members {
+
+		entity, err := i.Entity(member.Name, "agent")
 		if err != nil {
 			log.Error("Error creating entity for Agent '%s': %s", member.Name, err.Error())
 			continue
 		}
 
-		agent.client, err = api.NewClient(args.CreateAPIConfig(member.Name))
+		client, err = api.NewClient(args.CreateAPIConfig(member.Name))
 		if err != nil {
 			log.Error("Error creating client for Agent '%s': %s", member.Name, err.Error())
 			continue
 		}
 
-		agents = append(agents, &agent)
+		agent := NewAgent(client, entity)
+		agents = append(agents, agent)
+
+		// we need to identify the leader to collect catalog
+		if member.Addr == leaderAddr {
+			leader = agent
+		}
 	}
 
-	return agents, nil
+	err = nil
+
+	return
+}
+
+// NewAgent creates a new agent from the given client and Entity
+func NewAgent(client *api.Client, entity *integration.Entity) *Agent {
+	return &Agent{
+		Client: client,
+		entity: entity,
+	}
 }
 
 func (a *Agent) processConfig(config map[string]interface{}, configPrefix string) {
@@ -89,7 +110,7 @@ func (a *Agent) setInventoryItem(key, field string, value interface{}) {
 func (a *Agent) collectPeerCount(metricSet *metric.Set) error {
 	log.Debug("Starting peer count collection for Agent %s", a.entity.Metadata.Name)
 
-	peers, err := a.client.Status().Peers()
+	peers, err := a.Client.Status().Peers()
 	if err != nil {
 		return err
 	}
@@ -103,7 +124,7 @@ func (a *Agent) collectPeerCount(metricSet *metric.Set) error {
 func (a *Agent) collectLatencyMetrics(metricSet *metric.Set) error {
 	log.Debug("Starting latency metric collection for Agent %s", a.entity.Metadata.Name)
 
-	nodes, _, err := a.client.Coordinate().Nodes(nil)
+	nodes, _, err := a.Client.Coordinate().Nodes(nil)
 	if err != nil {
 		return err
 	}
@@ -124,22 +145,33 @@ func (a *Agent) collectLatencyMetrics(metricSet *metric.Set) error {
 	return nil
 }
 
+// Name returns the entity name of the agent
+func (a *Agent) Name() string {
+	return a.entity.Metadata.Name
+}
+
 // CollectCoreMetrics collects metrics for an Agent
 func (a *Agent) CollectCoreMetrics(metricSet *metric.Set, gaugeDefs, counterDefs []*metrics.MetricDefinition, timerDefs []*metrics.TimerDefinition) error {
 	log.Debug("Starting core metric collection for Agent %s", a.entity.Metadata.Name)
-	metricInfo, err := a.client.Agent().Metrics()
+	metricInfo, err := a.Client.Agent().Metrics()
 	if err != nil {
 		return err
 	}
 
 	// collect gauges
-	collectGaugeMetrics(metricSet, metricInfo.Gauges, gaugeDefs)
+	if gaugeDefs != nil {
+		collectGaugeMetrics(metricSet, metricInfo.Gauges, gaugeDefs)
+	}
 
 	// collect counters
-	collectCounterMetrics(metricSet, metricInfo.Counters, counterDefs)
+	if counterDefs != nil {
+		collectCounterMetrics(metricSet, metricInfo.Counters, counterDefs)
+	}
 
 	// collect timers
-	collectTimerMetrics(metricSet, metricInfo.Samples, timerDefs)
+	if timerDefs != nil {
+		collectTimerMetrics(metricSet, metricInfo.Samples, timerDefs)
+	}
 
 	log.Debug("Finished core metric collection for Agent %s", a.entity.Metadata.Name)
 	return nil
@@ -252,4 +284,14 @@ func arrayToString(input []interface{}) (*string, error) {
 	outString := strings.Join(stringElements, ",")
 
 	return &outString, nil
+}
+
+func getLeaderAddr(client *api.Client) (string, error) {
+	leaderAddr, err := client.Status().Leader()
+	if err != nil {
+		return "", err
+	}
+
+	// Addr comes in the form IP:Port splitting and only returning IP
+	return strings.Split(leaderAddr, ":")[0], nil
 }

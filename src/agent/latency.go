@@ -34,14 +34,14 @@ func calculateLatencyMetrics(metricSet *metric.Set, node *api.CoordinateEntry, n
 	sort.Float64s(latencies)
 
 	// Set metrics
-	metrics.SetMetric(metricSet, "net.agentMedianLatencyInMilliseconds", calcLatencyMedian(latencies), metric.GAUGE)
-	metrics.SetMetric(metricSet, "net.agentMinLatencyInMilliseconds", latencies[0], metric.GAUGE)
-	metrics.SetMetric(metricSet, "net.agentMaxLatencyInMilliseconds", latencies[len(latencies)-1], metric.GAUGE)
-	metrics.SetMetric(metricSet, "net.agentP25LatencyInMilliseconds", calcLatencyPercentile(latencies, 0.25), metric.GAUGE)
-	metrics.SetMetric(metricSet, "net.agentP75LatencyInMilliseconds", calcLatencyPercentile(latencies, 0.75), metric.GAUGE)
-	metrics.SetMetric(metricSet, "net.agentP90LatencyInMilliseconds", calcLatencyPercentile(latencies, 0.90), metric.GAUGE)
-	metrics.SetMetric(metricSet, "net.agentP95LatencyInMilliseconds", calcLatencyPercentile(latencies, 0.95), metric.GAUGE)
-	metrics.SetMetric(metricSet, "net.agentP99LatencyInMilliseconds", calcLatencyPercentile(latencies, 0.99), metric.GAUGE)
+	metrics.SetMetric(metricSet, "net.agent.medianLatencyInMilliseconds", calcLatencyMedian(latencies), metric.GAUGE)
+	metrics.SetMetric(metricSet, "net.agent.minLatencyInMilliseconds", latencies[0], metric.GAUGE)
+	metrics.SetMetric(metricSet, "net.agent.maxLatencyInMilliseconds", latencies[len(latencies)-1], metric.GAUGE)
+	metrics.SetMetric(metricSet, "net.agent.p25LatencyInMilliseconds", calcLatencyPercentile(latencies, 0.25), metric.GAUGE)
+	metrics.SetMetric(metricSet, "net.agent.p75LatencyInMilliseconds", calcLatencyPercentile(latencies, 0.75), metric.GAUGE)
+	metrics.SetMetric(metricSet, "net.agent.p90LatencyInMilliseconds", calcLatencyPercentile(latencies, 0.90), metric.GAUGE)
+	metrics.SetMetric(metricSet, "net.agent.p95LatencyInMilliseconds", calcLatencyPercentile(latencies, 0.95), metric.GAUGE)
+	metrics.SetMetric(metricSet, "net.agent.p99LatencyInMilliseconds", calcLatencyPercentile(latencies, 0.99), metric.GAUGE)
 }
 
 // calcLatencyDist calculates distance between two coordinates.
