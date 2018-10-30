@@ -77,7 +77,7 @@ var timerMetrics = []*metrics.TimerDefinition{
 	{
 		MetricDefinition: metrics.MetricDefinition{
 			APIKey:     "consul.raft.leader.dispatchLog",
-			MetricName: "raft.logDispatchs",
+			MetricName: "raft.logDispatches",
 			SourceType: metric.RATE,
 		},
 		Operation: metrics.Count,
