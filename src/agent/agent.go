@@ -22,7 +22,7 @@ const workerCount = 5
 // and the Entity representing it.
 type Agent struct {
 	entity *integration.Entity
-	client *api.Client
+	Client *api.Client
 }
 
 // CreateAgents creates an Agent structure for every Agent member of the LAN cluster
@@ -49,7 +49,7 @@ func CreateAgents(client *api.Client, i *integration.Integration, args *args.Arg
 			continue
 		}
 
-		agent.client, err = api.NewClient(args.CreateAPIConfig(member.Name))
+		agent.Client, err = api.NewClient(args.CreateAPIConfig(member.Name))
 		if err != nil {
 			log.Error("Error creating client for Agent '%s': %s", member.Name, err.Error())
 			continue
@@ -102,7 +102,7 @@ func (a *Agent) setInventoryItem(key, field string, value interface{}) {
 func (a *Agent) collectPeerCount(metricSet *metric.Set) error {
 	log.Debug("Starting peer count collection for Agent %s", a.entity.Metadata.Name)
 
-	peers, err := a.client.Status().Peers()
+	peers, err := a.Client.Status().Peers()
 	if err != nil {
 		return err
 	}
@@ -116,7 +116,7 @@ func (a *Agent) collectPeerCount(metricSet *metric.Set) error {
 func (a *Agent) collectLatencyMetrics(metricSet *metric.Set) error {
 	log.Debug("Starting latency metric collection for Agent %s", a.entity.Metadata.Name)
 
-	nodes, _, err := a.client.Coordinate().Nodes(nil)
+	nodes, _, err := a.Client.Coordinate().Nodes(nil)
 	if err != nil {
 		return err
 	}
@@ -145,7 +145,7 @@ func (a *Agent) Name() string {
 // CollectCoreMetrics collects metrics for an Agent
 func (a *Agent) CollectCoreMetrics(metricSet *metric.Set, gaugeDefs, counterDefs []*metrics.MetricDefinition, timerDefs []*metrics.TimerDefinition) error {
 	log.Debug("Starting core metric collection for Agent %s", a.entity.Metadata.Name)
-	metricInfo, err := a.client.Agent().Metrics()
+	metricInfo, err := a.Client.Agent().Metrics()
 	if err != nil {
 		return err
 	}

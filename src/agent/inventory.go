@@ -39,7 +39,7 @@ func inventoryWorker(agentChan <-chan *Agent, wg *sync.WaitGroup) {
 			return
 		}
 
-		selfData, err := agent.client.Agent().Self()
+		selfData, err := agent.Client.Agent().Self()
 		if err != nil {
 			log.Error("Error retrieving self configuration data for Agent '%s': %s", agent.entity.Metadata.Name, err.Error())
 			continue

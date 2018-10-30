@@ -38,7 +38,7 @@ func TestCollectMetrics_CoreMetrics(t *testing.T) {
 	}
 
 	agent := &Agent{
-		client: client,
+		Client: client,
 		entity: entity,
 	}
 
@@ -166,7 +166,7 @@ func TestCollectMetrics_PeerMetrics(t *testing.T) {
 	}
 
 	agent := &Agent{
-		client: client,
+		Client: client,
 		entity: entity,
 	}
 
@@ -221,7 +221,7 @@ func TestCollectMetrics_LatencyMetrics(t *testing.T) {
 	}
 
 	agent := &Agent{
-		client: client,
+		Client: client,
 		entity: entity,
 	}
 

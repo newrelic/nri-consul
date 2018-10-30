@@ -41,7 +41,7 @@ func TestCollectInventory_AllValid(t *testing.T) {
 
 	agents := []*Agent{
 		{
-			client: client,
+			Client: client,
 			entity: entity,
 		},
 	}
@@ -148,7 +148,7 @@ func TestCollectInventory_BadArray(t *testing.T) {
 
 	agents := []*Agent{
 		{
-			client: client,
+			Client: client,
 			entity: entity,
 		},
 	}

@@ -3,11 +3,14 @@ package cluster
 
 import (
 	"errors"
+	"fmt"
 
+	"github.com/hashicorp/consul/api"
 	"github.com/newrelic/infra-integrations-sdk/data/metric"
 	"github.com/newrelic/infra-integrations-sdk/integration"
 	"github.com/newrelic/infra-integrations-sdk/log"
 	"github.com/newrelic/nri-consul/src/agent"
+	"github.com/newrelic/nri-consul/src/metrics"
 )
 
 // Cluster represents the cluster
@@ -46,9 +49,66 @@ func (c *Cluster) CollectMetrics() {
 	if err := c.leader.CollectCoreMetrics(metricSet, nil, counterMetrics, timerMetrics); err != nil {
 		log.Error("Error collecting leader metrics for Cluster: %s", err.Error())
 	}
+
+	// collect node count
+	if err := c.setNodeCountMetric(metricSet); err != nil {
+		log.Error("Error collecting node count: %s", err.Error())
+	}
+
+	// collect node health counts
+	if err := c.collectStatusCounts(metricSet); err != nil {
+		log.Error("Error getting node health counts: %s", err.Error())
+	}
 }
 
-// func (c *Cluster) collectStatusCounts() error {
-// 	// catalog.registeredNodes count of /catalog/nodes
+func (c *Cluster) setNodeCountMetric(metricSet *metric.Set) error {
+	nodes, _, err := c.leader.Client.Catalog().Nodes(nil)
+	if err != nil {
+		return err
+	}
 
-// }
+	metrics.SetMetric(metricSet, "catalog.registeredNodes", len(nodes), metric.GAUGE)
+	return nil
+}
+
+// collectStatusCounts aggregates health status across services on a node.
+func (c *Cluster) collectStatusCounts(metricSet *metric.Set) error {
+	services, _, err := c.leader.Client.Catalog().Services(nil)
+	if err != nil {
+		return err
+	}
+
+	// keeps track of counts
+	nodeCounts := map[string]int{
+		"critical": 0,
+		"up":       0,
+		"warning":  0,
+		"passing":  0,
+	}
+
+	for service := range services {
+		entries, _, err := c.leader.Client.Health().Service(service, "", false, nil)
+		if err != nil {
+			log.Error("Error getting nodes for service: %s", service)
+			return err
+		}
+
+		for _, entry := range entries {
+			switch entry.Checks.AggregatedStatus() {
+			case api.HealthCritical:
+				nodeCounts["critical"]++
+			case api.HealthWarning:
+				nodeCounts["warning"]++
+			case api.HealthPassing:
+				nodeCounts["up"]++
+				nodeCounts["passing"]++
+			}
+		}
+	}
+
+	for status, count := range nodeCounts {
+		metrics.SetMetric(metricSet, fmt.Sprintf("catalog.%sNodes", status), count, metric.GAUGE)
+	}
+
+	return nil
+}
