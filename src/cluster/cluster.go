@@ -86,6 +86,7 @@ func (c *Cluster) collectStatusCounts(metricSet *metric.Set) error {
 		"passing":  0,
 	}
 
+	// for each service look at the nodes that host it and count health
 	for service := range services {
 		entries, _, err := c.leader.Client.Health().Service(service, "", false, nil)
 		if err != nil {
