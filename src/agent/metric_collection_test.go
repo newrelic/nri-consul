@@ -181,10 +181,10 @@ func TestCollectMetrics_PeerMetrics(t *testing.T) {
 	})
 
 	expected := map[string]interface{}{
-		"event_type":   "ConsulAgentSample",
-		"displayName":  agent.entity.Metadata.Name,
-		"entityName":   agent.entity.Metadata.Namespace + ":" + agent.entity.Metadata.Name,
-		"consul.peers": float64(3),
+		"event_type":  "ConsulAgentSample",
+		"displayName": agent.entity.Metadata.Name,
+		"entityName":  agent.entity.Metadata.Namespace + ":" + agent.entity.Metadata.Name,
+		"agent.peers": float64(3),
 	}
 
 	CollectMetrics(agents)

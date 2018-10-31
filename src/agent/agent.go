@@ -115,7 +115,7 @@ func (a *Agent) collectPeerCount(metricSet *metric.Set) error {
 		return err
 	}
 
-	metrics.SetMetric(metricSet, "consul.peers", len(peers), metric.GAUGE)
+	metrics.SetMetric(metricSet, "agent.peers", len(peers), metric.GAUGE)
 
 	log.Debug("Finished peer count collection for Agent %s", a.entity.Metadata.Name)
 	return nil
@@ -138,7 +138,7 @@ func (a *Agent) collectLatencyMetrics(metricSet *metric.Set) error {
 		return errors.New("could not find node for agent")
 	}
 
-	// calculate and popluate metrics
+	// calculate and populate metrics
 	calculateLatencyMetrics(metricSet, agentNode, nodes)
 
 	log.Debug("Finished latency metric collection for Agent %s", a.entity.Metadata.Name)
