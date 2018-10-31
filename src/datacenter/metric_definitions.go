@@ -1,4 +1,4 @@
-package cluster
+package datacenter
 
 import (
 	"github.com/newrelic/infra-integrations-sdk/data/metric"

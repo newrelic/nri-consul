@@ -1,6 +1,6 @@
 # New Relic Infrastructure Integration for HashiCorp Consul
 
-The New Relic Infrastructure Integration for HashiCorp Consul captures critical performance metrics and inventory reported by Consul clusters. Data on Agents and the Raft Cluster as a whole is collected.
+The New Relic Infrastructure Integration for HashiCorp Consul captures critical performance metrics and inventory reported by Consul clusters. Data on Agents and the Datacenter as a whole is collected.
 
 All data is obtained via the REST API.
 
@@ -21,7 +21,7 @@ This is the description about how to run the Consul Integration with New Relic I
 
 In order to use the Consul Integration it is required to configure `consul-config.yml.sample` file. Firstly, rename the file to `consul-config.yml`. Then, depending on your needs, specify all instances that you want to monitor. Once this is done, restart the Infrastructure agent.
 
-You can view your data in Insights by creating your own custom NRQL queries. To do so use the **ConsulClusterSample** and **ConsulAgentSample** event type.
+You can view your data in Insights by creating your own custom NRQL queries. To do so use the **ConsulDatacenterSample** and **ConsulAgentSample** event type.
 
 ## Compatibility
 

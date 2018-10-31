@@ -8,7 +8,7 @@ import (
 	"github.com/newrelic/infra-integrations-sdk/log"
 	"github.com/newrelic/nri-consul/src/agent"
 	"github.com/newrelic/nri-consul/src/args"
-	"github.com/newrelic/nri-consul/src/cluster"
+	"github.com/newrelic/nri-consul/src/datacenter"
 )
 
 const (
@@ -42,7 +42,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	cluster, err := cluster.NewCluster(leader, i)
+	cluster, err := datacenter.NewDatacenter(leader, i)
 	if err != nil {
 		log.Error("Error creating Cluster entity: %s", err.Error())
 		os.Exit(1)

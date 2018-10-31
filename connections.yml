@@ -1,0 +1,5 @@
+---
+hostname: consul-dev-uss-0
+port: 8500
+enable_ssl: false
+token: h6b6c3ed9911594d474aed53bcaec75041f7324ab

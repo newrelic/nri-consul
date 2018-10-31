@@ -1,4 +1,4 @@
-package cluster
+package datacenter
 
 import (
 	"fmt"
@@ -13,43 +13,18 @@ import (
 	"github.com/newrelic/nri-consul/src/testutils"
 )
 
-func TestNewCluster_NoLeader(t *testing.T) {
+func TestNewDatacenter_NoLeader(t *testing.T) {
 	i, err := integration.New("test", "1.0.0")
 	if err != nil {
 		t.Fatalf("Unexpected error %s", err.Error())
 	}
 
-	if _, err := NewCluster(nil, i); err == nil {
+	if _, err := NewDatacenter(nil, i); err == nil {
 		t.Error("Expected error")
 	}
 
 }
-func TestNewCluster_Normal(t *testing.T) {
-	i, err := integration.New("test", "1.0.0")
-	if err != nil {
-		t.Fatalf("Unexpected error %s", err.Error())
-	}
-
-	agent := &agent.Agent{}
-
-	out, err := NewCluster(agent, i)
-	if err != nil {
-		t.Fatalf("Unexpected error %s", err)
-	}
-
-	if out.entity.Metadata.Name != "Cluster" {
-		t.Fatalf("Entity was not named correctly %s", out.entity.Metadata.Name)
-	} else if out.entity.Metadata.Namespace != "cluster" {
-		t.Fatalf("Entity has wrong namespace %s", out.entity.Metadata.Namespace)
-	}
-
-	if out.leader != agent {
-		t.Errorf("Agent was not set correctly expected %+v got %+v", agent, out.leader)
-	}
-
-}
-
-func Test_Cluster_CollectMetrics_Full(t *testing.T) {
+func TestNewDatacenter_Normal(t *testing.T) {
 	mux, hostname, port, serverClose := testutils.SetupServer()
 	defer serverClose()
 
@@ -69,7 +44,164 @@ func Test_Cluster_CollectMetrics_Full(t *testing.T) {
 		t.Fatalf("Unexpected error %s", err.Error())
 	}
 
-	clusterEntity, err := i.Entity("test", "cluster")
+	agent := &agent.Agent{
+		Client: client,
+	}
+
+	mux.HandleFunc("/v1/agent/self", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, `{
+			"Config": {
+				"Datacenter": "dev-uss",
+				"NodeName": "vault-dev-uss-0",
+				"NodeID": "70ccd111-96de-a058-7be7-81a00fa7ca17",
+				"Revision": "39f93f011",
+				"Server": false,
+				"Version": "1.2.1"
+			}
+		}`)
+	})
+
+	out, err := NewDatacenter(agent, i)
+	if err != nil {
+		t.Fatalf("Unexpected error %s", err)
+	}
+
+	if out.entity.Metadata.Name != "dev-uss" {
+		t.Fatalf("Entity was not named correctly %s", out.entity.Metadata.Name)
+	} else if out.entity.Metadata.Namespace != "datacenter" {
+		t.Fatalf("Entity has wrong namespace %s", out.entity.Metadata.Namespace)
+	}
+
+	if out.leader != agent {
+		t.Errorf("Agent was not set correctly expected %+v got %+v", agent, out.leader)
+	}
+
+}
+
+func TestNewDatacenter_DCName_Config_Failure(t *testing.T) {
+	mux, hostname, port, serverClose := testutils.SetupServer()
+	defer serverClose()
+
+	arg := args.ArgumentList{
+		Hostname:  hostname,
+		Port:      port,
+		EnableSSL: false,
+	}
+
+	client, err := api.NewClient(arg.CreateAPIConfig(arg.Hostname))
+	if err != nil {
+		t.Fatalf("Unexpected error: %s", err.Error())
+	}
+
+	i, err := integration.New("test", "1.0.0")
+	if err != nil {
+		t.Fatalf("Unexpected error %s", err.Error())
+	}
+
+	agent := &agent.Agent{
+		Client: client,
+	}
+
+	mux.HandleFunc("/v1/agent/self", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, `{
+			"DebugConfig": {}
+		}`)
+	})
+
+	if _, err := NewDatacenter(agent, i); err == nil {
+		t.Error("Expected error")
+	}
+}
+
+func TestNewDatacenter_DCName_Failure(t *testing.T) {
+	mux, hostname, port, serverClose := testutils.SetupServer()
+	defer serverClose()
+
+	arg := args.ArgumentList{
+		Hostname:  hostname,
+		Port:      port,
+		EnableSSL: false,
+	}
+
+	client, err := api.NewClient(arg.CreateAPIConfig(arg.Hostname))
+	if err != nil {
+		t.Fatalf("Unexpected error: %s", err.Error())
+	}
+
+	i, err := integration.New("test", "1.0.0")
+	if err != nil {
+		t.Fatalf("Unexpected error %s", err.Error())
+	}
+
+	agent := &agent.Agent{
+		Client: client,
+	}
+
+	mux.HandleFunc("/v1/agent/self", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, `{
+			"Config": {}
+		}`)
+	})
+
+	if _, err := NewDatacenter(agent, i); err == nil {
+		t.Error("Expected error")
+	}
+}
+
+func TestNewDatacenter_Leader_Self_Failure(t *testing.T) {
+	mux, hostname, port, serverClose := testutils.SetupServer()
+	defer serverClose()
+
+	arg := args.ArgumentList{
+		Hostname:  hostname,
+		Port:      port,
+		EnableSSL: false,
+	}
+
+	client, err := api.NewClient(arg.CreateAPIConfig(arg.Hostname))
+	if err != nil {
+		t.Fatalf("Unexpected error: %s", err.Error())
+	}
+
+	i, err := integration.New("test", "1.0.0")
+	if err != nil {
+		t.Fatalf("Unexpected error %s", err.Error())
+	}
+
+	agent := &agent.Agent{
+		Client: client,
+	}
+
+	mux.HandleFunc("/v1/agent/self", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusNotFound)
+	})
+
+	if _, err := NewDatacenter(agent, i); err == nil {
+		t.Error("Expected error")
+	}
+}
+
+func Test_Datacenter_CollectMetrics_Full(t *testing.T) {
+	mux, hostname, port, serverClose := testutils.SetupServer()
+	defer serverClose()
+
+	arg := args.ArgumentList{
+		Hostname:  hostname,
+		Port:      port,
+		EnableSSL: false,
+	}
+
+	client, err := api.NewClient(arg.CreateAPIConfig(arg.Hostname))
+	if err != nil {
+		t.Fatalf("Unexpected error: %s", err.Error())
+	}
+
+	i, err := integration.New("test", "1.0.0")
+	if err != nil {
+		t.Fatalf("Unexpected error %s", err.Error())
+	}
+
+	dcEntity, err := i.Entity("test", "datacenter")
 	if err != nil {
 		t.Fatalf("Unexpected error %s", err.Error())
 	}
@@ -79,15 +211,15 @@ func Test_Cluster_CollectMetrics_Full(t *testing.T) {
 		t.Fatalf("Unexpected error %s", err.Error())
 	}
 
-	c := &Cluster{
-		entity: clusterEntity,
+	c := &Datacenter{
+		entity: dcEntity,
 		leader: agent.NewAgent(client, agentEntity),
 	}
 
 	setMetricMuxes(mux)
 
 	expected := map[string]interface{}{
-		"event_type":                          "ConsulClusterSample",
+		"event_type":                          "ConsulDatacenterSample",
 		"displayName":                         c.entity.Metadata.Name,
 		"entityName":                          c.entity.Metadata.Namespace + ":" + c.entity.Metadata.Name,
 		"leader":                              "leader",
@@ -111,7 +243,7 @@ func Test_Cluster_CollectMetrics_Full(t *testing.T) {
 	}
 }
 
-func Test_Cluster_CollectMetrics_All_Endpoint_Fails(t *testing.T) {
+func Test_Datacenter_CollectMetrics_All_Endpoint_Fails(t *testing.T) {
 	_, hostname, port, serverClose := testutils.SetupServer()
 	defer serverClose()
 
@@ -131,7 +263,7 @@ func Test_Cluster_CollectMetrics_All_Endpoint_Fails(t *testing.T) {
 		t.Fatalf("Unexpected error %s", err.Error())
 	}
 
-	clusterEntity, err := i.Entity("test", "cluster")
+	dcEntity, err := i.Entity("test", "datacenter")
 	if err != nil {
 		t.Fatalf("Unexpected error %s", err.Error())
 	}
@@ -141,13 +273,13 @@ func Test_Cluster_CollectMetrics_All_Endpoint_Fails(t *testing.T) {
 		t.Fatalf("Unexpected error %s", err.Error())
 	}
 
-	c := &Cluster{
-		entity: clusterEntity,
+	c := &Datacenter{
+		entity: dcEntity,
 		leader: agent.NewAgent(client, agentEntity),
 	}
 
 	expected := map[string]interface{}{
-		"event_type":  "ConsulClusterSample",
+		"event_type":  "ConsulDatacenterSample",
 		"displayName": c.entity.Metadata.Name,
 		"entityName":  c.entity.Metadata.Namespace + ":" + c.entity.Metadata.Name,
 		"leader":      "leader",
