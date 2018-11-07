@@ -42,9 +42,9 @@ func main() {
 		os.Exit(1)
 	}
 
-	cluster, err := datacenter.NewDatacenter(leader, i)
+	dc, err := datacenter.NewDatacenter(leader, i)
 	if err != nil {
-		log.Error("Error creating Cluster entity: %s", err.Error())
+		log.Error("Error creating Datacenter entity: %s", err.Error())
 		os.Exit(1)
 	}
 
@@ -56,7 +56,7 @@ func main() {
 	// Collect metrics for Agents and cluster
 	if args.HasMetrics() {
 		agent.CollectMetrics(agents)
-		cluster.CollectMetrics()
+		dc.CollectMetrics()
 	}
 
 	if err = i.Publish(); err != nil {

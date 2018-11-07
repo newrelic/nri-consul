@@ -53,14 +53,6 @@ var timerMetrics = []*metrics.TimerDefinition{
 	{
 		MetricDefinition: metrics.MetricDefinition{
 			APIKey:     "consul.raft.commitTime",
-			MetricName: "raft.commitTimeMedianInMilliseconds",
-			SourceType: metric.GAUGE,
-		},
-		Operation: metrics.Median,
-	},
-	{
-		MetricDefinition: metrics.MetricDefinition{
-			APIKey:     "consul.raft.commitTime",
 			MetricName: "raft.commitTimeMaxInMilliseconds",
 			SourceType: metric.GAUGE,
 		},
@@ -85,14 +77,6 @@ var timerMetrics = []*metrics.TimerDefinition{
 	{
 		MetricDefinition: metrics.MetricDefinition{
 			APIKey:     "consul.raft.leader.dispatchLog",
-			MetricName: "raft.logDispatchMedianInMilliseconds",
-			SourceType: metric.GAUGE,
-		},
-		Operation: metrics.Median,
-	},
-	{
-		MetricDefinition: metrics.MetricDefinition{
-			APIKey:     "consul.raft.leader.dispatchLog",
 			MetricName: "raft.logDispatchMaxInMilliseconds",
 			SourceType: metric.GAUGE,
 		},
@@ -113,14 +97,6 @@ var timerMetrics = []*metrics.TimerDefinition{
 			SourceType: metric.RATE,
 		},
 		Operation: metrics.Count,
-	},
-	{
-		MetricDefinition: metrics.MetricDefinition{
-			APIKey:     "consul.raft.leader.lastContact",
-			MetricName: "raft.lastContactMedianInMilliseconds",
-			SourceType: metric.GAUGE,
-		},
-		Operation: metrics.Median,
 	},
 	{
 		MetricDefinition: metrics.MetricDefinition{

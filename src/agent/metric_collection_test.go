@@ -128,7 +128,6 @@ func TestCollectMetrics_CoreMetrics(t *testing.T) {
 		"agent.aclCacheHit":                  float64(0),
 		"agent.txnAvgInMilliseconds":         float64(3),
 		"agent.txns":                         float64(0),
-		"agent.txnMedianInMilliseconds":      float64(3),
 		"agent.txnMaxInMilliseconds":         float64(5),
 	}
 

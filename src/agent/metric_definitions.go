@@ -101,14 +101,6 @@ var timerMetrics = []*metrics.TimerDefinition{
 	{
 		MetricDefinition: metrics.MetricDefinition{
 			APIKey:     "consul.txn.apply",
-			MetricName: "agent.txnMedianInMilliseconds",
-			SourceType: metric.GAUGE,
-		},
-		Operation: metrics.Median,
-	},
-	{
-		MetricDefinition: metrics.MetricDefinition{
-			APIKey:     "consul.txn.apply",
 			MetricName: "agent.txnMaxInMilliseconds",
 			SourceType: metric.GAUGE,
 		},
@@ -129,14 +121,6 @@ var timerMetrics = []*metrics.TimerDefinition{
 			SourceType: metric.RATE,
 		},
 		Operation: metrics.Count,
-	},
-	{
-		MetricDefinition: metrics.MetricDefinition{
-			APIKey:     "consul.kvs.apply",
-			MetricName: "agent.kvStoresMedianInMilliseconds",
-			SourceType: metric.GAUGE,
-		},
-		Operation: metrics.Median,
 	},
 	{
 		MetricDefinition: metrics.MetricDefinition{

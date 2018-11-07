@@ -219,20 +219,19 @@ func Test_Datacenter_CollectMetrics_Full(t *testing.T) {
 	setMetricMuxes(mux)
 
 	expected := map[string]interface{}{
-		"event_type":                          "ConsulDatacenterSample",
-		"displayName":                         c.entity.Metadata.Name,
-		"entityName":                          c.entity.Metadata.Namespace + ":" + c.entity.Metadata.Name,
-		"leader":                              "leader",
-		"raft.txns":                           float64(0),
-		"raft.commitTimeAvgInMilliseconds":    float64(3),
-		"raft.commitTimes":                    float64(0),
-		"raft.commitTimeMedianInMilliseconds": float64(3),
-		"raft.commitTimeMaxInMilliseconds":    float64(5),
-		"catalog.registeredNodes":             float64(3),
-		"catalog.criticalNodes":               float64(1),
-		"catalog.upNodes":                     float64(1),
-		"catalog.warningNodes":                float64(1),
-		"catalog.passingNodes":                float64(1),
+		"event_type":                       "ConsulDatacenterSample",
+		"displayName":                      c.entity.Metadata.Name,
+		"entityName":                       c.entity.Metadata.Namespace + ":" + c.entity.Metadata.Name,
+		"leader":                           "leader",
+		"raft.txns":                        float64(0),
+		"raft.commitTimeAvgInMilliseconds": float64(3),
+		"raft.commitTimes":                 float64(0),
+		"raft.commitTimeMaxInMilliseconds": float64(5),
+		"catalog.registeredNodes":          float64(3),
+		"catalog.criticalNodes":            float64(1),
+		"catalog.upNodes":                  float64(1),
+		"catalog.warningNodes":             float64(1),
+		"catalog.passingNodes":             float64(1),
 	}
 
 	c.CollectMetrics()
