@@ -5,15 +5,12 @@ Consul,raft.txns,Rate,true,"Number of raft transactions occurring"
 Consul,raft.commitTimeAvgInMilliseconds,Gauge,true,"The average time it takes to commit a new entry to the raft log on the leader"
 Consul,raft.commitTimes,Rate,true,The number of samples of raft.commitTime
 Consul,raft.commitTimeMaxInMilliseconds,Gauge,true,"The max time it takes to commit a new entry to the raft log on the leader"
-Consul,raft.commitTimeMedianInMilliseconds,Gauge,true,"The median time it takes to commit a new entry to the raft log on the leader"
 Consul,raft.logDispatchAvgInMilliseconds,Gauge,true,"The average time it takes for the leader to write log entries to disk"
 Consul,raft.logDispatches,Rate,true,The number of samples of raft.leader.dispatchLog
 Consul,raft.logDispatchMaxInMilliseconds,Gauge,true,"The max time it takes for the leader to write log entries to disk"
-Consul,raft.logDispatchMedianInMilliseconds,Gauge,true,"The median time it takes for the leader to write log entries to disk"
 Consul,raft.lastContactAvgInMilliseconds,Gauge,true,"Average time elapsed since the leader was last able to check its lease with followers"
 Consul,raft.lastContacts,Rate,true,The number of samples of raft.leader.lastContact
 Consul,raft.lastContactMaxInMilliseconds,Gauge,true,"Max time elapsed since the leader was last able to check its lease with followers"
-Consul,raft.lastContactMedianInMilliseconds,Gauge,true,"Median time elapsed since the leader was last able to check its lease with followers"
 Consul,cluster.suspects,Rate,true,Number of times an agent suspects another as failed while probing during gossip protocol
 Consul,cluster.flaps,Rate,true,Number of times an agent is marked dead and then quickly recovers
 Consul,catalog.criticalNodes,Gauge,true,"Number of nodes with service status `critical` from those registered"
@@ -47,8 +44,6 @@ Consul,agent.peers,Gauge,true,Number of peers in the peer set
 Consul,agent.txnAvgInMilliseconds,Gauge,true,"The average time it takes to apply a transaction operation"
 Consul,agent.txns,Rate,true,The number of samples of txn.apply
 Consul,agent.txnMaxInMilliseconds,Gauge,true,"The max time it takes to apply a transaction operation"
-Consul,agent.txnMedianInMilliseconds,Gauge,true,"The median time it takes to apply a transaction operation"
 Consul,agent.kvStoresAvgInMilliseconds,Gauge,true,"The average time it takes to complete an update to the KV store"
 Consul,agent.kvStores,Rate,true,The number of samples of kvs.apply
 Consul,agent.kvStoresMaxInMilliseconds,Gauge,true,"The max time it takes to complete an update to the KV store"
-Consul,agent.kvStoresMedianInMilliseconds,Gauge,true,"The median time it takes to complete an update to the KV store"

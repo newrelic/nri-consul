@@ -259,8 +259,6 @@ func calculateStatValue(operation metrics.StatOperation, sample *api.SampledValu
 		value = sample.Mean
 	case metrics.Max:
 		value = sample.Max
-	case metrics.Median:
-		value = (sample.Min + sample.Max) / 2.0
 	case metrics.Count:
 		value = float64(sample.Count)
 	}

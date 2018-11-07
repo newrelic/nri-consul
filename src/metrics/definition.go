@@ -23,9 +23,6 @@ const (
 	// Max represents the max of a Timer metric
 	Max
 
-	// Median represents the median of a Timer metric
-	Median
-
 	// Count represents the count of a Timer metric
 	Count
 )
