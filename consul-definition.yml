@@ -8,19 +8,4 @@ commands:
     command:
       - ./bin/nr-consul
     interval: 15
-  metrics:
-    command:
-      - ./bin/nr-consul
-      - --metrics
-    interval: 15
-  inventory:
-    command:
-      - ./bin/nr-consul
-      - --inventory
-    prefix: config/nr-consul
-    interval: 15
-  events:
-    command:
-    - ./bin/nr-consul
-    - --events
-    interval: 15
+    prefix: config/consul

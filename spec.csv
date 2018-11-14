@@ -1,0 +1,49 @@
+integration,metric_name,metric_type,metric_enabled,metric_description
+Consul,raft.completedLeaderElections,Rate,true,"Number of completed leader elections"
+Consul,raft.initiatedLeaderElections,Rate,true,"Number of initiated leader elections"
+Consul,raft.txns,Rate,true,"Number of raft transactions occurring"
+Consul,raft.commitTimeAvgInMilliseconds,Gauge,true,"The average time it takes to commit a new entry to the raft log on the leader"
+Consul,raft.commitTimes,Rate,true,The number of samples of raft.commitTime
+Consul,raft.commitTimeMaxInMilliseconds,Gauge,true,"The max time it takes to commit a new entry to the raft log on the leader"
+Consul,raft.logDispatchAvgInMilliseconds,Gauge,true,"The average time it takes for the leader to write log entries to disk"
+Consul,raft.logDispatches,Rate,true,The number of samples of raft.leader.dispatchLog
+Consul,raft.logDispatchMaxInMilliseconds,Gauge,true,"The max time it takes for the leader to write log entries to disk"
+Consul,raft.lastContactAvgInMilliseconds,Gauge,true,"Average time elapsed since the leader was last able to check its lease with followers"
+Consul,raft.lastContacts,Rate,true,The number of samples of raft.leader.lastContact
+Consul,raft.lastContactMaxInMilliseconds,Gauge,true,"Max time elapsed since the leader was last able to check its lease with followers"
+Consul,cluster.suspects,Rate,true,Number of times an agent suspects another as failed while probing during gossip protocol
+Consul,cluster.flaps,Rate,true,Number of times an agent is marked dead and then quickly recovers
+Consul,catalog.criticalNodes,Gauge,true,"Number of nodes with service status `critical` from those registered"
+Consul,catalog.passingNodes,Gauge,true,"Number of nodes with service status `passing` from those registered"
+Consul,catalog.upNodes,Gauge,true,"Number of nodes"
+Consul,catalog.warningNodes,Gauge,true,"Number of nodes with service status `warning` from those registered"
+Consul,catalog.registeredNodes,Gauge,true,"Number of nodes registered in the consul cluster"
+Consul,client.rpcLoad,Rate,true,Measure of how much an agent is loading Consul servers.
+Consul,client.rpcRateLimited,Rate,true,Measure of RPC requests that get rate limited
+Consul,client.rpcFailed,Rate,true,Measure of failed RPC requests
+Consul,runtime.goroutines,Gauge,true,Number of running goroutines
+Consul,runtime.allocationsInBytes,Gauge,true,Current bytes allocated by the Consul process
+Consul,runtime.heapObjects,Gauge,true,Number of objects allocated on the heap
+Consul,runtime.virtualAddressSpaceInBytes,Gauge,true,"Total size of the virtual address space reserved by the Go runtime"
+Consul,runtime.allocations,Gauge,true,"Cumulative count of heap objects allocated"
+Consul,runtime.frees,Gauge,true,"Cumulative count of heap objects freed"
+Consul,runtime.gcPauseInMilliseconds,Gauge,true,"Cumulative nanoseconds in GC stop-the-world pauses since Consul started"
+Consul,runtime.gcCycles,Gauge,true,Number of completed GC cycles
+Consul,net.agent.minLatencyInMilliseconds,Gauge,true,"minimum latency from this node to all others"
+Consul,net.agent.p25LatencyInMilliseconds,Gauge,true,"p25 latency from this node to all others"
+Consul,net.agent.medianLatencyInMilliseconds,Gauge,true,"median latency from this node to all others"
+Consul,net.agent.p75LatencyInMilliseconds,Gauge,true,"p75 latency from this node to all others"
+Consul,net.agent.p90LatencyInMilliseconds,Gauge,true,"p90 latency from this node to all others"
+Consul,net.agent.p95LatencyInMilliseconds,Gauge,true,"p95 latency from this node to all others"
+Consul,net.agent.p99LatencyInMilliseconds,Gauge,true,"p99 latency from this node to all others"
+Consul,net.agent.maxLatencyInMilliseconds,Gauge,true,"maximum latency from this node to all others"
+Consul,agent.aclCacheHit,Rate,true,ACL Cache Hits
+Consul,agent.aclCacheMiss,Rate,true,ACL Cache Misses
+Consul,agent.staleQueries,Rate,true,Served Queries within the allowed stale threshold
+Consul,agent.peers,Gauge,true,Number of peers in the peer set
+Consul,agent.txnAvgInMilliseconds,Gauge,true,"The average time it takes to apply a transaction operation"
+Consul,agent.txns,Rate,true,The number of samples of txn.apply
+Consul,agent.txnMaxInMilliseconds,Gauge,true,"The max time it takes to apply a transaction operation"
+Consul,agent.kvStoresAvgInMilliseconds,Gauge,true,"The average time it takes to complete an update to the KV store"
+Consul,agent.kvStores,Rate,true,The number of samples of kvs.apply
+Consul,agent.kvStoresMaxInMilliseconds,Gauge,true,"The max time it takes to complete an update to the KV store"
