@@ -213,7 +213,7 @@ func Test_Datacenter_CollectMetrics_Full(t *testing.T) {
 
 	c := &Datacenter{
 		entity: dcEntity,
-		leader: agent.NewAgent(client, agentEntity),
+		leader: agent.NewAgent(client, agentEntity, "", ""),
 	}
 
 	setMetricMuxes(mux)
@@ -274,7 +274,7 @@ func Test_Datacenter_CollectMetrics_All_Endpoint_Fails(t *testing.T) {
 
 	c := &Datacenter{
 		entity: dcEntity,
-		leader: agent.NewAgent(client, agentEntity),
+		leader: agent.NewAgent(client, agentEntity, "", ""),
 	}
 
 	expected := map[string]interface{}{
