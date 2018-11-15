@@ -21,8 +21,10 @@ const workerCount = 5
 // It's comprised of the client connected to that agent
 // and the Entity representing it.
 type Agent struct {
-	entity *integration.Entity
-	Client *api.Client
+	entity     *integration.Entity
+	Client     *api.Client
+	datacenter string
+	ipAddr     string
 }
 
 // CreateAgents creates an Agent structure for every Agent member of the LAN cluster
@@ -54,7 +56,7 @@ func CreateAgents(client *api.Client, i *integration.Integration, args *args.Arg
 			continue
 		}
 
-		agent := NewAgent(client, entity)
+		agent := NewAgent(client, entity, member.Addr, member.Tags["dc"])
 		agents = append(agents, agent)
 
 		// we need to identify the leader to collect catalog
@@ -69,10 +71,12 @@ func CreateAgents(client *api.Client, i *integration.Integration, args *args.Arg
 }
 
 // NewAgent creates a new agent from the given client and Entity
-func NewAgent(client *api.Client, entity *integration.Entity) *Agent {
+func NewAgent(client *api.Client, entity *integration.Entity, ipAddr, datacenter string) *Agent {
 	return &Agent{
-		Client: client,
-		entity: entity,
+		Client:     client,
+		entity:     entity,
+		ipAddr:     ipAddr,
+		datacenter: datacenter,
 	}
 }
 

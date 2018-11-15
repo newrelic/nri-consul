@@ -38,8 +38,10 @@ func TestCollectMetrics_CoreMetrics(t *testing.T) {
 	}
 
 	agent := &Agent{
-		Client: client,
-		entity: entity,
+		Client:     client,
+		entity:     entity,
+		datacenter: "MyDC",
+		ipAddr:     "192.168.0.0",
 	}
 
 	agents := []*Agent{agent}
@@ -118,6 +120,8 @@ func TestCollectMetrics_CoreMetrics(t *testing.T) {
 		"event_type":                         "ConsulAgentSample",
 		"displayName":                        agent.entity.Metadata.Name,
 		"entityName":                         agent.entity.Metadata.Namespace + ":" + agent.entity.Metadata.Name,
+		"datacenter":                         agent.datacenter,
+		"ip":                                 agent.ipAddr,
 		"runtime.goroutines":                 float64(49),
 		"runtime.heapObjects":                float64(33463),
 		"runtime.virtualAddressSpaceInBytes": float64(14395640),
@@ -165,8 +169,10 @@ func TestCollectMetrics_PeerMetrics(t *testing.T) {
 	}
 
 	agent := &Agent{
-		Client: client,
-		entity: entity,
+		Client:     client,
+		entity:     entity,
+		datacenter: "MyDC",
+		ipAddr:     "192.168.0.0",
 	}
 
 	agents := []*Agent{agent}
@@ -183,6 +189,8 @@ func TestCollectMetrics_PeerMetrics(t *testing.T) {
 		"event_type":  "ConsulAgentSample",
 		"displayName": agent.entity.Metadata.Name,
 		"entityName":  agent.entity.Metadata.Namespace + ":" + agent.entity.Metadata.Name,
+		"datacenter":  agent.datacenter,
+		"ip":          agent.ipAddr,
 		"agent.peers": float64(3),
 	}
 
@@ -220,8 +228,10 @@ func TestCollectMetrics_LatencyMetrics(t *testing.T) {
 	}
 
 	agent := &Agent{
-		Client: client,
-		entity: entity,
+		Client:     client,
+		entity:     entity,
+		datacenter: "MyDC",
+		ipAddr:     "192.168.0.0",
 	}
 
 	agents := []*Agent{agent}
@@ -288,9 +298,11 @@ func TestCollectMetrics_LatencyMetrics(t *testing.T) {
 	})
 
 	expected := map[string]interface{}{
-		"displayName":                           "consul-0",
-		"entityName":                            "agent:consul-0",
-		"event_type":                            "ConsulAgentSample",
+		"displayName": "consul-0",
+		"entityName":  "agent:consul-0",
+		"event_type":  "ConsulAgentSample",
+		"datacenter":  agent.datacenter,
+		"ip":          agent.ipAddr,
 		"net.agent.medianLatencyInMilliseconds": 0.3303747050428994,
 		"net.agent.minLatencyInMilliseconds":    0.28994299609053836,
 		"net.agent.maxLatencyInMilliseconds":    0.453482732462,

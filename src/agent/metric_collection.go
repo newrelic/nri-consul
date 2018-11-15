@@ -43,6 +43,8 @@ func metricWorker(agentChan <-chan *Agent, wg *sync.WaitGroup) {
 		metricSet := agent.entity.NewMetricSet("ConsulAgentSample",
 			metric.Attribute{Key: "displayName", Value: agent.entity.Metadata.Name},
 			metric.Attribute{Key: "entityName", Value: agent.entity.Metadata.Namespace + ":" + agent.entity.Metadata.Name},
+			metric.Attribute{Key: "ip", Value: agent.ipAddr},
+			metric.Attribute{Key: "datacenter", Value: agent.datacenter},
 		)
 
 		// Collect core metrics
