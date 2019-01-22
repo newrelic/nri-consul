@@ -1,0 +1,4 @@
+entity type,inventory source,inventory path
+datacenter,,
+agent,config/consul,Config/*
+agent,config/consul,DebugConfig/*
