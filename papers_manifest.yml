@@ -1,0 +1,85 @@
+golang:
+  github.com/newrelic/nri-consul/src/agent:
+    license: MIT
+    license_url: github.com/newrelic/nri-consul/LICENSE
+    project_url: github.com/newrelic/nri-consul/src/agent
+  github.com/newrelic/nri-consul/src/args:
+    license: MIT
+    license_url: github.com/newrelic/nri-consul/LICENSE
+    project_url: github.com/newrelic/nri-consul/src/args
+  github.com/newrelic/nri-consul/src/datacenter:
+    license: MIT
+    license_url: github.com/newrelic/nri-consul/LICENSE
+    project_url: github.com/newrelic/nri-consul/src/datacenter
+  github.com/newrelic/nri-consul/src/metrics:
+    license: MIT
+    license_url: github.com/newrelic/nri-consul/LICENSE
+    project_url: github.com/newrelic/nri-consul/src/metrics
+  github.com/newrelic/nri-consul/vendor/github.com/armon/go-metrics:
+    license: MIT
+    license_url: github.com/newrelic/nri-consul/vendor/github.com/armon/go-metrics/LICENSE
+    project_url: github.com/newrelic/nri-consul/vendor/github.com/armon/go-metrics
+  github.com/newrelic/nri-consul/vendor/github.com/hashicorp/consul/api:
+    license: MPL-2.0
+    license_url: github.com/newrelic/nri-consul/vendor/github.com/hashicorp/consul/LICENSE
+    project_url: github.com/newrelic/nri-consul/vendor/github.com/hashicorp/consul/api
+  github.com/newrelic/nri-consul/vendor/github.com/hashicorp/go-cleanhttp:
+    license: MPL-2.0
+    license_url: github.com/newrelic/nri-consul/vendor/github.com/hashicorp/go-cleanhttp/LICENSE
+    project_url: github.com/newrelic/nri-consul/vendor/github.com/hashicorp/go-cleanhttp
+  github.com/newrelic/nri-consul/vendor/github.com/hashicorp/go-immutable-radix:
+    license: MPL-2.0
+    license_url: github.com/newrelic/nri-consul/vendor/github.com/hashicorp/go-immutable-radix/LICENSE
+    project_url: github.com/newrelic/nri-consul/vendor/github.com/hashicorp/go-immutable-radix
+  github.com/newrelic/nri-consul/vendor/github.com/hashicorp/go-rootcerts:
+    license: MPL-2.0
+    license_url: github.com/newrelic/nri-consul/vendor/github.com/hashicorp/go-rootcerts/LICENSE
+    project_url: github.com/newrelic/nri-consul/vendor/github.com/hashicorp/go-rootcerts
+  github.com/newrelic/nri-consul/vendor/github.com/hashicorp/golang-lru/simplelru:
+    license: MPL-2.0
+    license_url: github.com/newrelic/nri-consul/vendor/github.com/hashicorp/golang-lru/LICENSE
+    project_url: github.com/newrelic/nri-consul/vendor/github.com/hashicorp/golang-lru/simplelru
+  github.com/newrelic/nri-consul/vendor/github.com/hashicorp/serf/coordinate:
+    license: MPL-2.0
+    license_url: github.com/newrelic/nri-consul/vendor/github.com/hashicorp/serf/LICENSE
+    project_url: github.com/newrelic/nri-consul/vendor/github.com/hashicorp/serf/coordinate
+  github.com/newrelic/nri-consul/vendor/github.com/mitchellh/go-homedir:
+    license: MIT
+    license_url: github.com/newrelic/nri-consul/vendor/github.com/mitchellh/go-homedir/LICENSE
+    project_url: github.com/newrelic/nri-consul/vendor/github.com/mitchellh/go-homedir
+  github.com/newrelic/nri-consul/vendor/github.com/mitchellh/mapstructure:
+    license: MIT
+    license_url: github.com/newrelic/nri-consul/vendor/github.com/mitchellh/mapstructure/LICENSE
+    project_url: github.com/newrelic/nri-consul/vendor/github.com/mitchellh/mapstructure
+  github.com/newrelic/nri-consul/vendor/github.com/newrelic/infra-integrations-sdk/args:
+    license: Unknown
+    license_url: github.com/newrelic/nri-consul/vendor/github.com/newrelic/infra-integrations-sdk/LICENSE
+    project_url: github.com/newrelic/nri-consul/vendor/github.com/newrelic/infra-integrations-sdk/args
+  github.com/newrelic/nri-consul/vendor/github.com/newrelic/infra-integrations-sdk/data/event:
+    license: Unknown
+    license_url: github.com/newrelic/nri-consul/vendor/github.com/newrelic/infra-integrations-sdk/LICENSE
+    project_url: github.com/newrelic/nri-consul/vendor/github.com/newrelic/infra-integrations-sdk/data/event
+  github.com/newrelic/nri-consul/vendor/github.com/newrelic/infra-integrations-sdk/data/inventory:
+    license: Unknown
+    license_url: github.com/newrelic/nri-consul/vendor/github.com/newrelic/infra-integrations-sdk/LICENSE
+    project_url: github.com/newrelic/nri-consul/vendor/github.com/newrelic/infra-integrations-sdk/data/inventory
+  github.com/newrelic/nri-consul/vendor/github.com/newrelic/infra-integrations-sdk/data/metric:
+    license: Unknown
+    license_url: github.com/newrelic/nri-consul/vendor/github.com/newrelic/infra-integrations-sdk/LICENSE
+    project_url: github.com/newrelic/nri-consul/vendor/github.com/newrelic/infra-integrations-sdk/data/metric
+  github.com/newrelic/nri-consul/vendor/github.com/newrelic/infra-integrations-sdk/integration:
+    license: Unknown
+    license_url: github.com/newrelic/nri-consul/vendor/github.com/newrelic/infra-integrations-sdk/LICENSE
+    project_url: github.com/newrelic/nri-consul/vendor/github.com/newrelic/infra-integrations-sdk/integration
+  github.com/newrelic/nri-consul/vendor/github.com/newrelic/infra-integrations-sdk/log:
+    license: Unknown
+    license_url: github.com/newrelic/nri-consul/vendor/github.com/newrelic/infra-integrations-sdk/LICENSE
+    project_url: github.com/newrelic/nri-consul/vendor/github.com/newrelic/infra-integrations-sdk/log
+  github.com/newrelic/nri-consul/vendor/github.com/newrelic/infra-integrations-sdk/persist:
+    license: Unknown
+    license_url: github.com/newrelic/nri-consul/vendor/github.com/newrelic/infra-integrations-sdk/LICENSE
+    project_url: github.com/newrelic/nri-consul/vendor/github.com/newrelic/infra-integrations-sdk/persist
+  github.com/newrelic/nri-consul/vendor/github.com/pkg/errors:
+    license: BSD-2-Clause
+    license_url: github.com/newrelic/nri-consul/vendor/github.com/pkg/errors/LICENSE
+    project_url: github.com/newrelic/nri-consul/vendor/github.com/pkg/errors
