@@ -35,11 +35,16 @@ func CreateAgents(client *api.Client, i *integration.Integration, args *args.Arg
 		return
 	}
 
-	leaderAddr, err := getLeaderAddr(client)
-	if err != nil {
-		log.Error("Error getting leader address: %s", err.Error())
-		return
+	if args.ForceLocalhostAsLeader {
+		leaderAddr := "127.0.0.1"
+	} else {
+		leaderAddr, err := getLeaderAddr(client)
+		if err != nil {
+			log.Error("Error getting leader address: %s", err.Error())
+			return
+		}
 	}
+
 
 	agents = make([]*Agent, 0, len(members))
 	for _, member := range members {

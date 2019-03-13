@@ -20,6 +20,7 @@ type ArgumentList struct {
 	CABundleFile                   string `default:"" help:"Alternative Certificate Authority bundle file"`
 	CABundleDir                    string `default:"" help:"Alternative Certificate Authority bundle directory"`
 	TolerateLeaderConnectionIssues bool   `default:"false" help:"Tolerate issues connecting to leaders"`
+	ForceLocalhostAsLeader         bool   `default:"false" help:"Leader will be configured as localhost"`
 }
 
 // Validate validates Consul arguments
