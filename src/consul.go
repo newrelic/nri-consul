@@ -45,7 +45,6 @@ func main() {
 	dc, err := datacenter.NewDatacenter(leader, i)
 	if err != nil {
 		log.Error("Error creating Datacenter entity: %s", err.Error())
-		os.Exit(1)
 	}
 
 	// Collect inventory for agents
