@@ -1,13 +1,36 @@
-Copyright 2018, Blue Medora Inc.
+HashiCorp components. The on host integration contains the following open source software (in unmodified form) provided by HashiCorp, distributed under the Mozilla Public License 2.0.  The source code of these components is freely available at the links below.  Copyright HashiCorp. 
+ 
+consul
+Source code available at: https://github.com/hashicorp/consul
+License: https://github.com/hashicorp/consul/blob/master/LICENSE
+ 
+go-cleanhttp
+Source code available at: https://github.com/hashicorp/go-cleanhttp
+License: https://github.com/hashicorp/go-cleanhttp/blob/master/LICENSE
+ 
+go-immutable-radix
+Source code available at: https://github.com/hashicorp/go-immutable-radix
+License:  https://github.com/hashicorp/go-immutable-radix/blob/master/LICENSE
+ 
+go-rootcerts
+Source code available at: https://github.com/hashicorp/go-rootcerts
+License: https://github.com/hashicorp/go-rootcerts/blob/master/LICENSE
+ 
+golang-lru
+Source code available at: https://github.com/hashicorp/golang-lru  
+License: https://github.com/hashicorp/golang-lru/blob/master/LICENSE  
+ 
+serf
+Source code available at: https://github.com/hashicorp/serf  
+License: https://github.com/hashicorp/serf/blob/master/LICENSE
+
+All other components of this on host integration are Copyright 2019, Blue Medora Inc.
 
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in 
-the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the 
-Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE 
-WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS 
-OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR 
-OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
