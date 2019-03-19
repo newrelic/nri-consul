@@ -4,6 +4,10 @@ The New Relic Infrastructure Integration for HashiCorp Consul captures critical 
 
 All data is obtained via the REST API.
 
+*HashiCorp components* The on host integration contains open source software (in unmodified form) provided by HashiCorp, distributed under the Mozilla Public License 2.0 (https://www.mozilla.org/en-US/MPL/2.0/FAQ/.).  Please see [LICENSE](LICENSE) for additional information.  Do not remove the license file.  Mozilla Public License 2.0 is a copyleft light open source license, if you do not want to be subject the copyleft light open source provisions, do not modify the MPL 2.0 files.
+
+All other components of this on host integration are licensed under an MIT license, Copyright 2019, Blue Medora Inc. Please see [LICENSE](LICENSE) for additional information.  
+
 ## Requirements
 
 No requirements at this time.
