@@ -19,6 +19,7 @@ type ArgumentList struct {
 	TrustServerCertificate bool   `default:"false" help:"If true server certificate is not verified for SSL. If false certificate will be verified against supplied certificate"`
 	CABundleFile           string `default:"" help:"Alternative Certificate Authority bundle file"`
 	CABundleDir            string `default:"" help:"Alternative Certificate Authority bundle directory"`
+	FanOut                 bool   `default:"true" help:"If true will attempt to gather metrics from all other nodes in consul cluster"`
 }
 
 // Validate validates Consul arguments

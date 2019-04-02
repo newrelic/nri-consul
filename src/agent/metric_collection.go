@@ -40,26 +40,33 @@ func metricWorker(agentChan <-chan *Agent, wg *sync.WaitGroup) {
 			return
 		}
 
-		metricSet := agent.entity.NewMetricSet("ConsulAgentSample",
-			metric.Attribute{Key: "displayName", Value: agent.entity.Metadata.Name},
-			metric.Attribute{Key: "entityName", Value: agent.entity.Metadata.Namespace + ":" + agent.entity.Metadata.Name},
-			metric.Attribute{Key: "ip", Value: agent.ipAddr},
-			metric.Attribute{Key: "datacenter", Value: agent.datacenter},
-		)
+		CollectMetricsFromOne(agent)
 
-		// Collect core metrics
-		if err := agent.CollectCoreMetrics(metricSet, gaugeMetrics, counterMetrics, timerMetrics); err != nil {
-			log.Error("Error collecting core metrics for Agent '%s': %s", agent.entity.Metadata.Name, err.Error())
-		}
-
-		// Peer Count
-		if err := agent.collectPeerCount(metricSet); err != nil {
-			log.Error("Error collecting peer count for Agent '%s': %s", agent.entity.Metadata.Name, err.Error())
-		}
-
-		// Latency metrics
-		if err := agent.collectLatencyMetrics(metricSet); err != nil {
-			log.Error("Error collecting latency metrics for Agent '%s': %s", agent.entity.Metadata.Name, err.Error())
-		}
 	}
+}
+
+// CollectMetricsFromOne does a metric collect for a single agent
+func CollectMetricsFromOne(agent *Agent) {
+	metricSet := agent.entity.NewMetricSet("ConsulAgentSample",
+		metric.Attribute{Key: "displayName", Value: agent.entity.Metadata.Name},
+		metric.Attribute{Key: "entityName", Value: agent.entity.Metadata.Namespace + ":" + agent.entity.Metadata.Name},
+		metric.Attribute{Key: "ip", Value: agent.ipAddr},
+		metric.Attribute{Key: "datacenter", Value: agent.datacenter},
+	)
+
+	// Collect core metrics
+	if err := agent.CollectCoreMetrics(metricSet, gaugeMetrics, counterMetrics, timerMetrics); err != nil {
+		log.Error("Error collecting core metrics for Agent '%s': %s", agent.entity.Metadata.Name, err.Error())
+	}
+
+	// Peer Count
+	if err := agent.collectPeerCount(metricSet); err != nil {
+		log.Error("Error collecting peer count for Agent '%s': %s", agent.entity.Metadata.Name, err.Error())
+	}
+
+	// Latency metrics
+	if err := agent.collectLatencyMetrics(metricSet); err != nil {
+		log.Error("Error collecting latency metrics for Agent '%s': %s", agent.entity.Metadata.Name, err.Error())
+	}
+
 }
