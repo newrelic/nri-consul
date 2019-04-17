@@ -50,7 +50,7 @@ func CreateAgents(client *api.Client, i *integration.Integration, args *args.Arg
 			continue
 		}
 
-		client, err = api.NewClient(args.CreateAPIConfig(member.Name))
+		client, err = api.NewClient(args.CreateAPIConfig(member.Addr))
 		if err != nil {
 			log.Error("Error creating client for Agent '%s': %s", member.Name, err.Error())
 			continue
