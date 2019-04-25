@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0 - 2019-04-25
+### Changed
+- Prefixed namespaces for uniqueness
+- Updated SDK
+- Added ID attributes
+
 ## 1.1.1 - 2019-04-17
 ### Added
 - Use address rather than name to connect
