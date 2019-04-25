@@ -143,8 +143,8 @@ func localCollection(client *api.Client, i *integration.Integration, args *args.
 		isLeader = false
 	}
 
-  agentNameIDAttr := integration.NewIDAttribute("co-agent", memberName)
-  entity, err := i.Entity(fmt.Sprintf("%s:%v", memberAddr, memberPort), "co-agent", agentNameIDAttr)
+	agentNameIDAttr := integration.NewIDAttribute("co-agent", memberName)
+	entity, err := i.Entity(fmt.Sprintf("%s:%v", memberAddr, memberPort), "co-agent", agentNameIDAttr)
 	agentInstance := agent.NewAgent(client, entity, memberAddr, memberDataCenter)
 
 	if args.HasMetrics() {

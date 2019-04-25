@@ -68,7 +68,7 @@ func TestNewDatacenter_Normal(t *testing.T) {
 
 	if out.entity.Metadata.Name != "dev-uss" {
 		t.Fatalf("Entity was not named correctly %s", out.entity.Metadata.Name)
-	} else if out.entity.Metadata.Namespace != "datacenter" {
+	} else if out.entity.Metadata.Namespace != "co-datacenter" {
 		t.Fatalf("Entity has wrong namespace %s", out.entity.Metadata.Namespace)
 	}
 
