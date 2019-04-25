@@ -31,7 +31,7 @@ func NewDatacenter(leader *agent.Agent, i *integration.Integration) (*Datacenter
 		return nil, err
 	}
 
-	dcEntity, err := i.Entity(*dcName, "datacenter")
+	dcEntity, err := i.Entity(*dcName, "co-datacenter")
 	if err != nil {
 		return nil, err
 	}
