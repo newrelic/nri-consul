@@ -15,7 +15,7 @@ import (
 
 const (
 	integrationName    = "com.newrelic.consul"
-	integrationVersion = "1.1.1"
+	integrationVersion = "2.0.0"
 )
 
 func main() {
@@ -120,6 +120,11 @@ func localCollection(client *api.Client, i *integration.Integration, args *args.
 		return fmt.Errorf("Failed to get member address: %v", ok)
 	}
 
+	memberPort, ok := member["Port"]
+	if !ok {
+		return fmt.Errorf("Failed to get member port: %v", ok)
+	}
+
 	memberDataCenter, ok := member["Tags"].(map[string]interface{})["dc"].(string)
 	if !ok {
 		return fmt.Errorf("Failed to get member datacenter: %v", ok)
@@ -138,7 +143,8 @@ func localCollection(client *api.Client, i *integration.Integration, args *args.
 		isLeader = false
 	}
 
-	entity, err := i.Entity(memberName, "agent")
+	agentNameIDAttr := integration.NewIDAttribute("co-agent", memberName)
+	entity, err := i.Entity(fmt.Sprintf("%s:%v", memberAddr, memberPort), "co-agent", agentNameIDAttr)
 	agentInstance := agent.NewAgent(client, entity, memberAddr, memberDataCenter)
 
 	if args.HasMetrics() {

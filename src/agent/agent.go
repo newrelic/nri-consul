@@ -44,7 +44,8 @@ func CreateAgents(client *api.Client, i *integration.Integration, args *args.Arg
 	agents = make([]*Agent, 0, len(members))
 	for _, member := range members {
 
-		entity, err := i.Entity(member.Name, "agent")
+		memberNameIDAttr := integration.NewIDAttribute("co-agent", member.Name)
+		entity, err := i.Entity(fmt.Sprintf("%s:%d", member.Addr, member.Port), "co-agent", memberNameIDAttr)
 		if err != nil {
 			log.Error("Error creating entity for Agent '%s': %s", member.Name, err.Error())
 			continue
