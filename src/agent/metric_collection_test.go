@@ -222,7 +222,8 @@ func TestCollectMetrics_LatencyMetrics(t *testing.T) {
 		t.Fatalf("Unexpected error %s", err.Error())
 	}
 
-	entity, err := i.Entity("consul-0", "agent")
+	memberNameIDAttr := integration.NewIDAttribute("co-agent", "consul-0")
+	entity, err := i.Entity("consul-0", "agent", memberNameIDAttr)
 	if err != nil {
 		t.Fatalf("Unexpected error %s", err.Error())
 	}
@@ -298,11 +299,11 @@ func TestCollectMetrics_LatencyMetrics(t *testing.T) {
 	})
 
 	expected := map[string]interface{}{
-		"displayName": "consul-0",
-		"entityName":  "agent:consul-0",
-		"event_type":  "ConsulAgentSample",
-		"datacenter":  agent.datacenter,
-		"ip":          agent.ipAddr,
+		"displayName":                           "consul-0",
+		"entityName":                            "agent:consul-0",
+		"event_type":                            "ConsulAgentSample",
+		"datacenter":                            agent.datacenter,
+		"ip":                                    agent.ipAddr,
 		"net.agent.medianLatencyInMilliseconds": 0.3303747050428994,
 		"net.agent.minLatencyInMilliseconds":    0.28994299609053836,
 		"net.agent.maxLatencyInMilliseconds":    0.453482732462,

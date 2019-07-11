@@ -145,6 +145,9 @@ func localCollection(client *api.Client, i *integration.Integration, args *args.
 
 	agentNameIDAttr := integration.NewIDAttribute("co-agent", memberName)
 	entity, err := i.Entity(fmt.Sprintf("%s:%v", memberAddr, memberPort), "co-agent", agentNameIDAttr)
+	if err != nil {
+		return fmt.Errorf("failed to create newrelic entity: %v", err)
+	}
 	agentInstance := agent.NewAgent(client, entity, memberAddr, memberDataCenter)
 
 	if args.HasMetrics() {

@@ -135,12 +135,16 @@ func (a *Agent) collectLatencyMetrics(metricSet *metric.Set) error {
 	}
 
 	if len(nodes) == 1 {
-		return errors.New("cluster only contains 1 node")
+		return errors.New("could not collect latency metrics because the cluster only contains 1 node")
+	}
+	nodeName, err := getNodeNameFromAttr(a.entity.Metadata.IDAttrs)
+	if err != nil {
+		return err
 	}
 
-	agentNode := findNode(a.entity.Metadata.Name, nodes)
+	agentNode := findNode(nodeName, nodes)
 	if agentNode == nil {
-		return errors.New("could not find node for agent")
+		return fmt.Errorf("could not collect latency metrics because the node with name %s could not be found be found in the list of nodes: %v", nodeName, nodes)
 	}
 
 	// calculate and populate metrics
