@@ -233,7 +233,7 @@ func TestCollectMetrics_LatencyMetrics(t *testing.T) {
 		entity:     entity,
 		datacenter: "MyDC",
 		ipAddr:     "192.168.0.0",
-    name: "consul-0",
+		name:       "consul-0",
 	}
 
 	agents := []*Agent{agent}

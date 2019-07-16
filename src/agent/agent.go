@@ -25,7 +25,7 @@ type Agent struct {
 	Client     *api.Client
 	datacenter string
 	ipAddr     string
-  name string
+	name       string
 }
 
 // CreateAgents creates an Agent structure for every Agent member of the LAN cluster
@@ -79,7 +79,7 @@ func NewAgent(client *api.Client, entity *integration.Entity, name, ipAddr, data
 		entity:     entity,
 		ipAddr:     ipAddr,
 		datacenter: datacenter,
-    name: name,
+		name:       name,
 	}
 }
 
