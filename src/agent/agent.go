@@ -25,6 +25,7 @@ type Agent struct {
 	Client     *api.Client
 	datacenter string
 	ipAddr     string
+  name string
 }
 
 // CreateAgents creates an Agent structure for every Agent member of the LAN cluster
@@ -57,7 +58,7 @@ func CreateAgents(client *api.Client, i *integration.Integration, args *args.Arg
 			continue
 		}
 
-		agent := NewAgent(client, entity, member.Addr, member.Tags["dc"])
+		agent := NewAgent(client, entity, member.Name, member.Addr, member.Tags["dc"])
 		agents = append(agents, agent)
 
 		// we need to identify the leader to collect catalog
@@ -72,12 +73,13 @@ func CreateAgents(client *api.Client, i *integration.Integration, args *args.Arg
 }
 
 // NewAgent creates a new agent from the given client and Entity
-func NewAgent(client *api.Client, entity *integration.Entity, ipAddr, datacenter string) *Agent {
+func NewAgent(client *api.Client, entity *integration.Entity, name, ipAddr, datacenter string) *Agent {
 	return &Agent{
 		Client:     client,
 		entity:     entity,
 		ipAddr:     ipAddr,
 		datacenter: datacenter,
+    name: name,
 	}
 }
 
@@ -137,14 +139,10 @@ func (a *Agent) collectLatencyMetrics(metricSet *metric.Set) error {
 	if len(nodes) == 1 {
 		return errors.New("could not collect latency metrics because the cluster only contains 1 node")
 	}
-	nodeName, err := getNodeNameFromAttr(a.entity.Metadata.IDAttrs)
-	if err != nil {
-		return err
-	}
 
-	agentNode := findNode(nodeName, nodes)
+	agentNode := findNode(a.name, nodes)
 	if agentNode == nil {
-		return fmt.Errorf("could not collect latency metrics because the node with name %s could not be found be found in the list of nodes: %v", nodeName, nodes)
+		return fmt.Errorf("could not collect latency metrics because the node with name %s could not be found be found in the list of nodes: %v", a.name, nodes)
 	}
 
 	// calculate and populate metrics
@@ -155,7 +153,7 @@ func (a *Agent) collectLatencyMetrics(metricSet *metric.Set) error {
 }
 
 // Name returns the entity name of the agent
-func (a *Agent) Name() string {
+func (a *Agent) HostPort() string {
 	return a.entity.Metadata.Name
 }
 

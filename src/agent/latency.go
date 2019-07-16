@@ -1,11 +1,8 @@
 package agent
 
 import (
-	"fmt"
 	"math"
 	"sort"
-
-	"github.com/newrelic/infra-integrations-sdk/integration"
 
 	"github.com/hashicorp/consul/api"
 	"github.com/hashicorp/serf/coordinate"
@@ -20,19 +17,6 @@ func findNode(nodeName string, nodes []*api.CoordinateEntry) *api.CoordinateEntr
 		}
 	}
 	return nil
-}
-
-func getNodeNameFromAttr(attributes integration.IDAttributes) (string, error) {
-	var nodeName string
-	for _, attr := range attributes {
-		if attr.Key == "co-agent" {
-			nodeName = attr.Value
-		}
-	}
-	if nodeName == "" {
-		return "", fmt.Errorf("failed to get node name from newrelic entity's ID attribute named co-agent. Either the attribute does not exist or the attribute's value is empty. Actual ID attributes: %v", attributes)
-	}
-	return nodeName, nil
 }
 
 func calculateLatencyMetrics(metricSet *metric.Set, node *api.CoordinateEntry, nodes []*api.CoordinateEntry) {

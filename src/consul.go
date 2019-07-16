@@ -148,7 +148,7 @@ func localCollection(client *api.Client, i *integration.Integration, args *args.
 	if err != nil {
 		return fmt.Errorf("failed to create newrelic entity: %v", err)
 	}
-	agentInstance := agent.NewAgent(client, entity, memberAddr, memberDataCenter)
+	agentInstance := agent.NewAgent(client, entity, memberName, memberAddr, memberDataCenter)
 
 	if args.HasMetrics() {
 		if isLeader {

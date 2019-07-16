@@ -197,7 +197,7 @@ func Test_Agent_Name(t *testing.T) {
 		entity: entity,
 	}
 
-	if agent.Name() != entity.Metadata.Name {
-		t.Errorf("Expected %s got %s", entity.Metadata.Name, agent.Name())
+	if agent.HostPort() != entity.Metadata.Name {
+		t.Errorf("Expected %s got %s", entity.Metadata.Name, agent.HostPort())
 	}
 }
