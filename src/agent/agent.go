@@ -152,7 +152,7 @@ func (a *Agent) collectLatencyMetrics(metricSet *metric.Set) error {
 	return nil
 }
 
-// Name returns the entity name of the agent
+// HostPort returns the host:port of the agent
 func (a *Agent) HostPort() string {
 	return a.entity.Metadata.Name
 }
