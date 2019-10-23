@@ -16,7 +16,6 @@ func findNode(nodeName string, nodes []*api.CoordinateEntry) *api.CoordinateEntr
 			return node
 		}
 	}
-
 	return nil
 }
 

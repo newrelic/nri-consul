@@ -39,20 +39,26 @@ func inventoryWorker(agentChan <-chan *Agent, wg *sync.WaitGroup) {
 			return
 		}
 
-		selfData, err := agent.Client.Agent().Self()
-		if err != nil {
-			log.Error("Error retrieving self configuration data for Agent '%s': %s", agent.entity.Metadata.Name, err.Error())
-			continue
-		}
-
-		// Config data
-		if configData, ok := selfData["Config"]; ok {
-			agent.processConfig(configData, "Config")
-		}
-
-		// Debug config data
-		if debugConfig, ok := selfData["DebugConfig"]; ok {
-			agent.processConfig(debugConfig, "DebugConfig")
-		}
+		CollectInventoryFromOne(agent)
 	}
+}
+
+//CollectInventoryFromOne collects inventory data for a single agent entity
+func CollectInventoryFromOne(agent *Agent) {
+	selfData, err := agent.Client.Agent().Self()
+	if err != nil {
+		log.Error("Error retrieving self configuration data for Agent '%s': %s", agent.entity.Metadata.Name, err.Error())
+		return
+	}
+
+	// Config data
+	if configData, ok := selfData["Config"]; ok {
+		agent.processConfig(configData, "Config")
+	}
+
+	// Debug config data
+	if debugConfig, ok := selfData["DebugConfig"]; ok {
+		agent.processConfig(debugConfig, "DebugConfig")
+	}
+
 }

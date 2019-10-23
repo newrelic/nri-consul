@@ -222,7 +222,8 @@ func TestCollectMetrics_LatencyMetrics(t *testing.T) {
 		t.Fatalf("Unexpected error %s", err.Error())
 	}
 
-	entity, err := i.Entity("consul-0", "agent")
+	memberNameIDAttr := integration.NewIDAttribute("co-agent", "consul-0")
+	entity, err := i.Entity("consul-0", "agent", memberNameIDAttr)
 	if err != nil {
 		t.Fatalf("Unexpected error %s", err.Error())
 	}
@@ -232,6 +233,7 @@ func TestCollectMetrics_LatencyMetrics(t *testing.T) {
 		entity:     entity,
 		datacenter: "MyDC",
 		ipAddr:     "192.168.0.0",
+		name:       "consul-0",
 	}
 
 	agents := []*Agent{agent}

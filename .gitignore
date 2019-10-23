@@ -3,7 +3,9 @@
 *.a
 *.so
 
+
 # Folders
+.idea
 _obj
 _test
 bin

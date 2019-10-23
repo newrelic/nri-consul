@@ -31,7 +31,7 @@ func NewDatacenter(leader *agent.Agent, i *integration.Integration) (*Datacenter
 		return nil, err
 	}
 
-	dcEntity, err := i.Entity(*dcName, "datacenter")
+	dcEntity, err := i.Entity(*dcName, "co-datacenter")
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +68,7 @@ func (dc *Datacenter) CollectMetrics() {
 	metricSet := dc.entity.NewMetricSet("ConsulDatacenterSample",
 		metric.Attribute{Key: "displayName", Value: dc.entity.Metadata.Name},
 		metric.Attribute{Key: "entityName", Value: dc.entity.Metadata.Namespace + ":" + dc.entity.Metadata.Name},
-		metric.Attribute{Key: "leader", Value: dc.leader.Name()},
+		metric.Attribute{Key: "leader", Value: dc.leader.HostPort()},
 	)
 
 	// collect leader agent metrics

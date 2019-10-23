@@ -8,6 +8,8 @@ All data is obtained via the REST API.
 
 All other components of this on host integration are licensed under an MIT license, Copyright 2019, Blue Medora Inc. Please see [LICENSE](LICENSE) for additional information.  
 
+See our [documentation web site](https://docs.newrelic.com/docs/integrations/host-integrations/host-integrations-list/consul-monitoring-integration) for more details.
+
 ## Requirements
 
 No requirements at this time.

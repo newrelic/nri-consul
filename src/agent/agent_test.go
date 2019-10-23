@@ -75,7 +75,7 @@ func TestCreateAgents(t *testing.T) {
 	}
 
 	agent := agents[0]
-	if agent.entity.Metadata.Name != "consul-0" {
+	if agent.entity.Metadata.Name != "10.0.0.1:8301" {
 		t.Errorf("Expected Entity name 'consul-0' got %s", agent.entity.Metadata.Name)
 	} else if agent != leader {
 		t.Error("Leader was no correclty set")
@@ -197,7 +197,7 @@ func Test_Agent_Name(t *testing.T) {
 		entity: entity,
 	}
 
-	if agent.Name() != entity.Metadata.Name {
-		t.Errorf("Expected %s got %s", entity.Metadata.Name, agent.Name())
+	if agent.HostPort() != entity.Metadata.Name {
+		t.Errorf("Expected %s got %s", entity.Metadata.Name, agent.HostPort())
 	}
 }
