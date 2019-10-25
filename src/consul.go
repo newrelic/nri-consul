@@ -1,3 +1,4 @@
+//go:generate goversioninfo
 package main
 
 import (
@@ -15,7 +16,7 @@ import (
 
 const (
 	integrationName    = "com.newrelic.consul"
-	integrationVersion = "2.0.2"
+	integrationVersion = "2.0.3"
 )
 
 func main() {

@@ -1,0 +1,11 @@
+name: com.newrelic.consul
+description: Reports status and metrics for HashiCorp Consul service
+protocol_version: 2
+os: windows
+
+commands:
+  all_data:
+    command:
+      - ./bin/nr-consul.exe
+    interval: 15
+    prefix: config/consul
