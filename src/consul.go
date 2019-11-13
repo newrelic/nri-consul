@@ -16,7 +16,7 @@ import (
 
 const (
 	integrationName    = "com.newrelic.consul"
-	integrationVersion = "2.0.3"
+	integrationVersion = "2.0.4"
 )
 
 func main() {
