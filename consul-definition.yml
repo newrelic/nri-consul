@@ -6,6 +6,6 @@ os: linux
 commands:
   all_data:
     command:
-      - ./bin/nr-consul
+      - ./bin/nri-consul
     interval: 15
     prefix: config/consul

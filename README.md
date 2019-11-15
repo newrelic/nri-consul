@@ -18,7 +18,7 @@ No requirements at this time.
 
 - download an archive file for the `Consul` Integration
 - extract `consul-definition.yml` and `/bin` directory into `/var/db/newrelic-infra/newrelic-integrations`
-- add execute permissions for the binary file `nr-consul` (if required)
+- add execute permissions for the binary file `nri-consul` (if required)
 - extract `consul-config.yml.sample` into `/etc/newrelic-infra/integrations.d`
 
 ## Usage
@@ -42,13 +42,13 @@ Assuming that you have source code you can build and run the Consul Integration 
 ```bash
 $ make
 ```
-* The command above will execute tests for the Consul Integration and build an executable file called `nr-consul` in `bin` directory.
+* The command above will execute tests for the Consul Integration and build an executable file called `nri-consul` in `bin` directory.
 ```bash
-$ ./bin/nr-consul
+$ ./bin/nri-consul
 ```
-* If you want to know more about usage of `./nr-consul` check
+* If you want to know more about usage of `./nri-consul` check
 ```bash
-$ ./bin/nr-consul -help
+$ ./bin/nri-consul -help
 ```
 
 For managing external dependencies [govendor tool](https://github.com/kardianos/govendor) is used. It is required to lock all external dependencies to specific version (if possible) into vendor directory.
