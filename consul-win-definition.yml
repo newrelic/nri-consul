@@ -6,6 +6,6 @@ os: windows
 commands:
   all_data:
     command:
-      - .\bin\nr-consul.exe
+      - .\bin\nri-consul.exe
     interval: 15
     prefix: config/consul
