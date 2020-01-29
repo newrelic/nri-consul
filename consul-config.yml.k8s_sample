@@ -1,0 +1,22 @@
+  consul-config.yml: |
+    ---
+    # Run auto discovery to find pods with label "app=consul"
+    # https://docs.newrelic.com/docs/integrations/host-integrations/installation/container-auto-discovery
+    discovery:
+      command:
+        # Run NRI Discovery for Kubernetes
+        # https://github.com/newrelic/nri-discovery-kubernetes
+        exec: /var/db/newrelic-infra/nri-discovery-kubernetes
+        match:
+          label.app: consul
+    integrations:
+      - name: nri-consul
+        env:
+          # Use the discovered IP as the host address
+          HOSTNAME: ${discovery.ip}
+          PORT: <(Optional) Port to connect to agent node (default "8500")>
+          TOKEN: <(Optional) ACL Token if token authentication is enabled>
+          ENABLE_SSL: <(Optional) If true will use SSL encryption, false will not use encryption (default "false")>
+          CA_BUNDLE_DIR: <Alternative Certificate Authority bundle directory, required if enable_ssl is true and trust_server_certificate is false>
+          CA_BUNDLE_FILE: <Alternative Certificate Authority bundle file, required if enable_ssl is true and trust_server_certificate is false>
+          TRUST_SERVER_CERTIFICATE: <(Optional) If true server certificate is not verified for SSL. If false certificate will be verified against supplied certificate (default "false")>
