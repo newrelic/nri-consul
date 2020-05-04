@@ -15,10 +15,16 @@
 			"revisionTime": "2018-02-21T22:46:20Z"
 		},
 		{
-			"checksumSHA1": "ukyES9bOlseMacwgYxaUe2w1zw4=",
+			"checksumSHA1": "ZAx+0+nA0f+pk1LTqvCqe24D2+U=",
+			"path": "github.com/fatih/color",
+			"revision": "daf2830f2741ebb735b21709a520c5f37d642d85",
+			"revisionTime": "2020-01-07T17:30:06Z"
+		},
+		{
+			"checksumSHA1": "Lage7gu2F1rIx4M4uFp7hxpT2u4=",
 			"path": "github.com/hashicorp/consul/api",
-			"revision": "a7f83b62f325cad17be513f39d7fed58f65710a7",
-			"revisionTime": "2018-10-24T15:20:05Z"
+			"revision": "c4093c87ccd2b0faa9c6a532ef0f0fcd3656250f",
+			"revisionTime": "2020-05-04T16:39:08Z"
 		},
 		{
 			"checksumSHA1": "Ihile6rE76J6SivxECovHgMROxw=",
@@ -27,16 +33,22 @@
 			"revisionTime": "2018-08-30T03:37:06Z"
 		},
 		{
+			"checksumSHA1": "pMBMTiWbecIA1IZszJ9vN+4DDME=",
+			"path": "github.com/hashicorp/go-hclog",
+			"revision": "24cddb1fb85ce678527dab791c1ce88d82bc959d",
+			"revisionTime": "2020-03-31T14:08:46Z"
+		},
+		{
 			"checksumSHA1": "mCCQqlVo0CPUr29LXH4Oe4Ww3JA=",
 			"path": "github.com/hashicorp/go-immutable-radix",
 			"revision": "27df80928bb34bb1b0d6d0e01b9e679902e7a6b5",
 			"revisionTime": "2018-08-30T03:32:45Z"
 		},
 		{
-			"checksumSHA1": "A1PcINvF3UiwHRKn8UcgARgvGRs=",
+			"checksumSHA1": "VMCsLDLDBZ4A9nG5aDQPZ9uiTO8=",
 			"path": "github.com/hashicorp/go-rootcerts",
-			"revision": "6bb64b370b90e7ef1fa532be9e591a81c3493e00",
-			"revisionTime": "2016-05-03T14:34:40Z"
+			"revision": "c8a9a31cbd7675425d28e4e56713d0368a3aeb2c",
+			"revisionTime": "2019-12-16T10:17:43Z"
 		},
 		{
 			"checksumSHA1": "NvkV52M5EFd0kT4U+9A2Eu/kKr8=",
@@ -49,6 +61,18 @@
 			"path": "github.com/hashicorp/serf/coordinate",
 			"revision": "48d57945817366b5484d99353f1f33e990bd142d",
 			"revisionTime": "2018-09-07T13:02:40Z"
+		},
+		{
+			"checksumSHA1": "0l1+INjzl6WPqkR20J+Mlivuq5s=",
+			"path": "github.com/mattn/go-colorable",
+			"revision": "f1b5a0ed4603826971e6d07195710bbc9ed74df6",
+			"revisionTime": "2020-05-04T13:27:58Z"
+		},
+		{
+			"checksumSHA1": "CQ794EIFp/4zTVi4redzOXOPY8k=",
+			"path": "github.com/mattn/go-isatty",
+			"revision": "cb30d6282491c185f77d9bec5d25de1bb61a06bc",
+			"revisionTime": "2020-01-28T10:39:42Z"
 		},
 		{
 			"checksumSHA1": "a58zUNtDH/gEd6F6KI3FqT2iEo0=",
@@ -121,6 +145,22 @@
 			"path": "github.com/stretchr/objx",
 			"revision": "9e1dfc121bca96d392da5d00591953bdb54ab306",
 			"revisionTime": "2018-06-26T19:55:58Z"
+		},
+		{
+			"checksumSHA1": "Ld0iviZSRGAKK6WSoti+3++1RmY=",
+			"path": "golang.org/x/sys/internal/unsafeheader",
+			"revision": "bc7a7d42d5c30f4d0fe808715c002826ce2c624e",
+			"revisionTime": "2020-05-01T14:24:05Z"
+		},
+		{
+			"checksumSHA1": "MI9gMXCXFnhZL8QkAM5y1ggrHr8=",
+			"path": "golang.org/x/sys/unix",
+			"revision": "bc7a7d42d5c30f4d0fe808715c002826ce2c624e",
+			"revisionTime": "2020-05-01T14:24:05Z"
+		},
+		{
+			"path": "vendor/github.com/hashicorp/consul/api",
+			"revision": ""
 		}
 	],
 	"rootPath": "github.com/newrelic/nri-consul"
