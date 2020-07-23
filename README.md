@@ -84,6 +84,6 @@ If you would like to contribute to this project, please review [these guidelines
 To all contributors, we thank you!  Without your contribution, this project would not be what it is today.
 
 ## License
-nri-consul is licensed under the [Apache 2.0](http://apache.org/licenses/LICENSE-2.0.txt) License.
+HashiCorp components The on host integration contains open source software (in unmodified form) provided by HashiCorp, distributed under the Mozilla Public License 2.0 (https://www.mozilla.org/en-US/MPL/2.0/FAQ/.). See LICENSE for additional information. Do not remove the license file. Mozilla Public License 2.0 is a copyleft light open source license, if you do not want to be subject the copyleft light open source provisions, do not modify the MPL 2.0 files.
 
-This integration contains open source software (in unmodified form) provided by HashiCorp, distributed under the Mozilla Public License 2.0 (https://www.mozilla.org/en-US/MPL/2.0/FAQ/.).
+All other components of this on host integration are licensed under an MIT license, Copyright 2019, Blue Medora Inc. Please see LICENSE for additional information.
