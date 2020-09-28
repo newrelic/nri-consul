@@ -133,7 +133,10 @@ func localCollection(client *api.Client, i *integration.Integration, args *args.
 
 	isLeaderValue, ok := localAgentData["Stats"]["consul"].(map[string]interface{})["leader"]
 	if !ok {
-		return fmt.Errorf("Failed to check for leadership: %v", ok)
+		isLeaderValue, ok = localAgentData["Stats"]["consul"].(map[string]interface{})["server"]
+		if !ok {
+			return fmt.Errorf("Failed to check for leadership: %v", ok)
+		}
 	}
 
 	// The key currently comes back to us as a string, so we convert it if we need to
