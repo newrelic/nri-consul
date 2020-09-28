@@ -305,6 +305,7 @@ func TestCollectMetrics_LatencyMetrics(t *testing.T) {
 		"event_type":  "ConsulAgentSample",
 		"datacenter":  agent.datacenter,
 		"ip":          agent.ipAddr,
+
 		"net.agent.medianLatencyInMilliseconds": 0.3303747050428994,
 		"net.agent.minLatencyInMilliseconds":    0.28994299609053836,
 		"net.agent.maxLatencyInMilliseconds":    0.453482732462,
