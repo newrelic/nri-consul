@@ -40,3 +40,6 @@ Session.vim
 # VSCode
 .vscode
 debug
+
+dist
+*.gpg
