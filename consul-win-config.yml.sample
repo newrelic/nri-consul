@@ -1,0 +1,5 @@
+integration_name: com.newrelic.consul
+
+instances:
+  - name: consul
+    command: all_data
