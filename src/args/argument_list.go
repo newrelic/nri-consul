@@ -20,6 +20,7 @@ type ArgumentList struct {
 	CABundleFile           string `default:"" help:"Alternative Certificate Authority bundle file"`
 	CABundleDir            string `default:"" help:"Alternative Certificate Authority bundle directory"`
 	FanOut                 bool   `default:"true" help:"If true will attempt to gather metrics from all other nodes in consul cluster"`
+	CheckLeadership        bool   `default:"true" help:"Check leadership on consul server. This should be disabled on consul in client mode"`
 }
 
 // Validate validates Consul arguments
