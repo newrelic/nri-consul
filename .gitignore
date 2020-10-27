@@ -41,5 +41,14 @@ Session.vim
 .vscode
 debug
 
-dist
+bin/
+dist/
+
+# Local development tools/files
+.env
+.envrc
 *.gpg
+
+# build files
+src/versioninfo.json
+src/resource.syso
