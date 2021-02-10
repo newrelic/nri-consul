@@ -22,3 +22,4 @@
           CA_BUNDLE_DIR: <Alternative Certificate Authority bundle directory, required if enable_ssl is true and trust_server_certificate is false>
           CA_BUNDLE_FILE: <Alternative Certificate Authority bundle file, required if enable_ssl is true and trust_server_certificate is false>
           TRUST_SERVER_CERTIFICATE: <(Optional) If true server certificate is not verified for SSL. If false certificate will be verified against supplied certificate (default "false")>
+          FAN_OUT: <(Optional) If true will attempt to gather metrics from all other nodes in consul cluster (default "true")>
