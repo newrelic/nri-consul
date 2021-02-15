@@ -82,7 +82,7 @@ archives:
       - nri-win
     name_template: "{{ .ProjectName }}-{{ .Arch }}.{{ .Version }}_dirty"
     files:
-      - consul-win-config.yml.sample
+      - consul-config.yml.sample
       - consul-win-definition.yml
     format: zip
 
