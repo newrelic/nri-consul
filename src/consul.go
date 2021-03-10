@@ -150,11 +150,15 @@ func localCollection(client *api.Client, i *integration.Integration, args *args.
 		return fmt.Errorf("Failed to get member datacenter: %v", ok)
 	}
 
-	isLeaderValue, ok := localAgentData["Stats"]["consul"].(map[string]interface{})["leader"]
-	if !ok {
-		isLeaderValue, ok = localAgentData["Stats"]["consul"].(map[string]interface{})["server"]
+	var isLeaderValue interface{}
+
+	if args.CheckLeadership {
+		isLeaderValue, ok := localAgentData["Stats"]["consul"].(map[string]interface{})["leader"]
 		if !ok {
-			return fmt.Errorf("Failed to check for leadership: %v", ok)
+			isLeaderValue, ok = localAgentData["Stats"]["consul"].(map[string]interface{})["server"]
+			if !ok {
+				return fmt.Errorf("Failed to check for leadership: %v", ok)
+			}
 		}
 	}
 
