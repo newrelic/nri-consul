@@ -151,9 +151,8 @@ func localCollection(client *api.Client, i *integration.Integration, args *args.
 	}
 
 	var isLeaderValue interface{}
-
 	if args.CheckLeadership {
-		isLeaderValue, ok := localAgentData["Stats"]["consul"].(map[string]interface{})["leader"]
+		isLeaderValue, ok = localAgentData["Stats"]["consul"].(map[string]interface{})["leader"]
 		if !ok {
 			isLeaderValue, ok = localAgentData["Stats"]["consul"].(map[string]interface{})["server"]
 			if !ok {
