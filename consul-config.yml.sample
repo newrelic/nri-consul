@@ -1,17 +1,16 @@
-integration_name: com.newrelic.consul
-
-instances:
-  - name: consul
-    command: all_data
-    arguments:
-      hostname: <The agent node Hostname or IP address to connect to (default "localhost")>
-      port: <(Optional) Port to connect to agent node (default "8500")>
-      token: <(Optional) ACL Token if token authentication is enabled>
-      enable_ssl: <(Optional) If true will use SSL encryption, false will not use encryption (default "false")>
-      ca_bundle_dir: <Alternative Certificate Authority bundle directory, required if enable_ssl is true and trust_server_certificate is false>
-      ca_bundle_file: <Alternative Certificate Authority bundle file, required if enable_ssl is true and trust_server_certificate is false>
-      trust_server_certificate: <(Optional) If true server certificate is not verified for SSL. If false certificate will be verified against supplied certificate (default "false")>
-      fan_out: <(Optional) If true will attempt to gather metrics from all other nodes in consul cluster (default "true")>
+integrations:
+  - name: nri-consul
+    env:
+      HOSTNAME: <The agent node Hostname or IP address to connect to (default "localhost")>
+      PORT: <(Optional) Port to connect to agent node (default "8500")>
+      TOKEN: <(Optional) ACL Token if token authentication is enabled>
+      ENABLE_SSL: <(Optional) If true will use SSL encryption, false will not use encryption (default "false")>
+      CA_BUNDLE_DIR: <Alternative Certificate Authority bundle directory, required if enable_ssl is true and trust_server_certificate is false>
+      CA_BUNDLE_FILE: <Alternative Certificate Authority bundle file, required if enable_ssl is true and trust_server_certificate is false>
+      TRUST_SERVER_CERTIFICATE: <(Optional) If true server certificate is not verified for SSL. If false certificate will be verified against supplied certificate (default "false")>
+      FAN_OUT: <(Optional) If true will attempt to gather metrics from all other nodes in consul cluster (default "true")>
+    interval: 15s
+    inventory_source: config/consul
     labels:
       env: production
       role: consul
