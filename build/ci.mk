@@ -43,6 +43,7 @@ ci/snyk-test:
 			-w /go/src/github.com/newrelic/nri-$(INTEGRATION) \
 			-e GO111MODULE=auto \
 			-e SNYK_TOKEN \
+			-e GO111MODULE=auto \
 			snyk/snyk:golang snyk test --severity-threshold=high
 
 .PHONY : ci/build
