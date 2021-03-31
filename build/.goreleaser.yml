@@ -32,40 +32,55 @@ builds:
       pre: build/windows/set_exe_properties.sh {{ .Env.TAG }} "consul"
 
 nfpms:
-  - id: linux
+  - id: nri-deb
+    builds:
+      - nri-nix
     file_name_template: "{{ .ProjectName }}_{{ .Version }}-1_{{ .Arch }}"
     vendor: "New Relic, Inc."
     homepage: "https://www.newrelic.com/infrastructure"
     maintainer: "New Relic Infrastructure Team <infrastructure-eng@newrelic.com>"
-    description: "New Relic Infrastructure consul Integration extend the core New Relic\nInfrastructure agent's capabilities to allow you to collect metric and\nlive state data from consul components."
+    description: "New Relic Infrastructure Consul Integration extend the core New Relic\nInfrastructure agent's capabilities to allow you to collect metric and\nlive state data from Consul components."
     license: "https://newrelic.com/terms (also see LICENSE installed with this package)"
-    
+    # Formats to be generated.
+    formats:
+      - deb
+    bindir: "/var/db/newrelic-infra/newrelic-integrations/bin"
+    files:
+      "CHANGELOG.md": "/usr/share/doc/nri-consul/CHANGELOG.md"
+      "README.md":  "/usr/share/doc/nri-consul/README.md"
+      "LICENSE": "/usr/share/doc/nri-consul/LICENSE"
+    config_files:
+      "consul-definition.yml": "/var/db/newrelic-infra/newrelic-integrations/consul-definition.yml"
+      "consul-config.yml.sample": "/etc/newrelic-infra/integrations.d/consul-config.yml.sample"
     dependencies:
       - "newrelic-infra"
 
+  - id: nri-rpm
+    builds:
+      - nri-nix
+    file_name_template: "{{ .ProjectName }}-{{ .Version }}-{{ .Arch }}"
+    vendor: "New Relic, Inc."
+    homepage: "https://www.newrelic.com/infrastructure"
+    maintainer: "New Relic Infrastructure Team <infrastructure-eng@newrelic.com>"
+    description: "New Relic Infrastructure Consul Integration extend the core New Relic\nInfrastructure agent's capabilities to allow you to collect metric and\nlive state data from Consul components."
+    license: "https://newrelic.com/terms (also see LICENSE installed with this package)"
+    # Formats to be generated.
+    formats:
+      - rpm
     bindir: "/var/db/newrelic-infra/newrelic-integrations/bin"
-    
-    contents:
-      - src: "consul-config.yml.sample"
-        dst: "/etc/newrelic-infra/integrations.d/consul-config.yml.sample"
-      - src: "CHANGELOG.md"
-        dst: "/usr/share/doc/nri-consul/CHANGELOG.md"
-      - src: "README.md"
-        dst: "/usr/share/doc/nri-consul/README.md"
-      - src: "LICENSE"
-        dst: "/usr/share/doc/nri-consul/LICENSE"
-      - src: "consul-definition.yml"
-        dst: "/var/db/newrelic-infra/newrelic-integrations/consul-definition.yml"
-        type: config
-
+    files:
+      "CHANGELOG.md": "/usr/share/doc/nri-consul/CHANGELOG.md"
+      "README.md":  "/usr/share/doc/nri-consul/README.md"
+      "LICENSE": "/usr/share/doc/nri-consul/LICENSE"
+    config_files:
+      "consul-definition.yml": "/var/db/newrelic-infra/newrelic-integrations/consul-definition.yml"
+      "consul-config.yml.sample": "/etc/newrelic-infra/integrations.d/consul-config.yml.sample"
+    dependencies:
+      - "newrelic-infra"
     overrides:
       rpm:
         replacements:
           amd64: 1.x86_64
-
-    formats:
-      - deb
-      - rpm
 
 archives:
   - id: nri-nix
