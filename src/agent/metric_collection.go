@@ -3,7 +3,7 @@ package agent
 import (
 	"sync"
 
-	"github.com/newrelic/infra-integrations-sdk/data/metric"
+	"github.com/newrelic/infra-integrations-sdk/data/attribute"
 	"github.com/newrelic/infra-integrations-sdk/log"
 )
 
@@ -48,10 +48,10 @@ func metricWorker(agentChan <-chan *Agent, wg *sync.WaitGroup) {
 // CollectMetricsFromOne does a metric collect for a single agent
 func CollectMetricsFromOne(agent *Agent) {
 	metricSet := agent.entity.NewMetricSet("ConsulAgentSample",
-		metric.Attribute{Key: "displayName", Value: agent.entity.Metadata.Name},
-		metric.Attribute{Key: "entityName", Value: agent.entity.Metadata.Namespace + ":" + agent.entity.Metadata.Name},
-		metric.Attribute{Key: "ip", Value: agent.ipAddr},
-		metric.Attribute{Key: "datacenter", Value: agent.datacenter},
+		attribute.Attribute{Key: "displayName", Value: agent.entity.Metadata.Name},
+		attribute.Attribute{Key: "entityName", Value: agent.entity.Metadata.Namespace + ":" + agent.entity.Metadata.Name},
+		attribute.Attribute{Key: "ip", Value: agent.ipAddr},
+		attribute.Attribute{Key: "datacenter", Value: agent.datacenter},
 	)
 
 	// Collect core metrics

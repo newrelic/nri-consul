@@ -17,7 +17,7 @@ require (
 	github.com/mattn/go-isatty v0.0.13-0.20200128103942-cb30d6282491 // indirect
 	github.com/mitchellh/go-testing-interface v1.14.0 // indirect
 	github.com/mitchellh/mapstructure v1.2.3 // indirect
-	github.com/newrelic/infra-integrations-sdk v3.1.5+incompatible
+	github.com/newrelic/infra-integrations-sdk v3.6.7+incompatible
 	golang.org/x/crypto v0.0.0-20200220183623-bac4c82f6975 // indirect
 	golang.org/x/net v0.0.0-20191004110552-13f9640d40b9 // indirect
 	golang.org/x/sys v0.0.0-20200501145240-bc7a7d42d5c3 // indirect

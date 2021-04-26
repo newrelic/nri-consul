@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/hashicorp/consul/api"
+	"github.com/newrelic/infra-integrations-sdk/data/attribute"
 	"github.com/newrelic/infra-integrations-sdk/data/metric"
 	"github.com/newrelic/infra-integrations-sdk/integration"
 	"github.com/newrelic/infra-integrations-sdk/log"
@@ -66,9 +67,9 @@ func getDatacenterName(client *api.Client) (*string, error) {
 // CollectMetrics collects all datacenter level metrics
 func (dc *Datacenter) CollectMetrics() {
 	metricSet := dc.entity.NewMetricSet("ConsulDatacenterSample",
-		metric.Attribute{Key: "displayName", Value: dc.entity.Metadata.Name},
-		metric.Attribute{Key: "entityName", Value: dc.entity.Metadata.Namespace + ":" + dc.entity.Metadata.Name},
-		metric.Attribute{Key: "leader", Value: dc.leader.HostPort()},
+		attribute.Attribute{Key: "displayName", Value: dc.entity.Metadata.Name},
+		attribute.Attribute{Key: "entityName", Value: dc.entity.Metadata.Namespace + ":" + dc.entity.Metadata.Name},
+		attribute.Attribute{Key: "leader", Value: dc.leader.HostPort()},
 	)
 
 	// collect leader agent metrics

@@ -97,8 +97,8 @@ github.com/mitchellh/mapstructure v0.0.0-20160808181253-ca63d7c062ee/go.mod h1:F
 github.com/mitchellh/mapstructure v1.1.2/go.mod h1:FVVH3fgwuzCH5S8UJGiWEs2h04kUh9fWfEaFds41c1Y=
 github.com/mitchellh/mapstructure v1.2.3 h1:f/MjBEBDLttYCGfRaKBbKSRVF5aV2O6fnBpzknuE3jU=
 github.com/mitchellh/mapstructure v1.2.3/go.mod h1:bFUtVrKA4DC2yAKiSyO/QUcy7e+RRV2QTWOzhPopBRo=
-github.com/newrelic/infra-integrations-sdk v3.1.5+incompatible h1:rhn5xKl4vGZYqPS8GTSfi+FaOVib5XNtRi3J9gxMu5Y=
-github.com/newrelic/infra-integrations-sdk v3.1.5+incompatible/go.mod h1:tMUHRMq6mJS0YyBnbWrTXAnREnQqC1AGO6Lu45u5xAM=
+github.com/newrelic/infra-integrations-sdk v3.6.7+incompatible h1:dOsTM3DT6piFLpWLroIFw1Yy5ZqHpnS0HoS6B6WOV7k=
+github.com/newrelic/infra-integrations-sdk v3.6.7+incompatible/go.mod h1:tMUHRMq6mJS0YyBnbWrTXAnREnQqC1AGO6Lu45u5xAM=
 github.com/pascaldekloe/goe v0.0.0-20180627143212-57f6aae5913c/go.mod h1:lzWF7FIEvWOWxwDKqyGYQf6ZUaNfKdP144TG7ZOy1lc=
 github.com/pascaldekloe/goe v0.1.0 h1:cBOtyMzM9HTpWjXfbbunk26uA6nG3a8n06Wieeh0MwY=
 github.com/pascaldekloe/goe v0.1.0/go.mod h1:lzWF7FIEvWOWxwDKqyGYQf6ZUaNfKdP144TG7ZOy1lc=
