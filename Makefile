@@ -19,13 +19,13 @@ clean:
 
 tools: check-version
 	@echo "=== $(INTEGRATION) === [ tools ]: Installing tools required by the project..."
-	@go get $(GOTOOLS)
-	@gometalinter.v2 --install
+	@GO111MODULE=off go get $(GOTOOLS)
+	@GO111MODULE=off gometalinter.v2 --install
 
 tools-update: check-version
 	@echo "=== $(INTEGRATION) === [ tools-update ]: Updating tools required by the project..."
-	@go get -u $(GOTOOLS)
-	@gometalinter.v2 --install
+	@GO111MODULE=off go get -u $(GOTOOLS)
+	@GO111MODULE=off gometalinter.v2 --install
 
 deps: tools
 
