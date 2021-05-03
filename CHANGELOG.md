@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.3.0 (2021-05-03)
+### Fixed
+- Bump to integrations-sdk to v3.6.7 containing fix for multiple instance sharing storer.
+### Changed
+- Migrate to gomod and go v1.16.
+- Update CI to support go mod and bump go version.
+- Bump non core dependencies to last minor verison.
+
 ## 2.2.0 (2021-03-31)
 ### Added
 - Arm and Arm64 packages for Linux
