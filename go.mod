@@ -3,9 +3,7 @@ module github.com/newrelic/nri-consul
 go 1.16
 
 require (
-	github.com/AlekSi/gocov-xml v0.0.0-20190121064608-3a14fb1c4737
 	github.com/armon/go-metrics v0.0.0-20190430140413-ec5e00d3c878 // indirect
-	github.com/axw/gocov v1.0.0
 	github.com/golangci/golangci-lint v1.40.0
 	github.com/hashicorp/consul/api v1.4.0
 	github.com/hashicorp/go-hclog v0.12.2 // indirect
