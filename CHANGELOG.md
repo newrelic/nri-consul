@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.3.1 (2021-06-09)
+### Changed
+- Added ARM support.
+
 ## 2.3.0 (2021-05-03)
 ### Fixed
 - Bump to integrations-sdk to v3.6.7 containing fix for multiple instance sharing storer.
