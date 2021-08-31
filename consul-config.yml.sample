@@ -1,17 +1,27 @@
 integrations:
 - name: nri-consul
   env:
-    HOSTNAME: <The agent node Hostname or IP address to connect to (default "localhost")>
-    PORT: <(Optional) Port to connect to agent node (default "8500")>
+    # The agent node Hostname or IP address to connect to
+    HOSTNAME: localhost
 
-    TOKEN: <(Optional) ACL Token if token authentication is enabled>
+    # Port to connect to agent node
+    PORT: 8500
 
-    ENABLE_SSL: <(Optional) If true will use SSL encryption, false will not use encryption (default "false")>
-    TRUST_SERVER_CERTIFICATE: <(Optional) If true server certificate is not verified for SSL. If false certificate will be verified against supplied certificate (default "false")>
-    CA_BUNDLE_DIR: <Alternative Certificate Authority bundle directory, required if enable_ssl is true and trust_server_certificate is false>
-    CA_BUNDLE_FILE: <Alternative Certificate Authority bundle file, required if enable_ssl is true and trust_server_certificate is false>
+    # If true will use SSL encryption, false will not use encryption
+    # ENABLE_SSL: false
+    # ACL Token if token authentication is enabled
+    # TOKEN:
+    # If true server certificate is not verified for SSL. If false certificate will be verified against supplied certificate
+    # TRUST_SERVER_CERTIFICATE: false
+    # Alternative Certificate Authority bundle directory, required if enable_ssl is true and trust_server_certificate is false
+    # CA_BUNDLE_DIR:
+    # Alternative Certificate Authority bundle file, required if enable_ssl is true and trust_server_certificate is false
+    # CA_BUNDLE_FILE:
 
-    FAN_OUT: <(Optional) If true will attempt to gather metrics from all other nodes in consul cluster (default "true")>
+    # If true will attempt to gather metrics from all other nodes in consul cluster
+    FAN_OUT: true
+    # Check leadership on consul server. This should be disabled on consul in client mode
+    CHECK_LEADERSHIP: true
 
   interval: 15s
   labels:
