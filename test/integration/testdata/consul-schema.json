@@ -1,0 +1,2219 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema",
+  "type": "object",
+  "required": [
+    "name",
+    "protocol_version",
+    "integration_version",
+    "data"
+  ],
+  "properties": {
+    "name": {
+      "minLength": 1,
+      "pattern": "^com.newrelic.consul$",
+      "type": "string"
+    },
+    "protocol_version": {
+      "minLength": 1,
+      "pattern": "^3$",
+      "type": "string"
+    },
+    "integration_version": {
+      "minLength": 1,
+      "pattern": "^[0-9]+.[0-9]+.[0-9]+$",
+      "type": "string"
+    },
+    "data": {
+      "type": "array",
+      "minItems": 4,
+      "items": {
+        "anyOf": [
+          {
+            "type": "object",
+            "required": [
+              "entity",
+              "metrics",
+              "inventory",
+              "events"
+            ],
+            "properties": {
+              "entity": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "type",
+                  "id_attributes"
+                ],
+                "properties": {
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "type": {
+                    "minLength": 1,
+                    "pattern": "^co-agent$",
+                    "type": "string"
+                  },
+                  "id_attributes": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "minLength": 1,
+                      "required": [
+                        "Key",
+                        "Value"
+                      ],
+                      "properties": {
+                        "Key": {
+                          "minLength": 1,
+                          "pattern": "^co-agent$",
+                          "type": "string"
+                        },
+                        "Value": {
+                          "minLength": 1,
+                          "pattern": "^consul-server*",
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              },
+              "metrics": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "agent.peers",
+                    "datacenter",
+                    "displayName",
+                    "entityName",
+                    "event_type",
+                    "ip",
+                    "net.agent.maxLatencyInMilliseconds",
+                    "net.agent.medianLatencyInMilliseconds",
+                    "net.agent.minLatencyInMilliseconds",
+                    "net.agent.p25LatencyInMilliseconds",
+                    "net.agent.p75LatencyInMilliseconds",
+                    "net.agent.p90LatencyInMilliseconds",
+                    "net.agent.p95LatencyInMilliseconds",
+                    "net.agent.p99LatencyInMilliseconds",
+                    "runtime.allocations",
+                    "runtime.allocationsInBytes",
+                    "runtime.frees",
+                    "runtime.gcCycles",
+                    "runtime.gcPauseInMilliseconds",
+                    "runtime.goroutines",
+                    "runtime.heapObjects",
+                    "runtime.virtualAddressSpaceInBytes"
+                  ],
+                  "properties": {
+                    "agent.peers": {
+                      "type": "integer"
+                    },
+                    "datacenter": {
+                      "type": "string"
+                    },
+                    "displayName": {
+                      "type": "string"
+                    },
+                    "entityName": {
+                      "type": "string"
+                    },
+                    "event_type": {
+                      "type": "string"
+                    },
+                    "ip": {
+                      "type": "string"
+                    },
+                    "net.agent.maxLatencyInMilliseconds": {
+                      "type": "number"
+                    },
+                    "net.agent.medianLatencyInMilliseconds": {
+                      "type": "number"
+                    },
+                    "net.agent.minLatencyInMilliseconds": {
+                      "type": "number"
+                    },
+                    "net.agent.p25LatencyInMilliseconds": {
+                      "type": "number"
+                    },
+                    "net.agent.p75LatencyInMilliseconds": {
+                      "type": "number"
+                    },
+                    "net.agent.p90LatencyInMilliseconds": {
+                      "type": "number"
+                    },
+                    "net.agent.p95LatencyInMilliseconds": {
+                      "type": "number"
+                    },
+                    "net.agent.p99LatencyInMilliseconds": {
+                      "type": "number"
+                    },
+                    "runtime.allocations": {
+                      "type": "integer"
+                    },
+                    "runtime.allocationsInBytes": {
+                      "type": "integer"
+                    },
+                    "runtime.frees": {
+                      "type": "integer"
+                    },
+                    "runtime.gcCycles": {
+                      "type": "integer"
+                    },
+                    "runtime.gcPauseInMilliseconds": {
+                      "type": "number"
+                    },
+                    "runtime.goroutines": {
+                      "type": "integer"
+                    },
+                    "runtime.heapObjects": {
+                      "type": "integer"
+                    },
+                    "runtime.virtualAddressSpaceInBytes": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "uniqueItems": true
+              },
+              "inventory": {
+                "type": "object",
+                "required": [
+                  "Config/Datacenter",
+                  "Config/NodeID",
+                  "Config/NodeName",
+                  "Config/PrimaryDatacenter",
+                  "Config/Revision",
+                  "Config/Server",
+                  "Config/Version",
+                  "DebugConfig/ACLEnableKeyListPolicy",
+                  "DebugConfig/ACLInitialManagementToken",
+                  "DebugConfig/ACLTokenReplication",
+                  "DebugConfig/ACLsEnabled",
+                  "DebugConfig/AEInterval",
+                  "DebugConfig/AdvertiseAddrLAN",
+                  "DebugConfig/AdvertiseAddrWAN",
+                  "DebugConfig/AdvertiseReconnectTimeout",
+                  "DebugConfig/AutoEncryptAllowTLS",
+                  "DebugConfig/AutoEncryptTLS",
+                  "DebugConfig/AutopilotCleanupDeadServers",
+                  "DebugConfig/AutopilotDisableUpgradeMigration",
+                  "DebugConfig/AutopilotLastContactThreshold",
+                  "DebugConfig/AutopilotMaxTrailingLogs",
+                  "DebugConfig/AutopilotMinQuorum",
+                  "DebugConfig/AutopilotServerStabilizationTime",
+                  "DebugConfig/BindAddr",
+                  "DebugConfig/Bootstrap",
+                  "DebugConfig/BootstrapExpect",
+                  "DebugConfig/CheckDeregisterIntervalMin",
+                  "DebugConfig/CheckOutputMaxSize",
+                  "DebugConfig/CheckReapInterval",
+                  "DebugConfig/CheckUpdateInterval",
+                  "DebugConfig/ClientAddrs",
+                  "DebugConfig/ConnectEnabled",
+                  "DebugConfig/ConnectMeshGatewayWANFederationEnabled",
+                  "DebugConfig/ConnectSidecarMaxPort",
+                  "DebugConfig/ConnectSidecarMinPort",
+                  "DebugConfig/ConnectTestCALeafRootChangeSpread",
+                  "DebugConfig/ConsulCoordinateUpdateBatchSize",
+                  "DebugConfig/ConsulCoordinateUpdateMaxBatches",
+                  "DebugConfig/ConsulCoordinateUpdatePeriod",
+                  "DebugConfig/ConsulRaftElectionTimeout",
+                  "DebugConfig/ConsulRaftHeartbeatTimeout",
+                  "DebugConfig/ConsulRaftLeaderLeaseTimeout",
+                  "DebugConfig/ConsulServerHealthInterval",
+                  "DebugConfig/DNSARecordLimit",
+                  "DebugConfig/DNSAddrs",
+                  "DebugConfig/DNSAllowStale",
+                  "DebugConfig/DNSCacheMaxAge",
+                  "DebugConfig/DNSDisableCompression",
+                  "DebugConfig/DNSDomain",
+                  "DebugConfig/DNSEnableTruncate",
+                  "DebugConfig/DNSMaxStale",
+                  "DebugConfig/DNSNodeMetaTXT",
+                  "DebugConfig/DNSNodeTTL",
+                  "DebugConfig/DNSOnlyPassing",
+                  "DebugConfig/DNSPort",
+                  "DebugConfig/DNSRecursorStrategy",
+                  "DebugConfig/DNSRecursorTimeout",
+                  "DebugConfig/DNSUDPAnswerLimit",
+                  "DebugConfig/DNSUseCache",
+                  "DebugConfig/DataDir",
+                  "DebugConfig/Datacenter",
+                  "DebugConfig/DefaultQueryTime",
+                  "DebugConfig/DevMode",
+                  "DebugConfig/DisableAnonymousSignature",
+                  "DebugConfig/DisableCoordinates",
+                  "DebugConfig/DisableHTTPUnprintableCharFilter",
+                  "DebugConfig/DisableHostNodeID",
+                  "DebugConfig/DisableKeyringFile",
+                  "DebugConfig/DisableRemoteExec",
+                  "DebugConfig/DisableUpdateCheck",
+                  "DebugConfig/DiscardCheckOutput",
+                  "DebugConfig/DiscoveryMaxStale",
+                  "DebugConfig/EnableAgentTLSForChecks",
+                  "DebugConfig/EnableCentralServiceConfig",
+                  "DebugConfig/EnableDebug",
+                  "DebugConfig/EnableLocalScriptChecks",
+                  "DebugConfig/EnableRemoteScriptChecks",
+                  "DebugConfig/EncryptKey",
+                  "DebugConfig/EncryptVerifyIncoming",
+                  "DebugConfig/EncryptVerifyOutgoing",
+                  "DebugConfig/ExposeMaxPort",
+                  "DebugConfig/ExposeMinPort",
+                  "DebugConfig/GRPCPort",
+                  "DebugConfig/GossipLANGossipInterval",
+                  "DebugConfig/GossipLANGossipNodes",
+                  "DebugConfig/GossipLANProbeInterval",
+                  "DebugConfig/GossipLANProbeTimeout",
+                  "DebugConfig/GossipLANRetransmitMult",
+                  "DebugConfig/GossipLANSuspicionMult",
+                  "DebugConfig/GossipWANGossipInterval",
+                  "DebugConfig/GossipWANGossipNodes",
+                  "DebugConfig/GossipWANProbeInterval",
+                  "DebugConfig/GossipWANProbeTimeout",
+                  "DebugConfig/GossipWANRetransmitMult",
+                  "DebugConfig/GossipWANSuspicionMult",
+                  "DebugConfig/HTTPAddrs",
+                  "DebugConfig/HTTPMaxConnsPerClient",
+                  "DebugConfig/HTTPMaxHeaderBytes",
+                  "DebugConfig/HTTPPort",
+                  "DebugConfig/HTTPSHandshakeTimeout",
+                  "DebugConfig/HTTPSPort",
+                  "DebugConfig/HTTPUseCache",
+                  "DebugConfig/KVMaxValueSize",
+                  "DebugConfig/KeyFile",
+                  "DebugConfig/LeaveDrainTime",
+                  "DebugConfig/LeaveOnTerm",
+                  "DebugConfig/MaxQueryTime",
+                  "DebugConfig/NodeID",
+                  "DebugConfig/NodeName",
+                  "DebugConfig/PrimaryDatacenter",
+                  "DebugConfig/PrimaryGatewaysInterval",
+                  "DebugConfig/RPCAdvertiseAddr",
+                  "DebugConfig/RPCBindAddr",
+                  "DebugConfig/RPCHandshakeTimeout",
+                  "DebugConfig/RPCHoldTimeout",
+                  "DebugConfig/RPCMaxBurst",
+                  "DebugConfig/RPCMaxConnsPerClient",
+                  "DebugConfig/RPCProtocol",
+                  "DebugConfig/RPCRateLimit",
+                  "DebugConfig/RaftProtocol",
+                  "DebugConfig/RaftSnapshotInterval",
+                  "DebugConfig/RaftSnapshotThreshold",
+                  "DebugConfig/RaftTrailingLogs",
+                  "DebugConfig/ReadReplica",
+                  "DebugConfig/ReconnectTimeoutLAN",
+                  "DebugConfig/ReconnectTimeoutWAN",
+                  "DebugConfig/RejoinAfterLeave",
+                  "DebugConfig/RetryJoinIntervalLAN",
+                  "DebugConfig/RetryJoinIntervalWAN",
+                  "DebugConfig/RetryJoinLAN",
+                  "DebugConfig/RetryJoinMaxAttemptsLAN",
+                  "DebugConfig/RetryJoinMaxAttemptsWAN",
+                  "DebugConfig/Revision",
+                  "DebugConfig/SegmentLimit",
+                  "DebugConfig/SegmentNameLimit",
+                  "DebugConfig/SerfAdvertiseAddrLAN",
+                  "DebugConfig/SerfAdvertiseAddrWAN",
+                  "DebugConfig/SerfBindAddrLAN",
+                  "DebugConfig/SerfBindAddrWAN",
+                  "DebugConfig/SerfPortLAN",
+                  "DebugConfig/SerfPortWAN",
+                  "DebugConfig/ServerMode",
+                  "DebugConfig/ServerPort",
+                  "DebugConfig/SessionTTLMin",
+                  "DebugConfig/SkipLeaveOnInt",
+                  "DebugConfig/SyncCoordinateIntervalMin",
+                  "DebugConfig/SyncCoordinateRateTarget",
+                  "DebugConfig/TLSMinVersion",
+                  "DebugConfig/TLSPreferServerCipherSuites",
+                  "DebugConfig/TranslateWANAddrs",
+                  "DebugConfig/TxnMaxReqLen",
+                  "DebugConfig/UseStreamingBackend",
+                  "DebugConfig/VerifyIncoming",
+                  "DebugConfig/VerifyIncomingHTTPS",
+                  "DebugConfig/VerifyIncomingRPC",
+                  "DebugConfig/VerifyOutgoing",
+                  "DebugConfig/VerifyServerHostname",
+                  "DebugConfig/Version"
+                ],
+                "properties": {
+                  "Config/Datacenter": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "Config/NodeID": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "Config/NodeName": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "Config/PrimaryDatacenter": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "Config/Revision": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "Config/Server": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "Config/Version": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/ACLEnableKeyListPolicy": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/ACLInitialManagementToken": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/ACLTokenReplication": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/ACLsEnabled": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/AEInterval": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/AdvertiseAddrLAN": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/AdvertiseAddrWAN": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/AdvertiseReconnectTimeout": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/AutoEncryptAllowTLS": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/AutoEncryptTLS": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/AutopilotCleanupDeadServers": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/AutopilotDisableUpgradeMigration": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/AutopilotLastContactThreshold": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/AutopilotMaxTrailingLogs": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/AutopilotMinQuorum": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/AutopilotServerStabilizationTime": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/BindAddr": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/Bootstrap": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/BootstrapExpect": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/CheckDeregisterIntervalMin": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/CheckOutputMaxSize": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/CheckReapInterval": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/CheckUpdateInterval": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/ClientAddrs": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/ConnectEnabled": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/ConnectMeshGatewayWANFederationEnabled": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/ConnectSidecarMaxPort": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/ConnectSidecarMinPort": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/ConnectTestCALeafRootChangeSpread": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/ConsulCoordinateUpdateBatchSize": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/ConsulCoordinateUpdateMaxBatches": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/ConsulCoordinateUpdatePeriod": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/ConsulRaftElectionTimeout": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/ConsulRaftHeartbeatTimeout": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/ConsulRaftLeaderLeaseTimeout": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/ConsulServerHealthInterval": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/DNSARecordLimit": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/DNSAddrs": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/DNSAllowStale": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/DNSCacheMaxAge": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/DNSDisableCompression": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/DNSDomain": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/DNSEnableTruncate": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/DNSMaxStale": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/DNSNodeMetaTXT": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/DNSNodeTTL": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/DNSOnlyPassing": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/DNSPort": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/DNSRecursorStrategy": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/DNSRecursorTimeout": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/DNSUDPAnswerLimit": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/DNSUseCache": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/DataDir": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/Datacenter": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/DefaultQueryTime": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/DevMode": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/DisableAnonymousSignature": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/DisableCoordinates": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/DisableHTTPUnprintableCharFilter": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/DisableHostNodeID": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/DisableKeyringFile": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/DisableRemoteExec": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/DisableUpdateCheck": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/DiscardCheckOutput": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/DiscoveryMaxStale": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/EnableAgentTLSForChecks": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/EnableCentralServiceConfig": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/EnableDebug": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/EnableLocalScriptChecks": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/EnableRemoteScriptChecks": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/EncryptKey": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/EncryptVerifyIncoming": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/EncryptVerifyOutgoing": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/ExposeMaxPort": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/ExposeMinPort": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/GRPCPort": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/GossipLANGossipInterval": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/GossipLANGossipNodes": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/GossipLANProbeInterval": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/GossipLANProbeTimeout": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/GossipLANRetransmitMult": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/GossipLANSuspicionMult": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/GossipWANGossipInterval": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/GossipWANGossipNodes": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/GossipWANProbeInterval": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/GossipWANProbeTimeout": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/GossipWANRetransmitMult": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/GossipWANSuspicionMult": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/HTTPAddrs": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/HTTPMaxConnsPerClient": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/HTTPMaxHeaderBytes": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/HTTPPort": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/HTTPSHandshakeTimeout": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/HTTPSPort": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/HTTPUseCache": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/KVMaxValueSize": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/KeyFile": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/LeaveDrainTime": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/LeaveOnTerm": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/MaxQueryTime": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/NodeID": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/NodeName": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/PrimaryDatacenter": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/PrimaryGatewaysInterval": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/RPCAdvertiseAddr": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/RPCBindAddr": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/RPCHandshakeTimeout": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/RPCHoldTimeout": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/RPCMaxBurst": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/RPCMaxConnsPerClient": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/RPCProtocol": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/RPCRateLimit": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/RaftProtocol": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/RaftSnapshotInterval": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/RaftSnapshotThreshold": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/RaftTrailingLogs": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/ReadReplica": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/ReconnectTimeoutLAN": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/ReconnectTimeoutWAN": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/RejoinAfterLeave": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/RetryJoinIntervalLAN": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/RetryJoinIntervalWAN": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/RetryJoinLAN": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/RetryJoinMaxAttemptsLAN": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/RetryJoinMaxAttemptsWAN": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/Revision": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/SegmentLimit": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/SegmentNameLimit": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/SerfAdvertiseAddrLAN": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/SerfAdvertiseAddrWAN": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/SerfBindAddrLAN": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/SerfBindAddrWAN": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/SerfPortLAN": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/SerfPortWAN": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/ServerMode": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/ServerPort": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/SessionTTLMin": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/SkipLeaveOnInt": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/SyncCoordinateIntervalMin": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/SyncCoordinateRateTarget": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/TLSMinVersion": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DebugConfig/TLSPreferServerCipherSuites": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/TranslateWANAddrs": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/TxnMaxReqLen": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "DebugConfig/UseStreamingBackend": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/VerifyIncoming": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/VerifyIncomingHTTPS": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/VerifyIncomingRPC": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/VerifyOutgoing": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/VerifyServerHostname": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "DebugConfig/Version": {
+                    "type": "object",
+                    "required": [
+                      "value"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "events": {
+                "type": "array",
+                "items": {},
+                "uniqueItems": true
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "entity",
+              "metrics",
+              "inventory",
+              "events"
+            ],
+            "properties": {
+              "entity": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "type",
+                  "id_attributes"
+                ],
+                "properties": {
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "type": {
+                    "minLength": 1,
+                    "pattern": "^co-datacenter$",
+                    "type": "string"
+                  },
+                  "id_attributes": {
+                    "type": "array",
+                    "items": {},
+                    "uniqueItems": true
+                  }
+                }
+              },
+              "metrics": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "catalog.criticalNodes",
+                    "catalog.passingNodes",
+                    "catalog.registeredNodes",
+                    "catalog.upNodes",
+                    "catalog.warningNodes",
+                    "displayName",
+                    "entityName",
+                    "event_type",
+                    "leader"
+                  ],
+                  "properties": {
+                    "catalog.criticalNodes": {
+                      "type": "integer"
+                    },
+                    "catalog.passingNodes": {
+                      "type": "integer"
+                    },
+                    "catalog.registeredNodes": {
+                      "type": "integer"
+                    },
+                    "catalog.upNodes": {
+                      "type": "integer"
+                    },
+                    "catalog.warningNodes": {
+                      "type": "integer"
+                    },
+                    "displayName": {
+                      "type": "string"
+                    },
+                    "entityName": {
+                      "type": "string"
+                    },
+                    "event_type": {
+                      "type": "string"
+                    },
+                    "leader": {
+                      "type": "string"
+                    },
+                    "raft.commitTimeAvgInMilliseconds": {
+                      "type": "number"
+                    },
+                    "raft.commitTimeMaxInMilliseconds": {
+                      "type": "number"
+                    },
+                    "raft.commitTimes": {
+                      "type": "integer"
+                    },
+                    "raft.lastContactAvgInMilliseconds": {
+                      "type": "number"
+                    },
+                    "raft.lastContactMaxInMilliseconds": {
+                      "type": "integer"
+                    },
+                    "raft.lastContacts": {
+                      "type": "integer"
+                    },
+                    "raft.logDispatchAvgInMilliseconds": {
+                      "type": "number"
+                    },
+                    "raft.logDispatchMaxInMilliseconds": {
+                      "type": "number"
+                    },
+                    "raft.logDispatches": {
+                      "type": "integer"
+                    },
+                    "raft.txns": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "uniqueItems": true
+              },
+              "inventory": {
+                "type": "object",
+                "required": [],
+                "properties": {}
+              },
+              "events": {
+                "type": "array",
+                "items": {},
+                "uniqueItems": true
+              }
+            }
+          }
+        ]
+      },
+      "uniqueItems": true
+    }
+  }
+}
