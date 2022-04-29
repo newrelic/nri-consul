@@ -22,7 +22,12 @@ func TestCollectMetrics_CoreMetrics(t *testing.T) {
 		EnableSSL: false,
 	}
 
-	client, err := api.NewClient(arg.CreateAPIConfig(arg.Hostname))
+	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
+	if err != nil {
+		t.Fatalf("Unexpected error: %s", err.Error())
+	}
+
+	client, err := api.NewClient(apiConfig)
 	if err != nil {
 		t.Fatalf("Unexpected error: %s", err.Error())
 	}
@@ -153,7 +158,12 @@ func TestCollectMetrics_PeerMetrics(t *testing.T) {
 		EnableSSL: false,
 	}
 
-	client, err := api.NewClient(arg.CreateAPIConfig(arg.Hostname))
+	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
+	if err != nil {
+		t.Fatalf("Unexpected error: %s", err.Error())
+	}
+
+	client, err := api.NewClient(apiConfig)
 	if err != nil {
 		t.Fatalf("Unexpected error: %s", err.Error())
 	}
@@ -212,7 +222,12 @@ func TestCollectMetrics_LatencyMetrics(t *testing.T) {
 		EnableSSL: false,
 	}
 
-	client, err := api.NewClient(arg.CreateAPIConfig(arg.Hostname))
+	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
+	if err != nil {
+		t.Fatalf("Unexpected error: %s", err.Error())
+	}
+
+	client, err := api.NewClient(apiConfig)
 	if err != nil {
 		t.Fatalf("Unexpected error: %s", err.Error())
 	}

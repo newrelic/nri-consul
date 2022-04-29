@@ -6,10 +6,14 @@ package tests
 import (
 	"flag"
 	"fmt"
-	"github.com/newrelic/infra-integrations-sdk/log"
-	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
+	"time"
+
+	"github.com/hashicorp/consul/api"
+	"github.com/newrelic/infra-integrations-sdk/log"
+	"github.com/newrelic/nri-consul/src/args"
+	"github.com/stretchr/testify/assert"
 )
 
 const (
@@ -38,7 +42,8 @@ func TestSuccessConnection(t *testing.T) {
 	fmt.Println(stderr)
 	assert.Nil(t, err)
 	assert.NotEmpty(t, response)
-	validateJSONSchema(schema, response)
+	err = validateJSONSchema(schema, response)
+	assert.NoError(t, err)
 }
 
 func waitForConsulClusterUpAndRunning(maxTries int) bool {
@@ -48,9 +53,47 @@ func waitForConsulClusterUpAndRunning(maxTries int) bool {
 	if err != nil {
 		log.Fatal(err)
 	}
+	arg := args.ArgumentList{
+		Hostname: "localhost",
+		Port:     "8500",
+	}
+	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
+	if err != nil {
+		log.Error("Error creating HTTP API client, please check configuration: %s", err.Error())
+		os.Exit(1)
+	}
+
+	// create client
+	client, err := api.NewClient(apiConfig)
+	if err != nil {
+		log.Error("Error creating API client, please check configuration: %s", err.Error())
+		os.Exit(1)
+	}
+
 	for ; maxTries > 0; maxTries-- {
 		log.Info("try to establish de connection with the Consul cluster...")
+		m, err := client.Agent().Metrics()
+		if err != nil {
+			log.Warn("Api not ready")
+			time.Sleep(2 * time.Second)
+		}
+		if m != nil && len(m.Gauges) > 0 {
+			nodes, _, err := client.Coordinate().Nodes(nil)
+			if err != nil {
+				log.Warn("Api not ready")
+				time.Sleep(2 * time.Second)
+				continue
+			}
 
+			if len(nodes) <= 1 {
+				log.Warn("nodes ready of 3: %d", len(nodes))
+				time.Sleep(2 * time.Second)
+				continue
+			}
+
+			log.Info("consul cluster is up & running!")
+			return true
+		}
 	}
 	return true
 }

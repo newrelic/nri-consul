@@ -59,7 +59,6 @@ func validateJSONSchema(fileName string, input string) error {
 	}
 
 	if result.Valid() {
-		fmt.Println("no-error?")
 		return nil
 	}
 	fmt.Printf("Errors for JSON schema: '%s'\n", schemaURI)
