@@ -37,6 +37,7 @@ func TestSuccessConnection(t *testing.T) {
 	if !waitForConsulClusterUpAndRunning(20) {
 		t.Fatal("tests cannot be executed")
 	}
+	defer dockerComposeDown()
 	hostname := "consul-server1"
 	envVars := []string{
 		fmt.Sprintf("HOSTNAME=%s", hostname),

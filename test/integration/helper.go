@@ -42,6 +42,18 @@ func dockerComposeRun(vars []string, container string) (string, string, error) {
 	return dockerCompose(vars, []string{"run", "--rm", "--name", container}, []string{container}, false)
 }
 
+func dockerComposeDown() {
+	fmt.Println("executing: docker-compose down")
+	cmd := exec.Command("docker-compose", "down")
+	var errbuf bytes.Buffer
+	cmd.Stderr = &errbuf
+	err := cmd.Run()
+	stderr := errbuf.String()
+	if err != nil {
+		fmt.Println("error on docker-compose down: %w, $s", err, stderr)
+	}
+}
+
 func validateJSONSchema(fileName string, input string) error {
 	pwd, err := os.Getwd()
 	if err != nil {
