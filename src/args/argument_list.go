@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/hashicorp/consul/api"
-	"github.com/hashicorp/go-cleanhttp"
+	goCleanhttp "github.com/hashicorp/go-cleanhttp"
 	sdkArgs "github.com/newrelic/infra-integrations-sdk/args"
 )
 
@@ -47,7 +47,7 @@ func (al ArgumentList) CreateAPIConfig(hostname string) (*api.Config, error) {
 		Token:   al.Token,
 		Scheme:  "http",
 		// Using the same as the consul api.NewClient
-		Transport: cleanhttp.DefaultPooledTransport(),
+		Transport: goCleanhttp.DefaultPooledTransport(),
 	}
 
 	// setup SSL if enabled
