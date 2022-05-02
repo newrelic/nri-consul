@@ -7,6 +7,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"regexp"
 	"testing"
 	"time"
 
@@ -21,7 +22,10 @@ const (
 	schema               = "consul-schema.json"
 )
 
-var containersConsul = []string{"consul-server1", "consul-server2", "consul-server3"}
+var (
+	containersConsul = []string{"consul-server1", "consul-server2", "consul-server3"}
+	responseRegex    = regexp.MustCompile(`{"name":"com\.newrelic\.consul".*`)
+)
 
 func TestMain(m *testing.M) {
 	flag.Parse()
@@ -42,7 +46,9 @@ func TestSuccessConnection(t *testing.T) {
 	fmt.Println(stderr)
 	assert.Nil(t, err)
 	assert.NotEmpty(t, response)
-	err = validateJSONSchema(schema, response)
+
+	cleanIntegrationResponse := responseRegex.FindString(response)
+	err = validateJSONSchema(schema, cleanIntegrationResponse)
 	assert.NoError(t, err)
 }
 
