@@ -10,7 +10,8 @@ services:
       - ./server1.json:/consul/config/server1.json:ro
       - ./certs/:/consul/config/certs/:ro
     networks:
-      - consul
+      consul:
+        ipv4_address: 10.5.0.2
     ports:
       - "8500:8500"
       - "8600:8600/tcp"
@@ -25,7 +26,8 @@ services:
       - ./server2.json:/consul/config/server2.json:ro
       - ./certs/:/consul/config/certs/:ro
     networks:
-      - consul
+      consul:
+        ipv4_address: 10.5.0.3
     command: "agent -bootstrap-expect=3"
 
   consul-server3:
@@ -36,7 +38,8 @@ services:
       - ./server3.json:/consul/config/server3.json:ro
       - ./certs/:/consul/config/certs/:ro
     networks:
-      - consul
+      consul:
+        ipv4_address: 10.5.0.4
     command: "agent -bootstrap-expect=3"
 
   nri-consul:
@@ -47,9 +50,14 @@ services:
       - ../../:/code
       - ./certs/:/consul/config/certs/:ro
     networks:
-      - consul
+      consul:
+        ipv4_address: 10.5.0.5
     entrypoint: go run /code/src/consul.go
 
 networks:
   consul:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1

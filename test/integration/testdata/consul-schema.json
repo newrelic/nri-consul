@@ -277,7 +277,6 @@
                   "DebugConfig/GossipWANProbeTimeout",
                   "DebugConfig/GossipWANRetransmitMult",
                   "DebugConfig/GossipWANSuspicionMult",
-                  "DebugConfig/HTTPAddrs",
                   "DebugConfig/HTTPMaxConnsPerClient",
                   "DebugConfig/HTTPMaxHeaderBytes",
                   "DebugConfig/HTTPPort",
@@ -1384,17 +1383,6 @@
                     "properties": {
                       "value": {
                         "type": "integer"
-                      }
-                    }
-                  },
-                  "DebugConfig/HTTPAddrs": {
-                    "type": "object",
-                    "required": [
-                      "value"
-                    ],
-                    "properties": {
-                      "value": {
-                        "type": "string"
                       }
                     }
                   },

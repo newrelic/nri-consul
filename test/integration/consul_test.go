@@ -33,7 +33,7 @@ func TestMain(m *testing.M) {
 	os.Exit(result)
 }
 
-func TestSuccessConnection(t *testing.T) {
+func TestMetricsCollectionInCluterWithSSL(t *testing.T) {
 	if !waitForConsulClusterUpAndRunning(20) {
 		t.Fatal("tests cannot be executed")
 	}
@@ -41,6 +41,8 @@ func TestSuccessConnection(t *testing.T) {
 	hostname := "consul-server1"
 	envVars := []string{
 		fmt.Sprintf("HOSTNAME=%s", hostname),
+		fmt.Sprintf("ENABLE_SSL=true"),
+		fmt.Sprintf("CA_BUNDLE_FILE=/consul/config/certs/consul-agent-ca.pem"),
 	}
 	response, stderr, err := dockerComposeRun(envVars, containerIntegration)
 	fmt.Println(response)
@@ -61,8 +63,10 @@ func waitForConsulClusterUpAndRunning(maxTries int) bool {
 		log.Fatal(err)
 	}
 	arg := args.ArgumentList{
-		Hostname: "localhost",
-		Port:     "8500",
+		Hostname:     "localhost",
+		Port:         "8500",
+		EnableSSL:    true,
+		CABundleFile: "certs/consul-agent-ca.pem",
 	}
 	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
 	if err != nil {
