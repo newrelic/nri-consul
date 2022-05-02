@@ -41,8 +41,7 @@ func (al ArgumentList) Validate() error {
 // CreateAPIConfig creates an API config from the argument list
 func (al ArgumentList) CreateAPIConfig(hostname string) (*api.Config, error) {
 	// Since we are creating the HttpClient instead of using the default (so we can define a Timeout)
-	// we must set the Transport, and config.TLSConfig(Address, CertFile and KeyFile) with the defaults used in
-	// consul's api.NewClient when no HttpClient is set, if not they won't be honored.
+	// we must set the Transport with the same defaults used in consul's api.NewClient.
 	config := &api.Config{
 		Address: fmt.Sprintf("%s:%s", hostname, al.Port),
 		Token:   al.Token,
@@ -59,12 +58,6 @@ func (al ArgumentList) CreateAPIConfig(hostname string) (*api.Config, error) {
 			InsecureSkipVerify: al.TrustServerCertificate,
 		}
 		config.Scheme = "https"
-
-		// Setting it like in consul's api.NewClient
-		defConfig := api.DefaultConfig()
-		config.TLSConfig.Address = defConfig.TLSConfig.Address
-		config.TLSConfig.CertFile = defConfig.TLSConfig.CertFile
-		config.TLSConfig.KeyFile = defConfig.TLSConfig.KeyFile
 	}
 
 	httpClient, err := api.NewHttpClient(config.Transport, config.TLSConfig)
