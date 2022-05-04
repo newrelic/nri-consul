@@ -1,10 +1,12 @@
 package args
 
 import (
-	"reflect"
+	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/hashicorp/consul/api"
+	"github.com/stretchr/testify/require"
 )
 
 func Test_ArgumentList_Validate(t *testing.T) {
@@ -19,6 +21,7 @@ func Test_ArgumentList_Validate(t *testing.T) {
 				Hostname:  "localhost",
 				Port:      "8500",
 				EnableSSL: false,
+				Timeout:   30,
 			},
 			false,
 		},
@@ -55,6 +58,11 @@ func Test_ArgumentList_Validate(t *testing.T) {
 }
 
 func Test_ArgumentList_CreateAPIConfig(t *testing.T) {
+	tempDir := t.TempDir()
+	fakeCaFile := "ca.pem"
+	err := os.WriteFile(filepath.Join(tempDir, fakeCaFile), []byte{}, 0755)
+	require.NoError(t, err)
+
 	testCases := []struct {
 		name string
 		args *ArgumentList
@@ -81,27 +89,25 @@ func Test_ArgumentList_CreateAPIConfig(t *testing.T) {
 				Port:                   "8500",
 				Token:                  "my_token",
 				EnableSSL:              true,
-				TrustServerCertificate: false,
-				CABundleDir:            "ca_dir",
-				CABundleFile:           "ca_file",
+				TrustServerCertificate: true,
 			},
 			&api.Config{
 				Address: "localhost:8500",
 				Token:   "my_token",
 				Scheme:  "https",
 				TLSConfig: api.TLSConfig{
-					CAFile:             "ca_file",
-					CAPath:             "ca_dir",
-					InsecureSkipVerify: false,
+					InsecureSkipVerify: true,
 				},
 			},
 		},
 	}
 
 	for _, tc := range testCases {
-		out := tc.args.CreateAPIConfig(tc.args.Hostname)
-		if !reflect.DeepEqual(out, tc.want) {
-			t.Errorf("Test Case %s Failed: Expected %v got %v", tc.name, tc.want, out)
-		}
+		out, err := tc.args.CreateAPIConfig(tc.args.Hostname)
+		require.NoError(t, err)
+		require.Equal(t, tc.want.Address, out.Address)
+		require.Equal(t, tc.want.Token, out.Token)
+		require.Equal(t, tc.want.Scheme, out.Scheme)
+		require.Equal(t, tc.want.TLSConfig, out.TLSConfig)
 	}
 }
