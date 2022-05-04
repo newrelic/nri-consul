@@ -16,4 +16,6 @@ require (
 	github.com/mitchellh/go-testing-interface v1.14.0 // indirect
 	github.com/mitchellh/mapstructure v1.2.3 // indirect
 	github.com/newrelic/infra-integrations-sdk v3.6.7+incompatible
+	github.com/stretchr/testify v1.7.0
+	github.com/xeipuuv/gojsonschema v1.2.0
 )
