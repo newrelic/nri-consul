@@ -32,6 +32,7 @@ func TestNewDatacenter_Normal(t *testing.T) {
 		Hostname:  hostname,
 		Port:      port,
 		EnableSSL: false,
+		Timeout:   "0s",
 	}
 
 	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
@@ -91,6 +92,7 @@ func TestNewDatacenter_DCName_Config_Failure(t *testing.T) {
 		Hostname:  hostname,
 		Port:      port,
 		EnableSSL: false,
+		Timeout:   "0s",
 	}
 
 	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
@@ -131,6 +133,7 @@ func TestNewDatacenter_DCName_Failure(t *testing.T) {
 		Hostname:  hostname,
 		Port:      port,
 		EnableSSL: false,
+		Timeout:   "0s",
 	}
 
 	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
@@ -171,6 +174,7 @@ func TestNewDatacenter_Leader_Self_Failure(t *testing.T) {
 		Hostname:  hostname,
 		Port:      port,
 		EnableSSL: false,
+		Timeout:   "0s",
 	}
 
 	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
@@ -209,6 +213,7 @@ func Test_Datacenter_CollectMetrics_Full(t *testing.T) {
 		Hostname:  hostname,
 		Port:      port,
 		EnableSSL: false,
+		Timeout:   "0s",
 	}
 
 	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
@@ -275,6 +280,7 @@ func Test_Datacenter_CollectMetrics_All_Endpoint_Fails(t *testing.T) {
 		Hostname:  hostname,
 		Port:      port,
 		EnableSSL: false,
+		Timeout:   "0s",
 	}
 
 	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)

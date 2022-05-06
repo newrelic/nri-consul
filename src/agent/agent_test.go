@@ -19,6 +19,7 @@ func TestCreateAgents(t *testing.T) {
 		Hostname:  hostname,
 		Port:      port,
 		EnableSSL: false,
+		Timeout:   "0s",
 	}
 
 	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
@@ -95,6 +96,7 @@ func TestCreateAgents_BadMemberCall(t *testing.T) {
 		Hostname:  hostname,
 		Port:      port,
 		EnableSSL: false,
+		Timeout:   "0s",
 	}
 
 	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
@@ -137,6 +139,7 @@ func TestCreateAgents_BadLeaderCall(t *testing.T) {
 		Hostname:  hostname,
 		Port:      port,
 		EnableSSL: false,
+		Timeout:   "0s",
 	}
 
 	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)

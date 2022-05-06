@@ -20,6 +20,7 @@ func TestCollectMetrics_CoreMetrics(t *testing.T) {
 		Hostname:  hostname,
 		Port:      port,
 		EnableSSL: false,
+		Timeout:   "0s",
 	}
 
 	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
@@ -156,6 +157,7 @@ func TestCollectMetrics_PeerMetrics(t *testing.T) {
 		Hostname:  hostname,
 		Port:      port,
 		EnableSSL: false,
+		Timeout:   "0s",
 	}
 
 	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
@@ -220,6 +222,7 @@ func TestCollectMetrics_LatencyMetrics(t *testing.T) {
 		Hostname:  hostname,
 		Port:      port,
 		EnableSSL: false,
+		Timeout:   "0s",
 	}
 
 	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)

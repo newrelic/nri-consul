@@ -22,6 +22,7 @@ func TestCollectInventory_AllValid(t *testing.T) {
 		Hostname:  hostname,
 		Port:      port,
 		EnableSSL: false,
+		Timeout:   "0s",
 	}
 
 	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
@@ -134,6 +135,7 @@ func TestCollectInventory_BadArray(t *testing.T) {
 		Hostname:  hostname,
 		Port:      port,
 		EnableSSL: false,
+		Timeout:   "0s",
 	}
 
 	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
