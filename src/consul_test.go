@@ -50,17 +50,17 @@ func Test_ClientTimeoutIsHonored(t *testing.T) {
 
 	testCases := []struct {
 		name          string
-		timeout       int
+		timeout       string
 		errorExpected bool
 	}{
 		{
 			name:          "When the timeout is exceeded Then an error is returned",
-			timeout:       1,
+			timeout:       "1s",
 			errorExpected: true,
 		},
 		{
 			name:          "When the timeout is not exceeded a correct response is retrieved",
-			timeout:       2,
+			timeout:       "2s",
 			errorExpected: false,
 		},
 	}

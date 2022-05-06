@@ -17,7 +17,7 @@ type ArgumentList struct {
 	Hostname               string `default:"localhost" help:"The agent node Hostname or IP address to connect to"`
 	Port                   string `default:"8500" help:"Port to connect to agent node"`
 	Token                  string `default:"" help:"ACL Token if token authentication is enabled"`
-	Timeout                int    `default:"0" help:"Timeout for an API call"`
+	Timeout                string `default:"0s" help:"Timeout for an API call"`
 	EnableSSL              bool   `default:"false" help:"If true will use SSL encryption, false will not use encryption"`
 	TrustServerCertificate bool   `default:"false" help:"If true server certificate is not verified for SSL. If false certificate will be verified against supplied certificate"`
 	CABundleFile           string `default:"" help:"Alternative Certificate Authority bundle file"`
@@ -64,8 +64,13 @@ func (al ArgumentList) CreateAPIConfig(hostname string) (*api.Config, error) {
 	if err != nil {
 		return nil, err
 	}
-	httpClient.Timeout = time.Duration(al.Timeout) * time.Second
 
+	duration, err := time.ParseDuration(al.Timeout)
+	if err != nil {
+		return nil, err
+	}
+
+	httpClient.Timeout = duration
 	config.HttpClient = httpClient
 
 	return config, nil

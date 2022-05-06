@@ -20,7 +20,7 @@ func Test_ArgumentList_Validate(t *testing.T) {
 				Hostname:  "localhost",
 				Port:      "8500",
 				EnableSSL: false,
-				Timeout:   30,
+				Timeout:   "30s",
 			},
 			false,
 		},
@@ -58,9 +58,10 @@ func Test_ArgumentList_Validate(t *testing.T) {
 
 func Test_ArgumentList_CreateAPIConfig(t *testing.T) {
 	testCases := []struct {
-		name string
-		args *ArgumentList
-		want *api.Config
+		name      string
+		args      *ArgumentList
+		want      *api.Config
+		errWanted bool
 	}{
 		{
 			"Base Config",
@@ -69,12 +70,14 @@ func Test_ArgumentList_CreateAPIConfig(t *testing.T) {
 				Port:      "8500",
 				Token:     "my_token",
 				EnableSSL: false,
+				Timeout:   "30s",
 			},
 			&api.Config{
 				Address: "localhost:8500",
 				Token:   "my_token",
 				Scheme:  "http",
 			},
+			false,
 		},
 		{
 			"Base SSL",
@@ -86,6 +89,7 @@ func Test_ArgumentList_CreateAPIConfig(t *testing.T) {
 				TrustServerCertificate: false,
 				CABundleDir:            "testdata",
 				CABundleFile:           filepath.Join("testdata", "ca.pem"),
+				Timeout:                "30s",
 			},
 			&api.Config{
 				Address: "localhost:8500",
@@ -97,12 +101,24 @@ func Test_ArgumentList_CreateAPIConfig(t *testing.T) {
 					InsecureSkipVerify: false,
 				},
 			},
+			false,
+		},
+		{
+			"Wrong timeout format",
+			&ArgumentList{
+				Timeout: "30",
+			},
+			nil,
+			true,
 		},
 	}
 
 	for _, tc := range testCases {
 		out, err := tc.args.CreateAPIConfig(tc.args.Hostname)
-		require.NoError(t, err)
+		if err != nil {
+			require.Equal(t, tc.errWanted, true)
+			continue
+		}
 		require.Equal(t, tc.want.Address, out.Address)
 		require.Equal(t, tc.want.Token, out.Token)
 		require.Equal(t, tc.want.Scheme, out.Scheme)
