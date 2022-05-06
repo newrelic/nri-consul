@@ -1,7 +1,6 @@
 package args
 
 import (
-	"os"
 	"path/filepath"
 	"testing"
 
@@ -58,11 +57,6 @@ func Test_ArgumentList_Validate(t *testing.T) {
 }
 
 func Test_ArgumentList_CreateAPIConfig(t *testing.T) {
-	tempDir := t.TempDir()
-	fakeCaFile := "ca.pem"
-	err := os.WriteFile(filepath.Join(tempDir, fakeCaFile), []byte{}, 0755)
-	require.NoError(t, err)
-
 	testCases := []struct {
 		name string
 		args *ArgumentList
@@ -89,14 +83,18 @@ func Test_ArgumentList_CreateAPIConfig(t *testing.T) {
 				Port:                   "8500",
 				Token:                  "my_token",
 				EnableSSL:              true,
-				TrustServerCertificate: true,
+				TrustServerCertificate: false,
+				CABundleDir:            "testdata",
+				CABundleFile:           filepath.Join("testdata", "ca.pem"),
 			},
 			&api.Config{
 				Address: "localhost:8500",
 				Token:   "my_token",
 				Scheme:  "https",
 				TLSConfig: api.TLSConfig{
-					InsecureSkipVerify: true,
+					CAPath:             "testdata",
+					CAFile:             filepath.Join("testdata", "ca.pem"),
+					InsecureSkipVerify: false,
 				},
 			},
 		},
