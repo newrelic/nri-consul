@@ -4,8 +4,10 @@ package args
 import (
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/hashicorp/consul/api"
+	goCleanhttp "github.com/hashicorp/go-cleanhttp"
 	sdkArgs "github.com/newrelic/infra-integrations-sdk/args"
 )
 
@@ -15,6 +17,7 @@ type ArgumentList struct {
 	Hostname               string `default:"localhost" help:"The agent node Hostname or IP address to connect to"`
 	Port                   string `default:"8500" help:"Port to connect to agent node"`
 	Token                  string `default:"" help:"ACL Token if token authentication is enabled"`
+	Timeout                string `default:"0s" help:"Timeout for an API call"`
 	EnableSSL              bool   `default:"false" help:"If true will use SSL encryption, false will not use encryption"`
 	TrustServerCertificate bool   `default:"false" help:"If true server certificate is not verified for SSL. If false certificate will be verified against supplied certificate"`
 	CABundleFile           string `default:"" help:"Alternative Certificate Authority bundle file"`
@@ -36,11 +39,15 @@ func (al ArgumentList) Validate() error {
 }
 
 // CreateAPIConfig creates an API config from the argument list
-func (al ArgumentList) CreateAPIConfig(hostname string) *api.Config {
+func (al ArgumentList) CreateAPIConfig(hostname string) (*api.Config, error) {
+	// Since we are creating the HttpClient instead of using the default (so we can define a Timeout)
+	// we must set the Transport with the same defaults used in consul's api.NewClient.
 	config := &api.Config{
 		Address: fmt.Sprintf("%s:%s", hostname, al.Port),
 		Token:   al.Token,
 		Scheme:  "http",
+		// Using the same as the consul api.NewClient
+		Transport: goCleanhttp.DefaultPooledTransport(),
 	}
 
 	// setup SSL if enabled
@@ -53,5 +60,18 @@ func (al ArgumentList) CreateAPIConfig(hostname string) *api.Config {
 		config.Scheme = "https"
 	}
 
-	return config
+	httpClient, err := api.NewHttpClient(config.Transport, config.TLSConfig)
+	if err != nil {
+		return nil, err
+	}
+
+	duration, err := time.ParseDuration(al.Timeout)
+	if err != nil {
+		return nil, err
+	}
+
+	httpClient.Timeout = duration
+	config.HttpClient = httpClient
+
+	return config, nil
 }

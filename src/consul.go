@@ -50,8 +50,14 @@ func main() {
 	// Setup logging with verbose
 	log.SetupLogging(args.Verbose)
 
+	apiConfig, err := args.CreateAPIConfig(args.Hostname)
+	if err != nil {
+		log.Error("Error creating HTTP API client, please check configuration: %s", err.Error())
+		os.Exit(1)
+	}
+
 	// create client
-	client, err := api.NewClient(args.CreateAPIConfig(args.Hostname))
+	client, err := api.NewClient(apiConfig)
 	if err != nil {
 		log.Error("Error creating API client, please check configuration: %s", err.Error())
 		os.Exit(1)

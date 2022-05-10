@@ -32,9 +32,15 @@ func TestNewDatacenter_Normal(t *testing.T) {
 		Hostname:  hostname,
 		Port:      port,
 		EnableSSL: false,
+		Timeout:   "0s",
 	}
 
-	client, err := api.NewClient(arg.CreateAPIConfig(arg.Hostname))
+	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
+	if err != nil {
+		t.Fatalf("Unexpected error: %s", err.Error())
+	}
+
+	client, err := api.NewClient(apiConfig)
 	if err != nil {
 		t.Fatalf("Unexpected error: %s", err.Error())
 	}
@@ -86,9 +92,15 @@ func TestNewDatacenter_DCName_Config_Failure(t *testing.T) {
 		Hostname:  hostname,
 		Port:      port,
 		EnableSSL: false,
+		Timeout:   "0s",
 	}
 
-	client, err := api.NewClient(arg.CreateAPIConfig(arg.Hostname))
+	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
+	if err != nil {
+		t.Fatalf("Unexpected error: %s", err.Error())
+	}
+
+	client, err := api.NewClient(apiConfig)
 	if err != nil {
 		t.Fatalf("Unexpected error: %s", err.Error())
 	}
@@ -121,9 +133,15 @@ func TestNewDatacenter_DCName_Failure(t *testing.T) {
 		Hostname:  hostname,
 		Port:      port,
 		EnableSSL: false,
+		Timeout:   "0s",
 	}
 
-	client, err := api.NewClient(arg.CreateAPIConfig(arg.Hostname))
+	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
+	if err != nil {
+		t.Fatalf("Unexpected error: %s", err.Error())
+	}
+
+	client, err := api.NewClient(apiConfig)
 	if err != nil {
 		t.Fatalf("Unexpected error: %s", err.Error())
 	}
@@ -156,9 +174,15 @@ func TestNewDatacenter_Leader_Self_Failure(t *testing.T) {
 		Hostname:  hostname,
 		Port:      port,
 		EnableSSL: false,
+		Timeout:   "0s",
 	}
 
-	client, err := api.NewClient(arg.CreateAPIConfig(arg.Hostname))
+	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
+	if err != nil {
+		t.Fatalf("Unexpected error: %s", err.Error())
+	}
+
+	client, err := api.NewClient(apiConfig)
 	if err != nil {
 		t.Fatalf("Unexpected error: %s", err.Error())
 	}
@@ -189,9 +213,15 @@ func Test_Datacenter_CollectMetrics_Full(t *testing.T) {
 		Hostname:  hostname,
 		Port:      port,
 		EnableSSL: false,
+		Timeout:   "0s",
 	}
 
-	client, err := api.NewClient(arg.CreateAPIConfig(arg.Hostname))
+	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
+	if err != nil {
+		t.Fatalf("Unexpected error: %s", err.Error())
+	}
+
+	client, err := api.NewClient(apiConfig)
 	if err != nil {
 		t.Fatalf("Unexpected error: %s", err.Error())
 	}
@@ -250,9 +280,15 @@ func Test_Datacenter_CollectMetrics_All_Endpoint_Fails(t *testing.T) {
 		Hostname:  hostname,
 		Port:      port,
 		EnableSSL: false,
+		Timeout:   "0s",
 	}
 
-	client, err := api.NewClient(arg.CreateAPIConfig(arg.Hostname))
+	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
+	if err != nil {
+		t.Fatalf("Unexpected error: %s", err.Error())
+	}
+
+	client, err := api.NewClient(apiConfig)
 	if err != nil {
 		t.Fatalf("Unexpected error: %s", err.Error())
 	}

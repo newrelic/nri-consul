@@ -22,9 +22,15 @@ func TestCollectInventory_AllValid(t *testing.T) {
 		Hostname:  hostname,
 		Port:      port,
 		EnableSSL: false,
+		Timeout:   "0s",
 	}
 
-	client, err := api.NewClient(arg.CreateAPIConfig(arg.Hostname))
+	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
+	if err != nil {
+		t.Fatalf("Unexpected error: %s", err.Error())
+	}
+
+	client, err := api.NewClient(apiConfig)
 	if err != nil {
 		t.Fatalf("Unexpected error: %s", err.Error())
 	}
@@ -129,9 +135,15 @@ func TestCollectInventory_BadArray(t *testing.T) {
 		Hostname:  hostname,
 		Port:      port,
 		EnableSSL: false,
+		Timeout:   "0s",
 	}
 
-	client, err := api.NewClient(arg.CreateAPIConfig(arg.Hostname))
+	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
+	if err != nil {
+		t.Fatalf("Unexpected error: %s", err.Error())
+	}
+
+	client, err := api.NewClient(apiConfig)
 	if err != nil {
 		t.Fatalf("Unexpected error: %s", err.Error())
 	}

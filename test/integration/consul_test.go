@@ -67,8 +67,13 @@ func waitForConsulClusterUpAndRunning(maxTries int) bool {
 		Port:         "8500",
 		EnableSSL:    true,
 		CABundleFile: "certs/consul-agent-ca.pem",
+		Timeout:      "0s",
 	}
-	apiConfig := arg.CreateAPIConfig(arg.Hostname)
+	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
+	if err != nil {
+		log.Error("Error creating API client, please check configuration: %s", err.Error())
+		os.Exit(1)
+	}
 
 	// create client
 	client, err := api.NewClient(apiConfig)

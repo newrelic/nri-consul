@@ -1,10 +1,11 @@
 package args
 
 import (
-	"reflect"
+	"path/filepath"
 	"testing"
 
 	"github.com/hashicorp/consul/api"
+	"github.com/stretchr/testify/require"
 )
 
 func Test_ArgumentList_Validate(t *testing.T) {
@@ -19,6 +20,7 @@ func Test_ArgumentList_Validate(t *testing.T) {
 				Hostname:  "localhost",
 				Port:      "8500",
 				EnableSSL: false,
+				Timeout:   "30s",
 			},
 			false,
 		},
@@ -56,9 +58,10 @@ func Test_ArgumentList_Validate(t *testing.T) {
 
 func Test_ArgumentList_CreateAPIConfig(t *testing.T) {
 	testCases := []struct {
-		name string
-		args *ArgumentList
-		want *api.Config
+		name      string
+		args      *ArgumentList
+		want      *api.Config
+		errWanted bool
 	}{
 		{
 			"Base Config",
@@ -67,12 +70,14 @@ func Test_ArgumentList_CreateAPIConfig(t *testing.T) {
 				Port:      "8500",
 				Token:     "my_token",
 				EnableSSL: false,
+				Timeout:   "30s",
 			},
 			&api.Config{
 				Address: "localhost:8500",
 				Token:   "my_token",
 				Scheme:  "http",
 			},
+			false,
 		},
 		{
 			"Base SSL",
@@ -82,26 +87,41 @@ func Test_ArgumentList_CreateAPIConfig(t *testing.T) {
 				Token:                  "my_token",
 				EnableSSL:              true,
 				TrustServerCertificate: false,
-				CABundleDir:            "ca_dir",
-				CABundleFile:           "ca_file",
+				CABundleDir:            "testdata",
+				CABundleFile:           filepath.Join("testdata", "ca.pem"),
+				Timeout:                "30s",
 			},
 			&api.Config{
 				Address: "localhost:8500",
 				Token:   "my_token",
 				Scheme:  "https",
 				TLSConfig: api.TLSConfig{
-					CAFile:             "ca_file",
-					CAPath:             "ca_dir",
+					CAPath:             "testdata",
+					CAFile:             filepath.Join("testdata", "ca.pem"),
 					InsecureSkipVerify: false,
 				},
 			},
+			false,
+		},
+		{
+			"Wrong timeout format",
+			&ArgumentList{
+				Timeout: "30",
+			},
+			nil,
+			true,
 		},
 	}
 
 	for _, tc := range testCases {
-		out := tc.args.CreateAPIConfig(tc.args.Hostname)
-		if !reflect.DeepEqual(out, tc.want) {
-			t.Errorf("Test Case %s Failed: Expected %v got %v", tc.name, tc.want, out)
+		out, err := tc.args.CreateAPIConfig(tc.args.Hostname)
+		if err != nil {
+			require.Equal(t, tc.errWanted, true)
+			continue
 		}
+		require.Equal(t, tc.want.Address, out.Address)
+		require.Equal(t, tc.want.Token, out.Token)
+		require.Equal(t, tc.want.Scheme, out.Scheme)
+		require.Equal(t, tc.want.TLSConfig, out.TLSConfig)
 	}
 }
