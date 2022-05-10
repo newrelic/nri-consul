@@ -11,7 +11,7 @@ GOLANGCI_LINT	= github.com/golangci/golangci-lint/cmd/golangci-lint
 
 all: build
 
-build: clean validate test compile
+build: clean validate test compile integration-test
 
 clean:
 	@echo "=== $(INTEGRATION) === [ clean ]: Removing binaries and coverage file..."
@@ -30,6 +30,10 @@ compile:
 test:
 	@echo "=== $(INTEGRATION) === [ test ]: Running unit tests..."
 	@go test -race ./... -count=1
+
+integration-test:
+	@echo "=== $(INTEGRATION) === [ test ]: running integration tests..."
+	@go test -v -tags=integration ./test/integration/. -count=1
 
 # Include thematic Makefiles
 include $(CURDIR)/build/ci.mk
