@@ -70,7 +70,10 @@ func waitForConsulClusterUpAndRunning(maxTries int) bool {
 		Timeout:      "0s",
 	}
 	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
-	log.Fatal(err)
+	if err != nil {
+		log.Error("Error creating API client, please check configuration: %s", err.Error())
+		os.Exit(1)
+	}
 
 	// create client
 	client, err := api.NewClient(apiConfig)
