@@ -17,6 +17,8 @@ integrations:
     # CA_BUNDLE_DIR:
     # Alternative Certificate Authority bundle file, required if enable_ssl is true and trust_server_certificate is false
     # CA_BUNDLE_FILE:
+    # Timeout for the consul client calls default is 30s
+    # TIMEOUT: 30s
 
     # If true will attempt to gather metrics from all other nodes in consul cluster
     FAN_OUT: true
