@@ -67,6 +67,7 @@ func waitForConsulClusterUpAndRunning(maxTries int) bool {
 		Port:         "8500",
 		EnableSSL:    true,
 		CABundleFile: "certs/consul-agent-ca.pem",
+		Timeout:      "0s",
 	}
 	apiConfig, err := arg.CreateAPIConfig(arg.Hostname)
 	log.Fatal(err)
