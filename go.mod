@@ -1,22 +1,43 @@
 module github.com/newrelic/nri-consul
 
-go 1.16
+go 1.18
+
+require (
+	github.com/hashicorp/consul/api v1.4.0
+	github.com/hashicorp/go-cleanhttp v0.5.1
+	github.com/hashicorp/serf v0.9.1
+	github.com/newrelic/infra-integrations-sdk v3.6.7+incompatible
+	github.com/stretchr/testify v1.7.5
+	github.com/xeipuuv/gojsonschema v1.2.0
+)
 
 require (
 	github.com/armon/go-metrics v0.0.0-20190430140413-ec5e00d3c878 // indirect
-	github.com/golangci/golangci-lint v1.40.0
-	github.com/hashicorp/consul/api v1.4.0
-	github.com/hashicorp/go-cleanhttp v0.5.1
+	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/fatih/color v1.10.0 // indirect
+	github.com/google/btree v1.0.0 // indirect
 	github.com/hashicorp/go-hclog v0.12.2 // indirect
 	github.com/hashicorp/go-immutable-radix v1.1.0 // indirect
 	github.com/hashicorp/go-msgpack v0.5.5 // indirect
+	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hashicorp/go-rootcerts v1.0.3-0.20191216101743-c8a9a31cbd76 // indirect
 	github.com/hashicorp/go-sockaddr v1.0.2 // indirect
-	github.com/hashicorp/serf v0.9.1
+	github.com/hashicorp/golang-lru v0.5.4 // indirect
+	github.com/kr/text v0.2.0 // indirect
+	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/mattn/go-isatty v0.0.13-0.20200128103942-cb30d6282491 // indirect
+	github.com/miekg/dns v1.1.35 // indirect
+	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/mitchellh/go-testing-interface v1.14.0 // indirect
 	github.com/mitchellh/mapstructure v1.2.3 // indirect
-	github.com/newrelic/infra-integrations-sdk v3.6.7+incompatible
-	github.com/stretchr/testify v1.7.0
-	github.com/xeipuuv/gojsonschema v1.2.0
+	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
+	github.com/pkg/errors v0.9.1 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
+	github.com/xeipuuv/gojsonpointer v0.0.0-20180127040702-4e3ac2762d5f // indirect
+	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
+	golang.org/x/crypto v0.0.0-20210220033148-5ea612d1eb83 // indirect
+	golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4 // indirect
+	golang.org/x/sys v0.0.0-20210403161142-5e06dd20ab57 // indirect
+	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
