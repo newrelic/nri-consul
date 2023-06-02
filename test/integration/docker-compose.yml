@@ -43,7 +43,7 @@ services:
     command: "agent -bootstrap-expect=3"
 
   nri-consul:
-    image: golang:1.18
+    image: golang:1.20-buster
     container_name: nri_consul
     working_dir: /code
     volumes:
