@@ -26,7 +26,7 @@ jobs:
           ignore-unfixed: true
           exit-code: 1
           severity: 'HIGH,CRITICAL'
-          skip-dirs: 'build'
+          skip-dirs: 'build,test/integration/certs'
 
       - name: Run Trivy vulnerability scanner sarif output
         uses: aquasecurity/trivy-action@0.7.1
@@ -38,7 +38,7 @@ jobs:
           format: 'template'
           template: '@/contrib/sarif.tpl'
           output: 'trivy-results.sarif'
-          skip-dirs: 'build'
+          skip-dirs: 'build,test/integration/certs'
 
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v2
