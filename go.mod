@@ -6,7 +6,7 @@ require (
 	github.com/hashicorp/consul/api v1.27.0
 	github.com/hashicorp/go-cleanhttp v0.5.2
 	github.com/hashicorp/serf v0.10.1
-	github.com/newrelic/infra-integrations-sdk v3.8.1+incompatible
+	github.com/newrelic/infra-integrations-sdk v3.8.2+incompatible
 	github.com/stretchr/testify v1.8.4
 	github.com/xeipuuv/gojsonschema v1.2.0
 )
