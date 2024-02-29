@@ -3,7 +3,7 @@ module github.com/newrelic/nri-consul
 go 1.20
 
 require (
-	github.com/hashicorp/consul/api v1.27.0
+	github.com/hashicorp/consul/api v1.28.2
 	github.com/hashicorp/go-cleanhttp v0.5.2
 	github.com/hashicorp/serf v0.10.1
 	github.com/newrelic/infra-integrations-sdk v3.8.2+incompatible
