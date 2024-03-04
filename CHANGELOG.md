@@ -7,8 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Unreleased section should follow [Release Toolkit](https://github.com/newrelic/release-toolkit#render-markdown-and-update-markdown)
 ## Unreleased
-### bugfix
+
+## v2.7.7 - 2024-03-04
+
+### 🐞 Bug fixes
 - Fix Windows packaging signtool path
+
+### ⛓️ Dependencies
+- Updated github.com/hashicorp/consul/api to v1.28.2
 
 ## v2.7.6 - 2024-02-26
 
