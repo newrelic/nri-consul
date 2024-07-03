@@ -6,12 +6,13 @@ package tests
 import (
 	"bytes"
 	"fmt"
-	"github.com/newrelic/infra-integrations-sdk/log"
-	"github.com/xeipuuv/gojsonschema"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
+
+	"github.com/newrelic/infra-integrations-sdk/log"
+	"github.com/xeipuuv/gojsonschema"
 )
 
 func dockerCompose(vars, cmdLine, containers []string, detached bool) (string, string, error) {
@@ -23,8 +24,9 @@ func dockerCompose(vars, cmdLine, containers []string, detached bool) (string, s
 		cmdLine = append(cmdLine, vars[i])
 	}
 	cmdLine = append(cmdLine, containers...)
-	fmt.Printf("executing: docker-compose %s\n", strings.Join(cmdLine, " "))
-	cmd := exec.Command("docker-compose", cmdLine...)
+	cmdLine = append([]string{"compose"}, cmdLine...)
+	fmt.Printf("executing: docker %s\n", strings.Join(cmdLine, " "))
+	cmd := exec.Command("docker", cmdLine...)
 	var outbuf, errbuf bytes.Buffer
 	cmd.Stdout = &outbuf
 	cmd.Stderr = &errbuf
@@ -43,14 +45,14 @@ func dockerComposeRun(vars []string, container string) (string, string, error) {
 }
 
 func dockerComposeDown() {
-	fmt.Println("executing: docker-compose down")
-	cmd := exec.Command("docker-compose", "down")
+	fmt.Println("executing: docker compose down")
+	cmd := exec.Command("docker", "compose", "down")
 	var errbuf bytes.Buffer
 	cmd.Stderr = &errbuf
 	err := cmd.Run()
 	stderr := errbuf.String()
 	if err != nil {
-		fmt.Println("error on docker-compose down: %w, $s", err, stderr)
+		fmt.Println("error on docker compose down: %w, $s", err, stderr)
 	}
 }
 
