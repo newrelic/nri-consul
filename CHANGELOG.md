@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 Unreleased section should follow [Release Toolkit](https://github.com/newrelic/release-toolkit#render-markdown-and-update-markdown)
 ## Unreleased
 
+## v2.7.14 - 2024-09-09
+
+### ⛓️ Dependencies
+- Updated github.com/hashicorp/consul/api to v1.29.4
+
 ## v2.7.13 - 2024-07-08
 
 ### ⛓️ Dependencies
