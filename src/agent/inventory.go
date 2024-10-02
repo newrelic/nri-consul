@@ -3,7 +3,7 @@ package agent
 import (
 	"sync"
 
-	"github.com/newrelic/infra-integrations-sdk/log"
+	"github.com/newrelic/infra-integrations-sdk/v3/log"
 )
 
 // CollectInventory collects inventory data for each Agent entity

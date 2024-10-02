@@ -1,8 +1,8 @@
 package metrics
 
 import (
-	"github.com/newrelic/infra-integrations-sdk/data/metric"
-	"github.com/newrelic/infra-integrations-sdk/log"
+	"github.com/newrelic/infra-integrations-sdk/v3/data/metric"
+	"github.com/newrelic/infra-integrations-sdk/v3/log"
 )
 
 // SetMetric is a wrappper around metric.Set.SetMetric with error logging
