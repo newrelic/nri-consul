@@ -43,7 +43,7 @@ func inventoryWorker(agentChan <-chan *Agent, wg *sync.WaitGroup) {
 	}
 }
 
-//CollectInventoryFromOne collects inventory data for a single agent entity
+// CollectInventoryFromOne collects inventory data for a single agent entity
 func CollectInventoryFromOne(agent *Agent) {
 	selfData, err := agent.Client.Agent().Self()
 	if err != nil {
