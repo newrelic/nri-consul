@@ -3,7 +3,7 @@ package agent
 import (
 	"sync"
 
-	"github.com/newrelic/infra-integrations-sdk/log"
+	"github.com/newrelic/infra-integrations-sdk/v3/log"
 )
 
 // CollectInventory collects inventory data for each Agent entity
@@ -43,7 +43,7 @@ func inventoryWorker(agentChan <-chan *Agent, wg *sync.WaitGroup) {
 	}
 }
 
-//CollectInventoryFromOne collects inventory data for a single agent entity
+// CollectInventoryFromOne collects inventory data for a single agent entity
 func CollectInventoryFromOne(agent *Agent) {
 	selfData, err := agent.Client.Agent().Self()
 	if err != nil {

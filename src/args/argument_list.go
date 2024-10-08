@@ -8,7 +8,7 @@ import (
 
 	"github.com/hashicorp/consul/api"
 	goCleanhttp "github.com/hashicorp/go-cleanhttp"
-	sdkArgs "github.com/newrelic/infra-integrations-sdk/args"
+	sdkArgs "github.com/newrelic/infra-integrations-sdk/v3/args"
 )
 
 // ArgumentList struct that holds all Consul arguments

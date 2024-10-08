@@ -1,7 +1,7 @@
 package datacenter
 
 import (
-	"github.com/newrelic/infra-integrations-sdk/data/metric"
+	"github.com/newrelic/infra-integrations-sdk/v3/data/metric"
 	"github.com/newrelic/nri-consul/src/metrics"
 )
 

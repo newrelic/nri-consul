@@ -3,8 +3,8 @@ package agent
 import (
 	"sync"
 
-	"github.com/newrelic/infra-integrations-sdk/data/attribute"
-	"github.com/newrelic/infra-integrations-sdk/log"
+	"github.com/newrelic/infra-integrations-sdk/v3/data/attribute"
+	"github.com/newrelic/infra-integrations-sdk/v3/log"
 )
 
 // CollectMetrics does a metric collect for a group of agents
