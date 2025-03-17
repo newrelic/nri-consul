@@ -8,7 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 Unreleased section should follow [Release Toolkit](https://github.com/newrelic/release-toolkit#render-markdown-and-update-markdown)
 ## Unreleased
 
-### enhancements
+## v2.9.0 - 2025-03-17
+
+### 🚀 Enhancements
 - Add FIPS compliant packages
 
 ## v2.8.4 - 2025-03-10
