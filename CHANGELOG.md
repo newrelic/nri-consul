@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 Unreleased section should follow [Release Toolkit](https://github.com/newrelic/release-toolkit#render-markdown-and-update-markdown)
 ## Unreleased
 
+### breaking
+- Support has been removed for windows 32 bit
+
 ## v2.11.0 - 2026-04-29
 
 ### 🛡️ Security notices
