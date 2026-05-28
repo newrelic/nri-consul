@@ -4,6 +4,7 @@ go 1.26.3
 
 require (
 	github.com/hashicorp/consul/api v1.34.3
+	github.com/hashicorp/consul/api/v2 v2.0.0
 	github.com/hashicorp/go-cleanhttp v0.5.2
 	github.com/hashicorp/serf v0.10.1
 	github.com/newrelic/infra-integrations-sdk/v3 v3.9.1
