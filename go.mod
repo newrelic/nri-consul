@@ -1,6 +1,6 @@
 module github.com/newrelic/nri-consul
 
-go 1.26.3
+go 1.26.4
 
 require (
 	github.com/hashicorp/consul/api v1.34.3
