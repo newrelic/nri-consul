@@ -1,9 +1,9 @@
 module github.com/newrelic/nri-consul
 
-go 1.26.6
+go 1.26.7
 
 require (
-	github.com/hashicorp/consul/api v1.34.4
+	github.com/hashicorp/consul/api v1.34.5
 	github.com/hashicorp/go-cleanhttp v0.5.2
 	github.com/hashicorp/serf v0.10.4
 	github.com/newrelic/infra-integrations-sdk/v3 v3.9.1
@@ -32,8 +32,8 @@ require (
 	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
 	go.yaml.in/yaml/v3 v3.0.5 // indirect
 	golang.org/x/exp v0.0.0-20260218203240-3dfff04db8fa // indirect
-	golang.org/x/net v0.56.0 // indirect
-	golang.org/x/sys v0.46.0 // indirect
+	golang.org/x/net v0.59.0 // indirect
+	golang.org/x/sys v0.48.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
