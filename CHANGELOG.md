@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 Unreleased section should follow [Release Toolkit](https://github.com/newrelic/release-toolkit#render-markdown-and-update-markdown)
 ## Unreleased
 
+## v2.11.6 - 2026-10-05
+
+### ⛓️ Dependencies
+- Updated golang version to v1.27.1
+- Updated github.com/hashicorp/consul/api to v1.34.5
+
 ## v2.11.5 - 2026-08-24
 
 ### ⛓️ Dependencies
