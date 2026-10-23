@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/hashicorp/consul/api"
+	"github.com/hashicorp/consul/api/v2"
 	goCleanhttp "github.com/hashicorp/go-cleanhttp"
 	sdkArgs "github.com/newrelic/infra-integrations-sdk/v3/args"
 )
