@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 Unreleased section should follow [Release Toolkit](https://github.com/newrelic/release-toolkit#render-markdown-and-update-markdown)
 ## Unreleased
 
+### security
+- Updated golang.org/x/net to v0.62.0 to address GO-2026-6860 and GO-2026-6866, with golang.org/x/sys v0.49.0
+
 ## v2.11.8 - 2026-10-23
 
 ### ⛓️ Dependencies
