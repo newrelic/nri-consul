@@ -7,7 +7,7 @@ import (
 
 	"time"
 
-	"github.com/hashicorp/consul/api"
+	"github.com/hashicorp/consul/api/v2"
 	"github.com/newrelic/nri-consul/src/args"
 	"github.com/newrelic/nri-consul/src/testutils"
 	"github.com/stretchr/testify/require"
